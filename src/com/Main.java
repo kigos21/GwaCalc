@@ -16,7 +16,7 @@ public class Main {
 				+ "G-Gifted\r\n"
 				+ "N- iNtelligent\r\n"
 				+ "A-Amazing\r\n"
-				+ "N-nice one baby\r\n"
+				+ "N-nice one baby\r\n" 
 				+ "A-Amusing\r\n"
 				+ "K-Kind\r\n"
 				+ "A-Agreeable\r\n"
