@@ -126,8 +126,6 @@ public class CoursePicker extends guiCustoms{
 				cancel.setFont(gothamLight.deriveFont(Font.PLAIN,16));
 				cancel.setBackground(customPaneColor);
 				cancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-				cancel.setOpaque(false);
-				cancel.setContentAreaFilled(false);
 				cancel.setBorderPainted(false);
 				cancel.setForeground(Color.WHITE);
 				cancel.setBounds(260,175,105,48);
@@ -163,7 +161,7 @@ public class CoursePicker extends guiCustoms{
 				});
 				
 				customPane.setPreferredSize(new Dimension(500, 250));
-				customPane.setLocationRelativeTo(null);
+				customPane.setLocationRelativeTo(coursePicker);
 				customPane.setVisible(true);
 			}
 		});
