@@ -124,6 +124,10 @@ public class UsrLogin extends guiCustoms{
 		bCrtUser.setForeground(hyperColor);
 		usrLogin.add(bCrtUser);
 		
+		// first focus
+		usrLogin.setFocusable(true);
+		usrLogin.requestFocus();
+		
 		add(usrLogin);
 		setVisible(true);
 		
