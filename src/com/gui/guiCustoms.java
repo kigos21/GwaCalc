@@ -13,7 +13,6 @@ public class guiCustoms extends JPanel{
 	}
 	
 	Font gothamBookC;
-	//
 	Font tahomaPlain16 = new Font("Tahoma", Font.PLAIN, 16);
 	Font tahomaBold16 = new Font("Tahoma", Font.BOLD, 16);
 	Font tahomaPlain12 = new Font("Tahoma", Font.PLAIN, 12);
