@@ -143,6 +143,9 @@ public class UsrLogin extends guiCustoms{
 		            add(cp);
 		            cp.setVisible(true);
 				//}
+				//else {
+					
+				//}
 			}
 		});
 	}
