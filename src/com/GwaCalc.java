@@ -21,7 +21,6 @@ public class GwaCalc extends JFrame{
 		setLayout(null);
 		setPreferredSize(new Dimension(1280, 720));
 		setResizable(false);
-		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
@@ -35,6 +34,7 @@ public class GwaCalc extends JFrame{
 		revalidate();
 		
 		pack();
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 
