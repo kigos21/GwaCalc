@@ -44,12 +44,7 @@ public class UsrLogin extends guiCustoms{
 		usrLogin.setBounds(0, 0, 1280, 720);
 		usrLogin.setLayout(null);
 		
-		lTitle = new JLabel("GENERAL WEIGHTED AVERAGE CALCULATOR");
-		lTitle.setFont(gothamBook.deriveFont(Font.PLAIN,13));
-		lTitle.setBounds(48, 16, 350, 10);
-		lTitle.setForeground(Color.WHITE);
-		usrLogin.add(lTitle);
-		
+	
 		lLogo = new JLabel();
 		icnPfp = new ImageIcon("res\\gwalogo2.png");
 		lLogo.setIcon(icnPfp);
@@ -66,7 +61,7 @@ public class UsrLogin extends guiCustoms{
 		tfUser.setBounds(456, 392, 371, 47);
 		tfUser.setFont(gothamBook.deriveFont(Font.PLAIN,16));
 		tfUser.setHorizontalAlignment(JTextField.CENTER);
-		tfUser.setForeground(Color.BLACK);
+		tfUser.setForeground(textfieldGray);
 		tfUser.addFocusListener(new FocusListener() {
 		    public void focusGained(FocusEvent e) {
 		        tfUser.setText("");
@@ -90,7 +85,7 @@ public class UsrLogin extends guiCustoms{
 		tfPswrd.setBounds(456, 464, 371, 47);
 		tfPswrd.setFont(gothamBook.deriveFont(Font.PLAIN,16));
 		tfPswrd.setHorizontalAlignment(JTextField.CENTER);
-		tfPswrd.setForeground(Color.BLACK);
+		tfPswrd.setForeground(textfieldGray);
 		tfPswrd.addFocusListener(new FocusListener() {
 		    public void focusGained(FocusEvent e) {
 		    	tfPswrd.setText("");

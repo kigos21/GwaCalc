@@ -19,7 +19,7 @@ public class CoursePicker extends guiCustoms{
 	JButton bNext,bLogout;
 	Font gothamBook,gothamBookBold,futura,gothamLight;
 	Icon icnUST;
-	JLabel lTitle, lSelect,lUST,lStudentName,lDepartment;
+	JLabel lSelect,lUST,lStudentName,lDepartment;
 	String[] cbOptions = {" Choose your course"," ICS2606"," ICS2622"};
 	
 	public CoursePicker() {
@@ -50,14 +50,8 @@ public class CoursePicker extends guiCustoms{
 		coursePicker.setBounds(0, 0, 1280, 720);
 		coursePicker.setLayout(null);
 		
-		lTitle = new JLabel("GENERAL WEIGHTED AVERAGE CALCULATOR");
-		lTitle.setFont(gothamBook.deriveFont(Font.PLAIN,13));
-		lTitle.setBounds(48, 16, 350, 10);
-		lTitle.setForeground(Color.WHITE);
-		coursePicker.add(lTitle);
-		
 		lUST = new JLabel();
-		icnUST = new ImageIcon("res\\ust-seal.png");
+		icnUST = new ImageIcon("res\\pfp-icon.png");
 		lUST.setIcon(icnUST);
 		lUST.setBounds(48, 80, 109, 110);
 		coursePicker.add(lUST);
@@ -108,8 +102,14 @@ public class CoursePicker extends guiCustoms{
 		
 		bLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int input = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Confirm Action",
+				
+				JLabel message = new JLabel("Are you sure you want to logout?");
+				message.setFont(gothamLight.deriveFont(Font.PLAIN,16));
+				message.setForeground(Color.BLACK);
+				
+				int input = JOptionPane.showConfirmDialog(null, message, "Confirm Action",
 						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+				
 				if(input==0) {
 		            UsrLogin usrLogin = new UsrLogin();
 		            usrLogin.setPreferredSize(new Dimension(1280, 720));
@@ -119,10 +119,6 @@ public class CoursePicker extends guiCustoms{
 		            add(usrLogin);
 		            usrLogin.setVisible(true);
 				}
-				//}
-				//else {
-					
-				//}
 			}
 		});
 	}
