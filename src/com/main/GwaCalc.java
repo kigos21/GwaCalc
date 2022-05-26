@@ -27,7 +27,7 @@ public class GwaCalc extends JFrame{
 			ge.registerFont(gothamBook); 
 		}
 		catch(IOException ie){
-			ie.printStackTrace();
+			ie.printStackTrace(); 
 		}
 		catch(FontFormatException ffe){
 			ffe.printStackTrace(); 

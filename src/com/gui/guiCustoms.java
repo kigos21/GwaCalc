@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 public class guiCustoms extends JPanel{
 	Color paneRed = new Color(216,60,62);
+	Color paneGreen = new Color(94,186,125);
 	Color customPaneColor = new Color(13,13,27);
 	Color hyperColor = new Color(43,164,179);
 	Color bgColor = new Color(16,16,30);

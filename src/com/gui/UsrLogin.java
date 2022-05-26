@@ -129,7 +129,7 @@ public class UsrLogin extends guiCustoms{
 		
 		bLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//if (tfUser.getText().equals("Test")&& tfPswrd.getText().equals("Test")) {
+				if (tfUser.getText().equals("Test")&& tfPswrd.getText().equals("Test")) {
 		            CoursePicker cp = new CoursePicker();
 		            cp.setPreferredSize(new Dimension(1280, 720));
 		            cp.setBounds(0, 0, 1280, 720);
@@ -137,10 +137,11 @@ public class UsrLogin extends guiCustoms{
 		            usrLogin.setVisible(false);
 		            add(cp);
 		            cp.setVisible(true);
-				//}
-				//else {
+				}
+				else {
+					CustomDialog cd = new CustomDialog("Err!", "Invalid username or password", usrLogin,"OK", paneRed);
 					
-				//}
+				}
 			}
 		});
 	}

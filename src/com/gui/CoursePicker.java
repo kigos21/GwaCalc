@@ -14,7 +14,7 @@ import java.io.IOException;
 import javax.swing.*;
 
 public class CoursePicker extends guiCustoms{
-	JPanel coursePicker;
+	JPanel mainContainer, coursePicker;
 	JComboBox cbCoursePicker;
 	JButton bNext,bLogout;
 	Font gothamBook,gothamBookBold,futura,gothamLight;
@@ -41,14 +41,21 @@ public class CoursePicker extends guiCustoms{
 			ffe.printStackTrace();
 		}
 		
-		setLayout(null);
 		setPreferredSize(new Dimension(1280, 720));
+		setLayout(null);
+		
+		mainContainer = new JPanel();
+		mainContainer.setPreferredSize(new Dimension(1280, 720));
+		mainContainer.setBounds(0, 0, 1280, 720);
+		mainContainer.setBackground(bgColor);
+		mainContainer.setLayout(null);
 		
 		coursePicker = new JPanel();
-		coursePicker.setBackground(bgColor);
+		coursePicker.setOpaque(false);
 		coursePicker.setPreferredSize(new Dimension(1280, 720));
 		coursePicker.setBounds(0, 0, 1280, 720);
 		coursePicker.setLayout(null);
+		mainContainer.add(coursePicker);
 		
 		lUST = new JLabel();
 		icnUST = new ImageIcon("res\\pfp-icon.png");
@@ -97,72 +104,16 @@ public class CoursePicker extends guiCustoms{
 		bNext.setForeground(Color.BLACK);
 		coursePicker.add(bNext);
 		
-		add(coursePicker);
+		add(mainContainer);
 		setVisible(true);
 		
 		bLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				UsrLogin usrLogin = new UsrLogin();
 				
-				JFrame f = new JFrame();
-				JDialog  customPane = new JDialog (f,true);
-				customPane.getContentPane().setBackground(customPaneColor);
-				customPane.setLayout(null);
-				customPane.setUndecorated(true);
-				customPane.setBounds(393,222,500,250);
-				
-				JLabel head = new JLabel("Log Out");
-				head.setFont(gothamBookBold.deriveFont(Font.PLAIN,28));
-				head.setForeground(Color.WHITE);
-				head.setBounds(20,20,500,56);
-				customPane.add(head);
-				
-				JLabel message = new JLabel("Are you sure you want to logout?");
-				message.setFont(gothamLight.deriveFont(Font.PLAIN,16));
-				message.setForeground(Color.WHITE);
-				message.setBounds(20,60,500,56);
-				customPane.add(message);
-					
-				JButton cancel = new JButton("Cancel");
-				cancel.setFont(gothamLight.deriveFont(Font.PLAIN,16));
-				cancel.setBackground(customPaneColor);
-				cancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-				cancel.setBorderPainted(false);
-				cancel.setForeground(Color.WHITE);
-				cancel.setBounds(260,175,105,48);
-				cancel.setFocusable(false);
-				customPane.add(cancel);
-				
-				JButton confirm = new JButton("Logout");
-				confirm.setFont(gothamLight.deriveFont(Font.PLAIN,16));
-				confirm.setBackground(paneRed);
-				confirm.setCursor(new Cursor(Cursor.HAND_CURSOR));
-				confirm.setForeground(Color.WHITE);
-				confirm.setBorderPainted(false);
-				confirm.setBounds(375,175,105,48);
-				confirm.setFocusable(false);
-				customPane.add(confirm);
-				cancel.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						customPane.dispose();
-					}
-				});
-				
-				confirm.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						UsrLogin usrLogin = new UsrLogin();
-						usrLogin.setPreferredSize(new Dimension(1280, 720));
-						usrLogin.setBounds(0, 0, 1280, 720);
-						
-						coursePicker.setVisible(false);
-						add(usrLogin);
-						usrLogin.setVisible(true);
-						customPane.dispose();
-					}
-				});
-				
-				customPane.setPreferredSize(new Dimension(500, 250));
-				customPane.setLocationRelativeTo(coursePicker);
-				customPane.setVisible(true);
+				//CustomDialog Constructor: headContent, messageContent, parentPane, childPane, newPane, buttonContentCancel, buttonContentConfirm, color
+				CustomDialog cd = new CustomDialog("Log Out","Are you sure you want to logout?",mainContainer,coursePicker,usrLogin,"Cancel","Logout",paneRed);
+				cd.setVisible(true);
 			}
 		});
 	}
