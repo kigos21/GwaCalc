@@ -139,8 +139,7 @@ public class UsrLogin extends guiCustoms{
 		            cp.setVisible(true);
 				}
 				else {
-					CustomDialog cd = new CustomDialog("Err!", "Invalid username or password", usrLogin,"OK", paneRed);
-					
+					CustomDialog cd = new CustomDialog("Err!", "Invalid username or password", usrLogin,"OK", paneRed);	
 				}
 			}
 		});
