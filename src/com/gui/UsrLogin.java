@@ -19,11 +19,6 @@ public class UsrLogin extends guiCustoms{
 	JButton bCrtUser;
 	Font gothamBook,gothamBookBold;
 	
-	UserStudent user;
-	PrintWriter pw;
-	File loginCreds;
-	BufferedReader br;
-	
 	public UsrLogin() {
 		try {
 			gothamBook = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBook.ttf"));
@@ -135,36 +130,30 @@ public class UsrLogin extends guiCustoms{
 		add(usrLogin);
 		setVisible(true);
 		
-		try {
-			loginCreds = new File("data\\usr-login-creds.txt");
-//			pw = new PrintWriter(new FileWriter(loginCreds, false)); // transfer to create-account-module
-			br = new BufferedReader(new FileReader(loginCreds));
-		} 
-		catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
 		bLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-//				if (tfUser.getText().equals("Test")&& tfPswrd.getText().equals("Test")) {
-//		            CoursePicker cp = new CoursePicker();
-//		            cp.setPreferredSize(new Dimension(1280, 720));
-//		            cp.setBounds(0, 0, 1280, 720);
-//		            
-//		            usrLogin.setVisible(false);
-//		            add(cp);
-//		            cp.setVisible(true);
-//				}
-//				else {
-//					
-//				}
+				File loginCreds = null;
+				BufferedReader br = null;
+				
+				try {
+					loginCreds = new File("data\\usr-login-creds.txt");
+					br = new BufferedReader(new FileReader(loginCreds));
+				} 
+				catch (IOException e1) {
+					e1.printStackTrace();
+				}
 				
 				try {
 					if (br.readLine() == null) {
 						JOptionPane.showMessageDialog(null, "No user found! Please create an account.", "Error", JOptionPane.ERROR_MESSAGE);
 					}
-					else if (tfUser.getText().equals(user.getUsername()) && tfPswrd.getText().equals(user.getPassword())) {
+					
+					br.close();
+					br = new BufferedReader(new FileReader(loginCreds)); // cheap alternative
+					UserStudent user = new UserStudent(br.readLine(), br.readLine());
+					
+					if (tfUser.getText().equals(user.getUsername()) && tfPswrd.getText().equals(user.getPassword())) {
 						CoursePicker cp = new CoursePicker();
 			            cp.setPreferredSize(new Dimension(1280, 720));
 			            cp.setBounds(0, 0, 1280, 720);
@@ -174,7 +163,7 @@ public class UsrLogin extends guiCustoms{
 			            cp.setVisible(true);
 					}
 					else {
-						JOptionPane.showMessageDialog(null, "Incorrect details. Try again.", "Info", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Incorrect details. Try again.", "Incorrect info", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 				catch (IOException e1) {
@@ -186,6 +175,13 @@ public class UsrLogin extends guiCustoms{
 		bCrtUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// call the user creation panel
+				UsrCreate usrCreate = new UsrCreate();
+				usrCreate.setPreferredSize(new Dimension(1280, 720));
+				usrCreate.setBounds(0, 0, 1280, 720);
+				
+				usrLogin.setVisible(false);
+				add(usrCreate);
+				usrCreate.setVisible(true);
 			}
 		});
 	}
