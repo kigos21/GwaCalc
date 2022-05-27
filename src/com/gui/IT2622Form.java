@@ -26,7 +26,7 @@ public class IT2622Form extends guiCustoms {
 			lblPrelimExam, lblPrelimGrade, lblTransmutedPrelimGrade,
 			
 			lblFinalClassStanding, lblFinalAttendance, lblFinalRecitation, lblAssignment,
-			lblFinalLongTest, lblLongTest2, 
+			lblFinalLongTest, lblLongTest2, lblLongTest3,
 			lblFinalDeliverable, lblDeliverable1, lblIntegratedAsmnt,
 			lblFinalGrade, lblTransmutedFinalGrade;
 	
@@ -36,7 +36,7 @@ public class IT2622Form extends guiCustoms {
 			tfPrelimExam, tfPrelimGrade, tfTransmutedPrelimGrade,
 			
 			tfFinalAttendance, tfFinalRecitation, tfAssignment,
-			tfLongTest2, tfDeliverable1, tfIntegratedAsmnt,
+			tfLongTest2, tfLongTest3, tfDeliverable1, tfIntegratedAsmnt,
 			tfFinalGrade, tfTransmutedFinalGrade;
 	
 	public IT2622Form() {
@@ -398,18 +398,32 @@ public class IT2622Form extends guiCustoms {
 		gradeForm.add(lblFinalLongTest);
 		
 		lblLongTest2 = new JLabel("Long Test 2", JLabel.RIGHT);
-		lblLongTest2.setBounds(674,356,188,18);
+		lblLongTest2.setBounds(760,356,103,18);
 		lblLongTest2.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblLongTest2.setForeground(Color.WHITE);
 		gradeForm.add(lblLongTest2);
 		
 		tfLongTest2 = new JTextField("");
-		tfLongTest2.setBounds(866,356,196,18);
+		tfLongTest2.setBounds(866,356,42,18);
 		tfLongTest2.setFont(gothamBook.deriveFont(Font.PLAIN,15));
 		tfLongTest2.setForeground(textfieldGray);
 		tfLongTest2.setHorizontalAlignment(JTextField.RIGHT);
 		tfLongTest2.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(tfLongTest2);
+		
+		lblLongTest3 = new JLabel("Long Test 3", JLabel.RIGHT);
+		lblLongTest3.setBounds(914,356,103,18);
+		lblLongTest3.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
+		lblLongTest3.setForeground(Color.WHITE);
+		gradeForm.add(lblLongTest3);
+		
+		tfLongTest3 = new JTextField("");
+		tfLongTest3.setBounds(1020,356,42,18);
+		tfLongTest3.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfLongTest3.setForeground(textfieldGray);
+		tfLongTest3.setHorizontalAlignment(JTextField.RIGHT);
+		tfLongTest3.setBorder(BorderFactory.createEmptyBorder());
+		gradeForm.add(tfLongTest3);
 		
 		lblFinalDeliverable = new JLabel("Deliverable (30%)");
 		lblFinalDeliverable.setBounds(672,386,150,18);
