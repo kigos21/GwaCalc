@@ -24,7 +24,7 @@ public class CoursePicker extends guiCustoms{
 	Font gothamBook,gothamBookBold,futura,gothamLight;
 	Icon icnPfp;
 	JLabel lSelect,lUST,lStudentName,lDepartment;
-	String[] cbOptions = {"    Choose your course","    ICS2606","    ICS2622"};
+	String[] cbOptions = {"    Choose your course","  ICS2606","  IT2622"};
 	
 	public CoursePicker() {
 		try {
@@ -138,8 +138,14 @@ public class CoursePicker extends guiCustoms{
 					coursePicker.setVisible(false);
 					gradeForm.setVisible(true);
 				}
-				else if (courseChosen.equals("ICS2622")) {
-					
+				else if (courseChosen.equals("IT2622")) {
+					IT2622Form gradeForm = new IT2622Form();
+					gradeForm.setPreferredSize(new Dimension(1280, 720));
+					gradeForm.setBounds(0, 0, 1280, 720);
+
+					coursePicker.setVisible(false);
+					mainContainer.add(gradeForm);
+					gradeForm.setVisible(true);
 				}
 				else {
 					CustomDialog cd = new CustomDialog("Err!", "Please choose a course", mainContainer,"OK", paneRed);
