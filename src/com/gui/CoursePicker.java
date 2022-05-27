@@ -24,7 +24,7 @@ public class CoursePicker extends guiCustoms{
 	Font gothamBook,gothamBookBold,futura,gothamLight;
 	Icon icnPfp;
 	JLabel lSelect,lUST,lStudentName,lDepartment;
-	String[] cbOptions = {" Choose your course"," ICS2606"," ICS2622"};
+	String[] cbOptions = {"    Choose your course","    ICS2606","    ICS2622"};
 	
 	public CoursePicker() {
 		try {
@@ -107,6 +107,9 @@ public class CoursePicker extends guiCustoms{
 		cbCoursePicker = new JComboBox<>(cbOptions);
 		cbCoursePicker.setBounds(373, 300, 531, 66);
 		cbCoursePicker.setFont(gothamBook.deriveFont(Font.PLAIN,16));
+		DefaultListCellRenderer dlcr = new DefaultListCellRenderer(); 
+		dlcr.setHorizontalAlignment(DefaultListCellRenderer.CENTER); 
+		cbCoursePicker.setRenderer(dlcr); 
 		coursePicker.add(cbCoursePicker);
 		
 		bNext = new JButton("Next");
