@@ -1,9 +1,9 @@
 package com.gui;
 
+import com.user.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 import javax.swing.*;
 
@@ -18,7 +18,6 @@ public class UsrLogin extends guiCustoms{
 	JButton bLogin;
 	JButton bCrtUser;
 	Font gothamBook,gothamBookBold;
-
 	
 	public UsrLogin() {
 		try {
@@ -124,23 +123,66 @@ public class UsrLogin extends guiCustoms{
 		bCrtUser.setForeground(hyperColor);
 		usrLogin.add(bCrtUser);
 		
+		// first focus
+		usrLogin.setFocusable(true);
+		usrLogin.requestFocus();
+		
 		add(usrLogin);
 		setVisible(true);
 		
 		bLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (tfUser.getText().equals("Test")&& tfPswrd.getText().equals("Test")) {
-		            CoursePicker cp = new CoursePicker();
-		            cp.setPreferredSize(new Dimension(1280, 720));
-		            cp.setBounds(0, 0, 1280, 720);
+				
+				File loginCreds = null;
+				BufferedReader br = null;
+				
+				try {
+					loginCreds = new File("data\\usr-login-creds.txt");
+					br = new BufferedReader(new FileReader(loginCreds));
+				} 
+				catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				
+				try {
+					if (br.readLine() == null) {
+						JOptionPane.showMessageDialog(null, "No user found! Please create an account.", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					
+					br.close();
+					br = new BufferedReader(new FileReader(loginCreds)); // cheap alternative
+					UserStudent user = new UserStudent(br.readLine(), br.readLine());
+					
+					if (tfUser.getText().equals(user.getUsername()) && tfPswrd.getText().equals(user.getPassword())) {
+						CoursePicker cp = new CoursePicker();
+			            cp.setPreferredSize(new Dimension(1280, 720));
+			            cp.setBounds(0, 0, 1280, 720);
 		            
-		            usrLogin.setVisible(false);
-		            add(cp);
-		            cp.setVisible(true);
+			            usrLogin.setVisible(false);
+			            add(cp);
+			            cp.setVisible(true);
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "Incorrect details. Try again.", "Incorrect info", JOptionPane.ERROR_MESSAGE);
+//						CustomDialog cd = new CustomDialog("Err!", "Invalid username or password", usrLogin,"OK", paneRed);
+					}
 				}
-				else {
-					CustomDialog cd = new CustomDialog("Err!", "Invalid username or password", usrLogin,"OK", paneRed);
+				catch (IOException e1) {
+					e1.printStackTrace();
 				}
+			}
+		});
+		
+		bCrtUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// call the user creation panel
+				UsrCreate usrCreate = new UsrCreate();
+				usrCreate.setPreferredSize(new Dimension(1280, 720));
+				usrCreate.setBounds(0, 0, 1280, 720);
+				
+				usrLogin.setVisible(false);
+				add(usrCreate);
+				usrCreate.setVisible(true);
 			}
 		});
 	}
