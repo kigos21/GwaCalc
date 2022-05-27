@@ -164,6 +164,7 @@ public class UsrLogin extends guiCustoms{
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "Incorrect details. Try again.", "Incorrect info", JOptionPane.ERROR_MESSAGE);
+//						CustomDialog cd = new CustomDialog("Err!", "Invalid username or password", usrLogin,"OK", paneRed);
 					}
 				}
 				catch (IOException e1) {
