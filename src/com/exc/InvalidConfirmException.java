@@ -1,10 +1,13 @@
 package com.exc;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
+import java.awt.*;
+
+import com.gui.CustomDialog;
 
 public class InvalidConfirmException extends Exception {
 
-	public InvalidConfirmException() {
-		JOptionPane.showMessageDialog(null, "Confirm your password!", "Error", JOptionPane.ERROR_MESSAGE);
+	public InvalidConfirmException(JPanel parentPane, Color btnColor) {
+		CustomDialog cd = new CustomDialog("Confirm Password!", "Please confirm your password.", parentPane,"OK", btnColor);
 	}
 }

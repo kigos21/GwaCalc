@@ -170,8 +170,7 @@ public class UsrCreate extends guiCustoms {
 						pw.println(tfUsrnm.getText());
 						pw.println(tfPswrd.getText());
 						pw.close();
-						JOptionPane.showMessageDialog(null, "Account created.", "Success", JOptionPane.INFORMATION_MESSAGE);
-						
+						CustomDialog cd = new CustomDialog("Success!", "Account created. You can use your account to login.",usrCreate,"OK",paneGreen);
 						UsrLogin usrLogin = new UsrLogin();
 						usrLogin.setPreferredSize(new Dimension(1280, 720));
 						usrLogin.setBounds(0, 0, 1280, 720);
@@ -186,21 +185,25 @@ public class UsrCreate extends guiCustoms {
 				} else {
 					try {
 						if (tfUsrnm.getText().equals("Username") || tfUsrnm.getText().isBlank())
-							throw new InvalidUNameException();
+							throw new InvalidUNameException(usrCreate, paneRed);
 						
 						if (tfPswrd.getText().equals("Password") || tfPswrd.getText().isBlank())
-							throw new InvalidPWordException();
+							throw new InvalidPWordException(usrCreate, paneRed);
 						
 						if (tfCnfPswrd.getText().equals("Password") || tfCnfPswrd.getText().isBlank())
-							throw new InvalidConfirmException();
+							throw new InvalidConfirmException(usrCreate, paneRed);
 						
 						if (!(tfPswrd.getText().equals(tfCnfPswrd.getText())))
-							throw new PasswordMismatchException();
+							throw new PasswordMismatchException(usrCreate, paneRed);
 					
-					} catch (InvalidUNameException iune) {	
+					} catch (InvalidUNameException iune) {
+						
 					} catch (InvalidPWordException ipwe) {	
-					} catch (InvalidConfirmException icfe) {	
+						
+					} catch (InvalidConfirmException icfe) {
+						
 					} catch (PasswordMismatchException pme) {
+						
 					}
 				}
 			}

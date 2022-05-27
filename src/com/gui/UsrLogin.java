@@ -146,25 +146,27 @@ public class UsrLogin extends guiCustoms{
 				
 				try {
 					if (br.readLine() == null) {
-						JOptionPane.showMessageDialog(null, "No user found! Please create an account.", "Error", JOptionPane.ERROR_MESSAGE);
-					}
-					
-					br.close();
-					br = new BufferedReader(new FileReader(loginCreds)); // cheap alternative
-					UserStudent user = new UserStudent(br.readLine(), br.readLine());
-					
-					if (tfUser.getText().equals(user.getUsername()) && tfPswrd.getText().equals(user.getPassword())) {
-						CoursePicker cp = new CoursePicker();
-			            cp.setPreferredSize(new Dimension(1280, 720));
-			            cp.setBounds(0, 0, 1280, 720);
-		            
-			            usrLogin.setVisible(false);
-			            add(cp);
-			            cp.setVisible(true);
+						CustomDialog cd = new CustomDialog("No user found!", "Please create an account.", usrLogin,"OK", paneRed);
+						//JOptionPane.showMessageDialog(null, "No user found! Please create an account.", "Error", JOptionPane.ERROR_MESSAGE);
+						bCrtUser.requestFocus();
 					}
 					else {
-						JOptionPane.showMessageDialog(null, "Incorrect details. Try again.", "Incorrect info", JOptionPane.ERROR_MESSAGE);
-//						CustomDialog cd = new CustomDialog("Err!", "Invalid username or password", usrLogin,"OK", paneRed);
+						
+						br.close();
+						br = new BufferedReader(new FileReader(loginCreds)); // cheap alternative
+						UserStudent user = new UserStudent(br.readLine(), br.readLine());
+						if (tfUser.getText().equals(user.getUsername()) && tfPswrd.getText().equals(user.getPassword())) {
+							CoursePicker cp = new CoursePicker();
+				            cp.setPreferredSize(new Dimension(1280, 720));
+				            cp.setBounds(0, 0, 1280, 720);
+			            
+				            usrLogin.setVisible(false);
+				            add(cp);
+				            cp.setVisible(true);
+						}
+						else {
+							CustomDialog cd = new CustomDialog("Incorrect Info!", "Incorrect details. Try again.", usrLogin,"OK", paneRed);
+						}
 					}
 				}
 				catch (IOException e1) {

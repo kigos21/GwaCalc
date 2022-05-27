@@ -1,10 +1,14 @@
 package com.exc;
 
-import javax.swing.JOptionPane;
+import java.awt.Color;
+
+import javax.swing.JPanel;
+
+import com.gui.CustomDialog;
 
 public class InvalidPWordException extends Exception {
 	
-	public InvalidPWordException() {
-		JOptionPane.showMessageDialog(null, "Add password!", "Error", JOptionPane.ERROR_MESSAGE);
+	public InvalidPWordException(JPanel parentPane, Color btnColor) {
+		CustomDialog cd = new CustomDialog("Invalid Password!", "Please input a password.", parentPane,"OK", btnColor);
 	}
 }

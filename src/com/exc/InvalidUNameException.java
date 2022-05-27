@@ -1,10 +1,14 @@
 package com.exc;
 
-import javax.swing.JOptionPane;
+import java.awt.Color;
+
+import javax.swing.JPanel;
+
+import com.gui.CustomDialog;
 
 public class InvalidUNameException extends Exception {
 	
-	public InvalidUNameException() {
-		JOptionPane.showMessageDialog(null, "Add username!", "Error", JOptionPane.ERROR_MESSAGE);
+	public InvalidUNameException(JPanel parentPane, Color btnColor) {
+		CustomDialog cd = new CustomDialog("Invalid Username!", "Please input a username.", parentPane,"OK", btnColor);
 	}
 }

@@ -1,10 +1,14 @@
 package com.exc;
 
-import javax.swing.JOptionPane;
+import java.awt.Color;
+
+import javax.swing.JPanel;
+
+import com.gui.CustomDialog;
 
 public class PasswordMismatchException extends Exception {
 
-	public PasswordMismatchException() {
-		JOptionPane.showMessageDialog(null, "Password mismatch, try again!", "Error", JOptionPane.ERROR_MESSAGE);
+	public PasswordMismatchException(JPanel parentPane, Color btnColor) {
+		CustomDialog cd = new CustomDialog("Password Mismatch!", "Password and confirm must match.", parentPane,"OK", btnColor);
 	}
 }
