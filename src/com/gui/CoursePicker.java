@@ -133,7 +133,6 @@ public class CoursePicker extends guiCustoms{
 				
 				//CustomDialog Constructor: headContent, messageContent, parentPane, childPane, newPane, buttonContentCancel, buttonContentConfirm, color
 				CustomDialog cd = new CustomDialog("Log Out","Are you sure you want to logout?",mainContainer,coursePicker,usrLogin,"Cancel","Logout",paneRed);
-				cd.setVisible(true);
 			}
 		});
 	}
