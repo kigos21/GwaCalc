@@ -8,10 +8,14 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.*;
+
+import com.user.UserStudent;
 
 public class CoursePicker extends guiCustoms{
 	JPanel mainContainer, coursePicker;
@@ -63,21 +67,30 @@ public class CoursePicker extends guiCustoms{
 		lUST.setBounds(48, 30, 109, 110);
 		coursePicker.add(lUST);
 		
-		lStudentName = new JLabel("STUDENT NAME");
-		lStudentName.setBounds(179, 57, 500, 28);
+		try {
+			File loginCreds = new File("data\\usr-login-creds.txt");
+			BufferedReader br = new BufferedReader(new FileReader(loginCreds));
+			br = new BufferedReader(new FileReader(loginCreds));
+			UserStudent user = new UserStudent(br.readLine(), br.readLine());
+			lStudentName = new JLabel(user.getUsername());
+		} 
+		catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		lStudentName.setBounds(179, 77, 500, 28);
 		lStudentName.setFont(futura.deriveFont(Font.PLAIN,28));
 		lStudentName.setForeground(userFontGray);
 		coursePicker.add(lStudentName);
 		
-		lDepartment = new JLabel("DEPARTMENT");
-		lDepartment.setBounds(179, 83, 500, 18);
+		lDepartment = new JLabel("UNIVERSITY OF SANTO TOMAS");
+		lDepartment.setBounds(179, 103, 500, 18);
 		lDepartment.setFont(gothamBook.deriveFont(Font.PLAIN,16));
 		lDepartment.setForeground(userFontGray);
 		coursePicker.add(lDepartment);
 		
 		bLogout = new JButton("Logout");
 		bLogout.setFont(gothamLight.deriveFont(Font.PLAIN,26));
-		bLogout.setBounds(1069, 40, 150, 46);
+		bLogout.setBounds(1069, 60, 150, 46);
 		bLogout.setOpaque(false);
 		bLogout.setContentAreaFilled(false);
 		bLogout.setBorderPainted(false);

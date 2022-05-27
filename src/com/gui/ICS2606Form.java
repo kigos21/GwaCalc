@@ -8,10 +8,14 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.*;
+
+import com.user.UserStudent;
 
 public class ICS2606Form extends guiCustoms{
 	Font gothamBook,gothamBookBold,futura,gothamLight;
@@ -77,21 +81,32 @@ public class ICS2606Form extends guiCustoms{
 		lblIconHolder.setBounds(48, 30, 109, 110);
 		gradeForm.add(lblIconHolder);
 		
-		lblStudentName = new JLabel("STUDENT NAME");
-		lblStudentName.setBounds(179, 57, 500, 28);
+		
+		try {
+			File loginCreds = new File("data\\usr-login-creds.txt");
+			BufferedReader br = new BufferedReader(new FileReader(loginCreds));
+			br = new BufferedReader(new FileReader(loginCreds));
+			UserStudent user = new UserStudent(br.readLine(), br.readLine());
+			lblStudentName = new JLabel(user.getUsername());
+		} 
+		catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		lblStudentName.setBounds(179, 77, 500, 28);
 		lblStudentName.setFont(futura.deriveFont(Font.PLAIN,28));
 		lblStudentName.setForeground(userFontGray);
 		gradeForm.add(lblStudentName);
 		
-		lblDepartment = new JLabel("DEPARTMENT");
-		lblDepartment.setBounds(179, 83, 500, 18);
+		lblDepartment = new JLabel("UNIVERSITY OF SANTO TOMAS");
+		lblDepartment.setBounds(179, 103, 500, 18);
 		lblDepartment.setFont(gothamBook.deriveFont(Font.PLAIN,16));
 		lblDepartment.setForeground(userFontGray);
 		gradeForm.add(lblDepartment);
 		
 		bLogout = new JButton("Logout");
 		bLogout.setFont(gothamLight.deriveFont(Font.PLAIN,26));
-		bLogout.setBounds(1069, 40, 150, 46);
+		bLogout.setBounds(1069, 60, 150, 46);
 		bLogout.setOpaque(false);
 		bLogout.setContentAreaFilled(false);
 		bLogout.setBorderPainted(false);
