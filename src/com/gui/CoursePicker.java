@@ -64,7 +64,8 @@ public class CoursePicker extends guiCustoms{
 		lUST = new JLabel();
 		icnPfp = new ImageIcon("res\\pfp-icon.png");
 		lUST.setIcon(icnPfp);
-		lUST.setBounds(48, 30, 109, 110);
+		//lUST.setBounds(48, 30, 109, 110);
+		lUST.setBounds(48, 30, 80, 80);
 		coursePicker.add(lUST);
 		
 		try {
@@ -77,20 +78,23 @@ public class CoursePicker extends guiCustoms{
 		catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		lStudentName.setBounds(179, 77, 500, 28);
+		//lStudentName.setBounds(179, 77, 500, 28);
+		lStudentName.setBounds(145, 57, 500, 28);
 		lStudentName.setFont(futura.deriveFont(Font.PLAIN,28));
 		lStudentName.setForeground(userFontGray);
 		coursePicker.add(lStudentName);
 		
 		lDepartment = new JLabel("UNIVERSITY OF SANTO TOMAS");
-		lDepartment.setBounds(179, 103, 500, 18);
+		//lDepartment.setBounds(179, 103, 500, 18);
+		lDepartment.setBounds(145, 83, 500, 18);
 		lDepartment.setFont(gothamBook.deriveFont(Font.PLAIN,16));
 		lDepartment.setForeground(userFontGray);
 		coursePicker.add(lDepartment);
 		
 		bLogout = new JButton("Logout");
-		bLogout.setFont(gothamLight.deriveFont(Font.PLAIN,26));
-		bLogout.setBounds(1069, 60, 150, 46);
+		bLogout.setFont(gothamLight.deriveFont(Font.PLAIN,24));
+		//bLogout.setBounds(1069, 60, 150, 46);
+		bLogout.setBounds(1069, 55, 150, 46);
 		bLogout.setOpaque(false);
 		bLogout.setContentAreaFilled(false);
 		bLogout.setBorderPainted(false);
