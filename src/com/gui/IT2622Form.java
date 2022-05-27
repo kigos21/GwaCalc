@@ -74,7 +74,7 @@ public class IT2622Form extends guiCustoms {
 		
 		icnPfp = new ImageIcon("res\\pfp-icon.png");
 		lblIconHolder = new JLabel(icnPfp);
-		lblIconHolder.setBounds(48, 30, 109, 110);
+		lblIconHolder.setBounds(48, 30, 80, 80);
 		gradeForm.add(lblIconHolder);
 		
 		try {
@@ -88,20 +88,20 @@ public class IT2622Form extends guiCustoms {
 			e1.printStackTrace();
 		}
 		
-		lblStudentName.setBounds(179, 77, 500, 28);
+		lblStudentName.setBounds(145, 57, 500, 28);
 		lblStudentName.setFont(futura.deriveFont(Font.PLAIN, 28));
 		lblStudentName.setForeground(userFontGray);
 		gradeForm.add(lblStudentName);
 		
 		lblDepartment = new JLabel("UNIVERSITY OF SANTO TOMAS");
-		lblDepartment.setBounds(179, 103, 500, 18);
+		lblDepartment.setBounds(145, 83, 500, 18);
 		lblDepartment.setFont(gothamBook.deriveFont(Font.PLAIN,16));
 		lblDepartment.setForeground(userFontGray);
 		gradeForm.add(lblDepartment);
 		
 		bLogout = new JButton("Logout");
-		bLogout.setFont(gothamLight.deriveFont(Font.PLAIN,26));
-		bLogout.setBounds(1069, 60, 150, 46);
+		bLogout.setFont(gothamLight.deriveFont(Font.PLAIN,24));
+		bLogout.setBounds(1069, 55, 150, 46);
 		bLogout.setOpaque(false);
 		bLogout.setContentAreaFilled(false);
 		bLogout.setBorderPainted(false);
@@ -323,6 +323,7 @@ public class IT2622Form extends guiCustoms {
 		tfPrelimGrade.setFont(gothamBook.deriveFont(Font.BOLD,26));
 		tfPrelimGrade.setForeground(textfieldGray);
 		tfPrelimGrade.setHorizontalAlignment(JTextField.RIGHT);
+		tfPrelimGrade.setEditable(false);
 		tfPrelimGrade.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(tfPrelimGrade);
 		
@@ -337,6 +338,7 @@ public class IT2622Form extends guiCustoms {
 		tfTransmutedPrelimGrade.setFont(gothamBook.deriveFont(Font.BOLD,26));
 		tfTransmutedPrelimGrade.setForeground(textfieldGray);
 		tfTransmutedPrelimGrade.setHorizontalAlignment(JTextField.RIGHT);
+		tfTransmutedPrelimGrade.setEditable(false);
 		tfTransmutedPrelimGrade.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(tfTransmutedPrelimGrade);
 		
@@ -460,6 +462,7 @@ public class IT2622Form extends guiCustoms {
 		tfFinalGrade.setFont(gothamBook.deriveFont(Font.BOLD,26));
 		tfFinalGrade.setForeground(textfieldGray);
 		tfFinalGrade.setHorizontalAlignment(JTextField.RIGHT);
+		tfFinalGrade.setEditable(false);
 		tfFinalGrade.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(tfFinalGrade);
 		
@@ -468,6 +471,7 @@ public class IT2622Form extends guiCustoms {
 		tfTransmutedFinalGrade.setFont(gothamBook.deriveFont(Font.BOLD,26));
 		tfTransmutedFinalGrade.setForeground(textfieldGray);
 		tfTransmutedFinalGrade.setHorizontalAlignment(JTextField.RIGHT);
+		tfTransmutedFinalGrade.setEditable(false);
 		tfTransmutedFinalGrade.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(tfTransmutedFinalGrade);
 		
@@ -488,10 +492,11 @@ public class IT2622Form extends guiCustoms {
 				cd.setVisible(true);
 			}
 		});
+		
 		gradeForm.add(bLogout);
 		
 		bClear = new JButton("Clear");
-		bClear.setBounds(374, 582, 171, 53);
+		bClear.setBounds(374, 610, 171, 46);
 		bClear.setFont(gothamBook.deriveFont(Font.PLAIN,16));
 		bClear.setBackground(Color.WHITE);
 		bClear.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -499,7 +504,7 @@ public class IT2622Form extends guiCustoms {
 		gradeForm.add(bClear);
 		
 		bDisplay = new JButton("Display");
-		bDisplay.setBounds(555, 582, 171, 53);
+		bDisplay.setBounds(555, 610, 171, 46);
 		bDisplay.setFont(gothamBook.deriveFont(Font.PLAIN,16));
 		bDisplay.setBackground(Color.WHITE);
 		bDisplay.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -507,7 +512,7 @@ public class IT2622Form extends guiCustoms {
 		gradeForm.add(bDisplay);
 		
 		bSave = new JButton("Save to Sheet");
-		bSave.setBounds(736, 582, 171, 53);
+		bSave.setBounds(736, 610, 171, 46);
 		bSave.setFont(gothamBook.deriveFont(Font.PLAIN,16));
 		bSave.setBackground(Color.WHITE);
 		bSave.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -515,13 +520,19 @@ public class IT2622Form extends guiCustoms {
 		gradeForm.add(bSave);
 		
 		bBack = new JButton("< Back to Course List");
-		bBack.setBounds(55, 630, 200, 18);
+		bBack.setBounds(15, 630, 215, 18);
 		bBack.setFont(gothamBook.deriveFont(Font.PLAIN,14));
 		bBack.setOpaque(false);
 		bBack.setContentAreaFilled(false);
 		bBack.setBorderPainted(false);
 		bBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bBack.setForeground(hyperColor);
+		bBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CoursePicker cP = new CoursePicker();
+				CustomDialog cd = new CustomDialog("Changes will be discarded","Are you sure you want to go back?",mainContainer,gradeForm,cP,"Cancel","Continue	",paneRed);
+			}
+		});
 		gradeForm.add(bBack);
 		
 		gradeForm.setVisible(true);
