@@ -7,6 +7,7 @@ import java.io.*;
 
 import javax.swing.*;
 
+import com.user.ICS2606;
 import com.user.UserStudent;
 
 public class ICS2606Form extends guiCustoms{
@@ -362,20 +363,20 @@ public class ICS2606Form extends guiCustoms{
 		lblLongTextTitle2.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(lblLongTextTitle2);
 		
-		lblLabExer4 = new JLabel("Long Test 3");
-		lblLabExer4.setBounds(751,291,139,18);
-		lblLabExer4.setFont(gothamBook.deriveFont(Font.PLAIN,18));
-		lblLabExer4.setForeground(Color.WHITE);
-		lblLabExer4.setBorder(BorderFactory.createEmptyBorder());
-		gradeForm.add(lblLabExer4);
+		lblLongTest2 = new JLabel("Long Test 3");
+		lblLongTest2.setBounds(751,291,139,18);
+		lblLongTest2.setFont(gothamBook.deriveFont(Font.PLAIN,18));
+		lblLongTest2.setForeground(Color.WHITE);
+		lblLongTest2.setBorder(BorderFactory.createEmptyBorder());
+		gradeForm.add(lblLongTest2);
 		
-		txtLabExer4 = new JTextField();
-		txtLabExer4.setBounds(896,291,181,18);
-		txtLabExer4.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
-		txtLabExer4.setForeground(textfieldGray);
-		txtLabExer4.setHorizontalAlignment(JTextField.RIGHT);
-		txtLabExer4.setBorder(BorderFactory.createEmptyBorder());
-		gradeForm.add(txtLabExer4);
+		txtLongTest3 = new JTextField();
+		txtLongTest3.setBounds(896,291,181,18);
+		txtLongTest3.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
+		txtLongTest3.setForeground(textfieldGray);
+		txtLongTest3.setHorizontalAlignment(JTextField.RIGHT);
+		txtLongTest3.setBorder(BorderFactory.createEmptyBorder());
+		gradeForm.add(txtLongTest3);
 		
 		lblFinalExamTitle = new JLabel("Examinations (40%)");
 		lblFinalExamTitle.setBounds(672,325,180,18);
@@ -482,7 +483,6 @@ public class ICS2606Form extends guiCustoms{
 		
 		bClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CoursePicker cP = new CoursePicker();
 				CustomDialog cd = new CustomDialog("Changes will be discarded","Are you sure you want to clear the forms?",gradeForm,"Cancel","Continue	",paneRed);
 			}
 		});
@@ -498,7 +498,25 @@ public class ICS2606Form extends guiCustoms{
 		
 		bDisplay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				ICS2606 comProg = new ICS2606();
+				try {
+					comProg.labExerPrelims(Integer.parseInt(txtLabExer1.getText()), Integer.parseInt(txtLabExer2.getText()), Integer.parseInt(txtLabExer3.getText()));
+					comProg.longTestPrelims(Integer.parseInt(txtLongTest1.getText()), Integer.parseInt(txtLongTest2.getText()));
+					comProg.examPrelims(Integer.parseInt(txtPrelimExams.getText()));
+					txtPrelimGrade.setText(comProg.prelimGrade()+"");
+					txtPrelimTransmuted.setText(comProg.transmutedPrelim()+"");
+							
+					comProg.labExerFinals(Integer.parseInt(txtLabExer4.getText()));
+					comProg.longTestFinals(Integer.parseInt(txtLongTest3.getText()));
+					comProg.examFinals(Integer.parseInt(txtFinalExams.getText()));
+					txtFinalGrade.setText(comProg.finalGrade()+"");
+					txtFinalTransmuted.setText(comProg.transmutedFinal()+"");
+							
+					lblSubjectGrade.setText(comProg.subjectGrade()+"");
+				}
+				catch(NumberFormatException nfe){
+					CustomDialog cd = new CustomDialog("Err!","You've input an invalid number",gradeForm,"OK",paneRed);
+				}
 			}
 		});
 		

@@ -1,7 +1,8 @@
 package com.gui;
 
+import com.exceptions.*;
 import com.user.*;
-import com.exc.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
