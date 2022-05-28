@@ -517,6 +517,13 @@ public class IT2622Form extends guiCustoms {
 		bClear.setForeground(Color.BLACK);
 		gradeForm.add(bClear);
 		
+		bClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CoursePicker cP = new CoursePicker();
+				CustomDialog cd = new CustomDialog("Changes will be discarded","Are you sure you want to clear the forms?",gradeForm,"Cancel","Continue	",paneRed);
+			}
+		});
+		
 		bDisplay = new JButton("Display");
 		bDisplay.setBounds(555, 610, 171, 46);
 		bDisplay.setFont(gothamBook.deriveFont(Font.PLAIN,16));

@@ -1,17 +1,9 @@
 package com.gui;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 import javax.swing.*;
 
@@ -149,7 +141,7 @@ public class ICS2606Form extends guiCustoms{
 		
 		txtName = new JTextField("");
 		txtName.setBounds(270,138,340,18);
-		txtName.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		txtName.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
 		txtName.setForeground(textfieldGray);
 		txtName.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtName);
@@ -162,7 +154,7 @@ public class ICS2606Form extends guiCustoms{
 		
 		txtStudentNo = new JTextField("");
 		txtStudentNo.setBounds(749,138,164,18);
-		txtStudentNo.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		txtStudentNo.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
 		txtStudentNo.setForeground(textfieldGray);
 		txtStudentNo.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtStudentNo);
@@ -175,7 +167,7 @@ public class ICS2606Form extends guiCustoms{
 		
 		txtSection = new JTextField("");
 		txtSection.setBounds(990,138,87,18);
-		txtSection.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		txtSection.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
 		txtSection.setForeground(textfieldGray);
 		txtSection.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtSection);
@@ -488,6 +480,13 @@ public class ICS2606Form extends guiCustoms{
 		bClear.setForeground(Color.BLACK);
 		gradeForm.add(bClear);
 		
+		bClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CoursePicker cP = new CoursePicker();
+				CustomDialog cd = new CustomDialog("Changes will be discarded","Are you sure you want to clear the forms?",gradeForm,"Cancel","Continue	",paneRed);
+			}
+		});
+		
 		bDisplay = new JButton("Display");
 		bDisplay.setFont(gothamBook.deriveFont(Font.PLAIN,16));
 		bDisplay.setBounds(555, 610, 171, 46);
@@ -496,6 +495,12 @@ public class ICS2606Form extends guiCustoms{
 		bDisplay.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bDisplay.setForeground(Color.BLACK);
 		gradeForm.add(bDisplay);
+		
+		bDisplay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		
 		bSave = new JButton("Save to Sheet");
 		bSave.setFont(gothamBook.deriveFont(Font.PLAIN,16));

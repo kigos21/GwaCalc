@@ -1,6 +1,7 @@
 package com.gui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -16,6 +17,7 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 public class CustomDialog extends guiCustoms{
 	Font gothamBookBold,gothamLight;
@@ -155,4 +157,85 @@ public class CustomDialog extends guiCustoms{
 		customPane.setLocationRelativeTo(parentPane);
 		customPane.setVisible(true);
 	}
+	
+	//CustomDialog for Clearing	
+		public CustomDialog(String headContent, String messageContent, JPanel parentPane, String buttonContentCancel, String buttonContentConfirm, Color confirmColor) {
+			
+			try {
+				gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBold.ttf"));
+				gothamLight = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamLight.ttf"));
+				GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+				ge.registerFont(gothamBookBold); 
+				ge.registerFont(gothamLight);
+			}
+			catch(IOException ie){
+				ie.printStackTrace();
+			}
+			catch(FontFormatException ffe){
+				ffe.printStackTrace();
+			}
+			
+			f = new JFrame();
+			customPane = new JDialog (f,true);
+			customPane.getContentPane().setBackground(customPaneColor);
+			customPane.setLayout(null);
+			customPane.setUndecorated(true);
+			customPane.setBounds(393,222,500,250);
+			
+			head = new JLabel(headContent);
+			head.setFont(gothamBookBold.deriveFont(Font.PLAIN,28));
+			head.setForeground(Color.WHITE);
+			head.setBounds(20,20,500,56);
+			customPane.add(head);
+			
+			message = new JLabel(messageContent);
+			message.setFont(gothamLight.deriveFont(Font.PLAIN,16));
+			message.setForeground(Color.WHITE);
+			message.setBounds(20,60,500,56);
+			customPane.add(message);
+			
+			confirm = new JButton(buttonContentConfirm);
+			confirm.setFont(gothamLight.deriveFont(Font.PLAIN,16));
+			confirm.setBackground(confirmColor);
+			confirm.setCursor(new Cursor(Cursor.HAND_CURSOR)); 
+			confirm.setForeground(Color.WHITE);
+			confirm.setBorderPainted(false);
+			confirm.setBounds(375,175,105,48);
+			confirm.setFocusable(false);
+			customPane.add(confirm);
+			
+			confirm.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					 for (Component c : parentPane.getComponents())
+				        {
+				            if (c instanceof JTextField)
+				            {
+				                JTextField j = (JTextField)c;
+				                j.setText("");
+				            }
+				       }
+					 customPane.dispose();
+				}
+			});
+			
+			
+			cancel = new JButton(buttonContentCancel);
+			cancel.setFont(gothamLight.deriveFont(Font.PLAIN,16));
+			cancel.setBackground(customPaneColor);
+			cancel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			cancel.setBorderPainted(false);
+			cancel.setForeground(Color.WHITE);
+			cancel.setBounds(260,175,105,48);
+			cancel.setFocusable(false);
+			customPane.add(cancel);
+			
+			cancel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					customPane.dispose();
+				}
+			});
+			customPane.setPreferredSize(new Dimension(500, 250));
+			customPane.setLocationRelativeTo(parentPane);
+			customPane.setVisible(true);
+		}
 }
