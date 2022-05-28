@@ -596,7 +596,7 @@ public class IT2622Form extends guiCustoms {
 		// clear listener
 		bClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				CustomDialog cd = new CustomDialog("Changes will be discarded","Are you sure you want to clear the forms?",gradeForm,"Cancel","Continue	",paneRed);
 			}
 		});
 		
