@@ -38,8 +38,45 @@ public class IT2622Form extends guiCustoms {
 			tfFinalAttendance, tfFinalRecitation, tfAssignment,
 			tfLongTest2, tfLongTest3, tfDeliverable1, tfIntegratedAsmnt,
 			tfFinalGrade, tfTransmutedFinalGrade;
+
+	// returns false when there are letters in the String, otherwise true 
+	public boolean isNumeric(String str) { 
+		try {  
+			Double.parseDouble(str);  
+			return true;
+		}
+		catch(NumberFormatException e) {  
+			return false;  
+		}  
+	} 
+	
+	public boolean noBlankTF(JTextField[] allTF) {
+		for (JTextField tf: allTF) {
+			if (!(tf.getText().isBlank()))
+				continue;
+			return false;
+		
+		} return true;
+	}
+	
+	public boolean validStrTF(JTextField[] strTF) {
+		for (JTextField tf: strTF) {
+			if (isNumeric(tf.getText()))
+				return false;
+		
+		} return true;
+	}
+	
+	public boolean validNumTF(JTextField[] numTF) {
+		for (JTextField tf: numTF) {
+			if (!(isNumeric(tf.getText())))
+				return false;
+		
+		} return true;
+	}
 	
 	public IT2622Form() {
+		
 		try {
 			futura = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\futur.ttf"));
 			gothamBook = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBook.ttf"));
@@ -555,6 +592,71 @@ public class IT2622Form extends guiCustoms {
 			}
 		});
 		gradeForm.add(bBack);
+		
+		// clear listener
+		bClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		// display listener
+		bDisplay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		// save listener
+		bSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				// check if inputs are proper for respective fields
+				JTextField[] allTF = {tfName, tfSection, tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfLongTest3, tfDeliverable1, tfIntegratedAsmnt};
+				JTextField[] strTF = {tfName, tfSection};
+				JTextField[] numTF = {tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfLongTest3, tfDeliverable1, tfIntegratedAsmnt};
+				
+				try {
+					if (!(noBlankTF(allTF))) { // if there is a blank TF
+						JOptionPane.showMessageDialog(null, "Please fill out every field!", "Error", JOptionPane.ERROR_MESSAGE);
+						throw new Exception();
+					}
+					if (!(validStrTF(strTF))) {
+						JOptionPane.showMessageDialog(null, "Invalid Name or Section!", "Error", JOptionPane.ERROR_MESSAGE);
+						throw new Exception();
+					}
+					if (!(validNumTF(numTF))) {
+						JOptionPane.showMessageDialog(null, "Invalid student number or grade! Please check all of your inputs.", "Error", JOptionPane.ERROR_MESSAGE);
+						throw new Exception();
+					}
+				
+				} catch (Exception exc) {
+					return ; // terminate actionPerformed method
+				}
+				
+				File hciSheet = new File("data\\IT2622 Sheet.csv");
+				PrintWriter pw = null;
+				BufferedReader br = null;
+				
+				try {
+					pw = new PrintWriter(new FileWriter(hciSheet, true));
+					br = new BufferedReader(new FileReader(hciSheet));
+					
+					if (br.readLine() == null)
+						pw.println("Name,Student Number,Section,,Prelim Grade,Transmuted Prelim Grade,Attendance,Recitation,Formatives,Long Test 1,Wireframe,Storyboard,Prototype,Exam,,Final Grade,Transmuted Final Grade,Attendance,Recitation,Assignment,Long Test 2,Long Test 3,Deliverable 1,Integrated Assmnt");
+					
+					pw.println(tfName.getText() + "," + tfStudentNo.getText() + "," + tfSection.getText() + "," + "PRELIMS" + "," + tfPrelimGrade.getText() + "," + tfTransmutedPrelimGrade.getText() + "," + tfPrelimAttendance.getText() + "," + tfPrelimRecitation.getText() + "," + tfFA.getText() + "," + tfLongTest1.getText() + "," + tfWireframe.getText() + "," + tfStoryboard.getText() + 
+							 "," + tfPrototype.getText() + "," + tfPrelimExam.getText() + "," + "FINALS" + "," + tfFinalGrade.getText() + "," + tfTransmutedFinalGrade.getText() + "," + tfFinalAttendance.getText() + "," + tfFinalRecitation.getText() + "," + tfAssignment.getText() + "," + tfLongTest2.getText() + "," + tfLongTest3.getText() + "," + tfDeliverable1.getText() + "," + tfIntegratedAsmnt.getText());
+					pw.close();
+					
+					JOptionPane.showMessageDialog(null, "Done! Info saved to sheet.", "Info", JOptionPane.INFORMATION_MESSAGE);
+					
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		
 		
 		gradeForm.setVisible(true);
 		mainContainer.add(gradeForm);
