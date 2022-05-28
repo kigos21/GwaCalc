@@ -1,4 +1,4 @@
-package com.exc;
+package com.exceptions;
 
 import java.awt.Color;
 
