@@ -61,9 +61,11 @@ public class UsrLogin extends guiCustoms{
 		tfUser.setFont(gothamBook.deriveFont(Font.PLAIN,16));
 		tfUser.setHorizontalAlignment(JTextField.CENTER);
 		tfUser.setForeground(textfieldGray);
+		tfUser.setBorder(BorderFactory.createEmptyBorder());
 		tfUser.addFocusListener(new FocusListener() {
 		    public void focusGained(FocusEvent e) {
-		        tfUser.setText("");
+		    	if (tfUser.getText().equals("Username"))
+		    		tfUser.setText("");
 		    }
 
 		    public void focusLost(FocusEvent e) {
@@ -85,9 +87,11 @@ public class UsrLogin extends guiCustoms{
 		tfPswrd.setFont(gothamBook.deriveFont(Font.PLAIN,16));
 		tfPswrd.setHorizontalAlignment(JTextField.CENTER);
 		tfPswrd.setForeground(textfieldGray);
+		tfPswrd.setBorder(BorderFactory.createEmptyBorder());
 		tfPswrd.addFocusListener(new FocusListener() {
 		    public void focusGained(FocusEvent e) {
-		    	tfPswrd.setText("");
+		    	if (tfPswrd.getText().equals("Password"))
+		    		tfPswrd.setText("");
 		    }
 
 		    public void focusLost(FocusEvent e) {
@@ -177,7 +181,7 @@ public class UsrLogin extends guiCustoms{
 		
 		bCrtUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// call the user creation panel
+				
 				UsrCreate usrCreate = new UsrCreate();
 				usrCreate.setPreferredSize(new Dimension(1280, 720));
 				usrCreate.setBounds(0, 0, 1280, 720);
