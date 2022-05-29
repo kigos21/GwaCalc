@@ -1,24 +1,14 @@
 package com.gui;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+
+import com.gui.ICS2606Form.subjectGrade;
 
 public class CustomDialog extends guiCustoms{
 	Font gothamBookBold,gothamLight;
@@ -221,6 +211,11 @@ public class CustomDialog extends guiCustoms{
 				                JTextField j = (JTextField)c;
 				                j.setText("");
 				            }
+				            if (c instanceof subjectGrade)
+				            {
+				            	subjectGrade j = (subjectGrade)c;
+				                j.setText("");
+				            }
 				       }
 					 customPane.dispose();
 				}
@@ -246,4 +241,5 @@ public class CustomDialog extends guiCustoms{
 			customPane.setLocationRelativeTo(parentPane);
 			customPane.setVisible(true);
 		}
+		
 }
