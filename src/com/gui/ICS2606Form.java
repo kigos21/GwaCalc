@@ -5,10 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import com.user.ICS2606;
-import com.user.UserStudent;
+import com.user.*;
 
 public class ICS2606Form extends guiCustoms{
 	Font gothamBook,gothamBookBold,futura,gothamLight;
@@ -32,14 +32,81 @@ public class ICS2606Form extends guiCustoms{
 			lblFinalExamTitle, lblFinalGrade, lblFinalExams,
 			lblPrelimTransmuted,lblFinalTransmuted,lblSubjectTransmuted,
 			lblIconHolder,lblStudentName,lblDepartment,
-			lblTransmutedTitle,lblSubjectGradeTitle,lblSubjectGrade;
+			lblTransmutedTitle,lblSubjectGradeTitle;
+	
+	Integer scoreMax;
+	class subjectGrade extends JLabel{
+	}
+	
+	subjectGrade lblSubjectGrade;
+	// returns false when there are letters in the String, otherwise true 
+	public boolean isNumeric(String str) { 
+		try {  
+			Double.parseDouble(str);  
+			return true;
+		}
+		catch(NumberFormatException e) {  
+			return false;  
+		}  
+	} 
+	
+	public boolean noBlankTF(JTextField[] allTF) {
+		for (JTextField tf: allTF) {
+			if (!(tf.getText().isBlank()))
+				continue;
+			return false;
+		
+		} return true;
+	}
+	
+	public boolean validStrTF(JTextField[] strTF) {
+		for (JTextField tf: strTF) {
+			if (isNumeric(tf.getText()))
+				return false;
+		
+		} return true;
+	}
+	
+	public boolean validNumTF(JTextField[] numTF) {
+		for (JTextField tf: numTF) {
+			if (!(isNumeric(tf.getText())))
+				return false;
+		
+		} return true;
+	}
+	
+	class BlankTextFieldException extends Exception {
+		public BlankTextFieldException(String textFieldName, JPanel parentPane) {
+			CustomDialog cd = new CustomDialog("Error", "Empty " + textFieldName, parentPane, "OK", paneRed);
+		}
+	}
+
+	class NumericsInStringException extends Exception {
+		public NumericsInStringException(String textFieldName, JPanel parentPane) {
+			CustomDialog cd = new CustomDialog("Error", "Invalid character found in " + textFieldName, parentPane, "OK", paneRed);
+		}
+	}
+	class StringInNumericsException extends Exception {
+		public StringInNumericsException(String textFieldName, JPanel parentPane) {
+			CustomDialog cd = new CustomDialog("Error","Invalid number found in " + textFieldName, parentPane, "OK", paneRed);
+		}
+	}
+	class ScoreOverloadException extends Exception{
+		public ScoreOverloadException(String textFieldName, JPanel parentPane) {
+			CustomDialog cd = new CustomDialog("Error","Score exceeds the maximum grade in " + textFieldName, parentPane, "OK", paneRed);
+		}
+	}
 	
 	public ICS2606Form(){
 		try {
-			futura = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\futur.ttf"));
-			gothamBook = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBook.ttf"));
-			gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBold.ttf"));
-			gothamLight = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamLight.ttf"));
+			InputStream isfutura = getClass().getResourceAsStream("/res/fonts/futur.ttf");
+			InputStream isgotham = getClass().getResourceAsStream("/res/fonts/GothamBook.ttf");
+			InputStream isgothamBold = getClass().getResourceAsStream("/res/fonts/GothamBold.ttf");
+			InputStream isgothamLight = getClass().getResourceAsStream("/res/fonts/GothamLight.ttf");
+			futura = Font.createFont(Font.TRUETYPE_FONT, isfutura);
+			gothamBook = Font.createFont(Font.TRUETYPE_FONT, isgotham);
+			gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, isgothamBold);
+			gothamLight = Font.createFont(Font.TRUETYPE_FONT, isgothamLight);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(futura); 
 			ge.registerFont(gothamBook); 
@@ -52,7 +119,7 @@ public class ICS2606Form extends guiCustoms{
 		catch(FontFormatException ffe){
 			ffe.printStackTrace();
 		}
-		
+			
 		setPreferredSize(new Dimension(1280, 720));
 		setLayout(null);
 		
@@ -70,14 +137,19 @@ public class ICS2606Form extends guiCustoms{
 		mainContainer.add(gradeForm);
 		
 		lblIconHolder = new JLabel();
-		icnPfp = new ImageIcon("res\\pfp-icon.png");
-		lblIconHolder.setIcon(icnPfp);
+		try {
+			Image myImage = ImageIO.read(getClass().getResourceAsStream("/res/images/pfp-icon.png"));
+			icnPfp = new ImageIcon(myImage);
+			lblIconHolder.setIcon(icnPfp);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		lblIconHolder.setBounds(48, 30, 80, 80);
 		gradeForm.add(lblIconHolder);
 		
 		
 		try {
-			File loginCreds = new File("data\\usr-login-creds.txt");
+			File loginCreds = new File("usr-login-creds.txt");
 			BufferedReader br = new BufferedReader(new FileReader(loginCreds));
 			br = new BufferedReader(new FileReader(loginCreds));
 			UserStudent user = new UserStudent(br.readLine(), br.readLine());
@@ -144,6 +216,7 @@ public class ICS2606Form extends guiCustoms{
 		txtName.setBounds(270,138,340,18);
 		txtName.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
 		txtName.setForeground(textfieldGray);
+		txtName.setName("Name");
 		txtName.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtName);
 		
@@ -157,6 +230,7 @@ public class ICS2606Form extends guiCustoms{
 		txtStudentNo.setBounds(749,138,164,18);
 		txtStudentNo.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
 		txtStudentNo.setForeground(textfieldGray);
+		txtStudentNo.setName("Student Number");
 		txtStudentNo.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtStudentNo);
 		
@@ -170,6 +244,7 @@ public class ICS2606Form extends guiCustoms{
 		txtSection.setBounds(990,138,87,18);
 		txtSection.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
 		txtSection.setForeground(textfieldGray);
+		txtSection.setName("Section");
 		txtSection.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtSection);
 		
@@ -200,6 +275,7 @@ public class ICS2606Form extends guiCustoms{
 		txtLabExer1.setBounds(433,232,176,18);
 		txtLabExer1.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
 		txtLabExer1.setForeground(textfieldGray);
+		txtLabExer1.setName("Lab Exercise 1");
 		txtLabExer1.setHorizontalAlignment(JTextField.RIGHT);
 		txtLabExer1.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtLabExer1);
@@ -215,6 +291,7 @@ public class ICS2606Form extends guiCustoms{
 		txtLabExer2.setBounds(433,262,176,18);
 		txtLabExer2.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
 		txtLabExer2.setForeground(textfieldGray);
+		txtLabExer2.setName("Lab Exercise 2");
 		txtLabExer2.setHorizontalAlignment(JTextField.RIGHT);
 		txtLabExer2.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtLabExer2);
@@ -230,6 +307,7 @@ public class ICS2606Form extends guiCustoms{
 		txtLabExer3.setBounds(433,291,176,18);
 		txtLabExer3.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
 		txtLabExer3.setForeground(textfieldGray);
+		txtLabExer3.setName("Lab Exercise 3");
 		txtLabExer3.setHorizontalAlignment(JTextField.RIGHT);
 		txtLabExer3.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtLabExer3);
@@ -252,6 +330,7 @@ public class ICS2606Form extends guiCustoms{
 		txtLongTest1.setBounds(433,356,176,18);
 		txtLongTest1.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
 		txtLongTest1.setForeground(textfieldGray);
+		txtLongTest1.setName("Long Test 1");
 		txtLongTest1.setHorizontalAlignment(JTextField.RIGHT);
 		txtLongTest1.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtLongTest1);
@@ -267,6 +346,7 @@ public class ICS2606Form extends guiCustoms{
 		txtLongTest2.setBounds(433,386,176,18);
 		txtLongTest2.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
 		txtLongTest2.setForeground(textfieldGray);
+		txtLongTest2.setName("Long Test 2");
 		txtLongTest2.setHorizontalAlignment(JTextField.RIGHT);
 		txtLongTest2.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtLongTest2);
@@ -289,6 +369,7 @@ public class ICS2606Form extends guiCustoms{
 		txtPrelimExams.setBounds(433,461,176,18);
 		txtPrelimExams.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
 		txtPrelimExams.setForeground(textfieldGray);
+		txtPrelimExams.setName("Prelim Exams");
 		txtPrelimExams.setHorizontalAlignment(JTextField.RIGHT);
 		txtPrelimExams.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtPrelimExams);
@@ -306,6 +387,7 @@ public class ICS2606Form extends guiCustoms{
 		txtPrelimGrade.setForeground(textfieldGray);
 		txtPrelimGrade.setHorizontalAlignment(JTextField.RIGHT);
 		txtPrelimGrade.setEditable(false);
+		txtPrelimGrade.setName("Prelim Grade");
 		txtPrelimGrade.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtPrelimGrade);
 		
@@ -322,6 +404,7 @@ public class ICS2606Form extends guiCustoms{
 		txtPrelimTransmuted.setForeground(textfieldGray);
 		txtPrelimTransmuted.setHorizontalAlignment(JTextField.RIGHT);
 		txtPrelimTransmuted.setEditable(false);
+		txtPrelimTransmuted.setName("Transmuted Prelim Grade");
 		txtPrelimTransmuted.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtPrelimTransmuted);
 		
@@ -353,6 +436,7 @@ public class ICS2606Form extends guiCustoms{
 		txtLabExer4.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
 		txtLabExer4.setForeground(textfieldGray);
 		txtLabExer4.setHorizontalAlignment(JTextField.RIGHT);
+		txtLabExer4.setName("Lab Exercise 4");
 		txtLabExer4.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtLabExer4);
 		
@@ -375,6 +459,7 @@ public class ICS2606Form extends guiCustoms{
 		txtLongTest3.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
 		txtLongTest3.setForeground(textfieldGray);
 		txtLongTest3.setHorizontalAlignment(JTextField.RIGHT);
+		txtLongTest3.setName("Long Test 3");
 		txtLongTest3.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtLongTest3);
 		
@@ -397,6 +482,7 @@ public class ICS2606Form extends guiCustoms{
 		txtFinalExams.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
 		txtFinalExams.setForeground(textfieldGray);
 		txtFinalExams.setHorizontalAlignment(JTextField.RIGHT);
+		txtFinalExams.setName("Final Exams");
 		txtFinalExams.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtFinalExams);
 		
@@ -413,6 +499,7 @@ public class ICS2606Form extends guiCustoms{
 		txtFinalGrade.setForeground(textfieldGray);
 		txtFinalGrade.setHorizontalAlignment(JTextField.RIGHT);
 		txtFinalGrade.setEditable(false);
+		txtFinalGrade.setName("Final Grade");
 		txtFinalGrade.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtFinalGrade);
 		
@@ -429,6 +516,7 @@ public class ICS2606Form extends guiCustoms{
 		txtFinalTransmuted.setForeground(textfieldGray);
 		txtFinalTransmuted.setHorizontalAlignment(JTextField.RIGHT);
 		txtFinalTransmuted.setEditable(false);
+		txtFinalTransmuted.setName("Transmuted Final Grade");
 		txtFinalTransmuted.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtFinalTransmuted);
 		
@@ -449,9 +537,10 @@ public class ICS2606Form extends guiCustoms{
 		lblSubjectGradeTitle.setForeground(Color.WHITE);
 		gradeForm.add(lblSubjectGradeTitle);
 		
-		lblSubjectGrade = new JLabel("");
+		lblSubjectGrade = new subjectGrade();
 		lblSubjectGrade.setBounds(829, 530, 300, 56);
 		lblSubjectGrade.setFont(gothamBook.deriveFont(Font.PLAIN,56));
+		lblSubjectGrade.setName("Subject Grade");
 		lblSubjectGrade.setForeground(Color.WHITE);
 		gradeForm.add(lblSubjectGrade);
 		
@@ -498,24 +587,101 @@ public class ICS2606Form extends guiCustoms{
 		
 		bDisplay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ICS2606 comProg = new ICS2606();
+				//JTextField[] allTF = {txtName, txtStudentNo, txtSection, txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
+				JTextField[] prelimTF = {txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams};
+				JTextField[] finalTF = {txtLabExer4, txtLongTest3, txtFinalExams};
+				JTextField[] studentDetailsTF = {txtName, txtStudentNo, txtSection};
+				JTextField[] strTF = {txtName, txtSection};
+				JTextField[] numTF = {txtStudentNo, txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2, txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
+				JTextField[] all100TF = {txtLabExer1, txtLabExer2, txtLabExer3,txtPrelimExams, txtLabExer4, txtFinalExams};
+				JTextField[] all50TF = {txtLongTest1, txtLongTest2, txtLongTest3};
+				
 				try {
-					comProg.labExerPrelims(Integer.parseInt(txtLabExer1.getText()), Integer.parseInt(txtLabExer2.getText()), Integer.parseInt(txtLabExer3.getText()));
-					comProg.longTestPrelims(Integer.parseInt(txtLongTest1.getText()), Integer.parseInt(txtLongTest2.getText()));
-					comProg.examPrelims(Integer.parseInt(txtPrelimExams.getText()));
-					txtPrelimGrade.setText(comProg.prelimGrade()+"");
-					txtPrelimTransmuted.setText(comProg.transmutedPrelim()+"");
-							
-					comProg.labExerFinals(Integer.parseInt(txtLabExer4.getText()));
-					comProg.longTestFinals(Integer.parseInt(txtLongTest3.getText()));
-					comProg.examFinals(Integer.parseInt(txtFinalExams.getText()));
-					txtFinalGrade.setText(comProg.finalGrade()+"");
-					txtFinalTransmuted.setText(comProg.transmutedFinal()+"");
-							
-					lblSubjectGrade.setText(comProg.subjectGrade()+"");
+					for(int i = 0; i<prelimTF.length;i++) {
+						if(!prelimTF[i].getText().isBlank()){
+							continue;
+						}
+						else {
+							prelimTF[i].setText("0");
+							//throw new BlankTextFieldException(prelimTF[i].getName(),gradeForm);
+						}
+					}
+					
+					for(int i = 0; i<finalTF.length;i++) {
+						if(!finalTF[i].getText().isBlank()){
+							continue;
+						}
+						else {
+							finalTF[i].setText("0");
+							//throw new BlankTextFieldException(prelimTF[i].getName(),gradeForm);
+						}
+					}
+					
+					for(int i = 0; i<studentDetailsTF.length;i++) {
+						if(!studentDetailsTF[i].getText().isBlank()){
+							continue;
+						}
+						else {
+						  throw new BlankTextFieldException(studentDetailsTF[i].getName(),gradeForm);
+						}
+					}
+					
+					for(int i = 0; i<strTF.length;i++) {
+						if(!isNumeric(strTF[i].getText())){
+							continue;
+						}
+						else {
+						  throw new NumericsInStringException(strTF[i].getName(),gradeForm);
+						}
+					}
+					
+					for(int i = 0; i<numTF.length;i++) {
+						if(isNumeric(numTF[i].getText())){
+							continue;
+						}
+						else {
+							throw new StringInNumericsException(numTF[i].getName(),gradeForm);
+						}
+					}
+					
+					for(int i = 0; i<all100TF.length;i++) {
+						if(Integer.parseInt(all100TF[i].getText())>=0 && Integer.parseInt(all100TF[i].getText())<=100){
+							continue;
+						}
+						else {
+						  throw new ScoreOverloadException(all100TF[i].getName(),gradeForm);
+						}
+					}
+					
+					for(int i = 0; i<all50TF.length;i++) {
+						if(Integer.parseInt(all50TF[i].getText())>=0 && Integer.parseInt(all50TF[i].getText())<=50){
+							continue;
+						}
+						else {
+						  throw new ScoreOverloadException(all50TF[i].getName(),gradeForm);
+						}
+					}
+					
+					ICS2606 comProg = new ICS2606();
+	
+						comProg.labExerPrelims(Integer.parseInt(txtLabExer1.getText()), Integer.parseInt(txtLabExer2.getText()), Integer.parseInt(txtLabExer3.getText()));
+						comProg.longTestPrelims(Integer.parseInt(txtLongTest1.getText()), Integer.parseInt(txtLongTest2.getText()));
+						comProg.examPrelims(Integer.parseInt(txtPrelimExams.getText()));
+						txtPrelimGrade.setText(comProg.prelimGrade()+"");
+						txtPrelimTransmuted.setText(comProg.transmutedPrelim()+"");
+								
+						comProg.labExerFinals(Integer.parseInt(txtLabExer4.getText()));
+						comProg.longTestFinals(Integer.parseInt(txtLongTest3.getText()));
+						comProg.examFinals(Integer.parseInt(txtFinalExams.getText()));
+						txtFinalGrade.setText(comProg.finalGrade()+"");
+						txtFinalTransmuted.setText(comProg.transmutedFinal()+"");
+								
+						lblSubjectGrade.setText(comProg.subjectGrade()+"");
 				}
-				catch(NumberFormatException nfe){
-					CustomDialog cd = new CustomDialog("Err!","You've input an invalid number",gradeForm,"OK",paneRed);
+				 catch(BlankTextFieldException btfe) {	
+				}catch(NumericsInStringException nse) {
+				}catch(StringInNumericsException sin) {
+				}catch(ScoreOverloadException soe) {
 				}
 			}
 		});
