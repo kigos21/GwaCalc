@@ -29,7 +29,7 @@ public class ICS2606 {
 	}
 	
 	public double longTestFinals(int lt3) {
-		longTestFinals = lt3/50*100*.3;
+		longTestFinals = (lt3/50*100)*.3;
 		return longTestFinals;
 	}
 	
