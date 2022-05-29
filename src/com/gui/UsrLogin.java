@@ -144,8 +144,9 @@ public class UsrLogin extends guiCustoms{
 					loginCreds = new File("data\\usr-login-creds.txt");
 					br = new BufferedReader(new FileReader(loginCreds));
 				} 
-				catch (IOException e1) {
-					e1.printStackTrace();
+				catch (FileNotFoundException e1) {
+					CustomDialog cd = new CustomDialog("No user found!", "Please create an account.", usrLogin,"OK", paneRed);
+					return ;
 				}
 				
 				try {
