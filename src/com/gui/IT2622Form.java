@@ -643,10 +643,10 @@ public class IT2622Form extends guiCustoms {
 					br = new BufferedReader(new FileReader(hciSheet));
 					
 					if (br.readLine() == null)
-						pw.println("Name,Student Number,Section,,Prelim Grade,Transmuted Prelim Grade,Attendance,Recitation,Formatives,Long Test 1,Wireframe,Storyboard,Prototype,Exam,,Final Grade,Transmuted Final Grade,Attendance,Recitation,Assignment,Long Test 2,Long Test 3,Deliverable 1,Integrated Assmnt");
+						pw.println("Name,Student Number,Section,PRELIMS,Prelim Grade,Transmuted Prelim Grade,Attendance,Recitation,Formatives,Long Test 1,Wireframe,Storyboard,Prototype,Exam,FINALS,Final Grade,Transmuted Final Grade,Attendance,Recitation,Assignment,Long Test 2,Long Test 3,Deliverable 1,Integrated Assmnt");
 					
-					pw.println(tfName.getText() + "," + tfStudentNo.getText() + "," + tfSection.getText() + "," + "PRELIMS" + "," + tfPrelimGrade.getText() + "," + tfTransmutedPrelimGrade.getText() + "," + tfPrelimAttendance.getText() + "," + tfPrelimRecitation.getText() + "," + tfFA.getText() + "," + tfLongTest1.getText() + "," + tfWireframe.getText() + "," + tfStoryboard.getText() + 
-							 "," + tfPrototype.getText() + "," + tfPrelimExam.getText() + "," + "FINALS" + "," + tfFinalGrade.getText() + "," + tfTransmutedFinalGrade.getText() + "," + tfFinalAttendance.getText() + "," + tfFinalRecitation.getText() + "," + tfAssignment.getText() + "," + tfLongTest2.getText() + "," + tfLongTest3.getText() + "," + tfDeliverable1.getText() + "," + tfIntegratedAsmnt.getText());
+					pw.println(tfName.getText() + "," + tfStudentNo.getText() + "," + tfSection.getText() + "," + " " + "," + tfPrelimGrade.getText() + "," + tfTransmutedPrelimGrade.getText() + "," + tfPrelimAttendance.getText() + "," + tfPrelimRecitation.getText() + "," + tfFA.getText() + "," + tfLongTest1.getText() + "," + tfWireframe.getText() + "," + tfStoryboard.getText() + 
+							 "," + tfPrototype.getText() + "," + tfPrelimExam.getText() + "," + " " + "," + tfFinalGrade.getText() + "," + tfTransmutedFinalGrade.getText() + "," + tfFinalAttendance.getText() + "," + tfFinalRecitation.getText() + "," + tfAssignment.getText() + "," + tfLongTest2.getText() + "," + tfLongTest3.getText() + "," + tfDeliverable1.getText() + "," + tfIntegratedAsmnt.getText());
 					pw.close();
 					
 					JOptionPane.showMessageDialog(null, "Done! Info saved to sheet.", "Info", JOptionPane.INFORMATION_MESSAGE);
