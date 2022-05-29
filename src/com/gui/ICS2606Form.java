@@ -588,12 +588,13 @@ public class ICS2606Form extends guiCustoms{
 		bDisplay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//JTextField[] allTF = {txtName, txtStudentNo, txtSection, txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
-				JTextField[] allScoreTF = {txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
 				JTextField[] prelimTF = {txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams};
 				JTextField[] finalTF = {txtLabExer4, txtLongTest3, txtFinalExams};
 				JTextField[] studentDetailsTF = {txtName, txtStudentNo, txtSection};
 				JTextField[] strTF = {txtName, txtSection};
 				JTextField[] numTF = {txtStudentNo, txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2, txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
+				JTextField[] all100TF = {txtLabExer1, txtLabExer2, txtLabExer3,txtPrelimExams, txtLabExer4, txtFinalExams};
+				JTextField[] all50TF = {txtLongTest1, txtLongTest2, txtLongTest3};
 				
 				try {
 					for(int i = 0; i<prelimTF.length;i++) {
@@ -643,14 +644,24 @@ public class ICS2606Form extends guiCustoms{
 						}
 					}
 					
-					for(int i = 0; i<allScoreTF.length;i++) {
-						if(Integer.parseInt(allScoreTF[i].getText())>=0 && Integer.parseInt(allScoreTF[i].getText())<=100){
+					for(int i = 0; i<all100TF.length;i++) {
+						if(Integer.parseInt(all100TF[i].getText())>=0 && Integer.parseInt(all100TF[i].getText())<=100){
 							continue;
 						}
 						else {
-						  throw new ScoreOverloadException(allScoreTF[i].getName(),gradeForm);
+						  throw new ScoreOverloadException(all100TF[i].getName(),gradeForm);
 						}
 					}
+					
+					for(int i = 0; i<all50TF.length;i++) {
+						if(Integer.parseInt(all50TF[i].getText())>=0 && Integer.parseInt(all50TF[i].getText())<=50){
+							continue;
+						}
+						else {
+						  throw new ScoreOverloadException(all50TF[i].getName(),gradeForm);
+						}
+					}
+					
 					ICS2606 comProg = new ICS2606();
 	
 						comProg.labExerPrelims(Integer.parseInt(txtLabExer1.getText()), Integer.parseInt(txtLabExer2.getText()), Integer.parseInt(txtLabExer3.getText()));
