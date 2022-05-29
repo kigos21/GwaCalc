@@ -768,6 +768,15 @@ public class IT2622Form extends guiCustoms {
 					return ; // terminate actionPerformed method
 				}
 				
+				try {
+					if (tfPrelimGrade.getText().isBlank() && tfFinalGrade.getText().isBlank() && tfTransmutedPrelimGrade.getText().isBlank() && tfTransmutedFinalGrade.getText().isBlank()) {
+						CustomDialog cd = new CustomDialog("Err!", "Please click the Display button first.", gradeForm, "OK", paneRed);
+						throw new Exception();
+					}
+					
+				} catch (Exception exc) {
+					return ;
+				}
 				
 				File hciSheet = new File("IT2622 Sheet.csv");
 				PrintWriter pw = null;

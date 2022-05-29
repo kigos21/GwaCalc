@@ -56,51 +56,51 @@ public class GwaCalc extends JFrame{
 		usrlog.setBounds(0, 0, 1280, 720);
 		add(usrlog);
 		
-		//custom title bar
-		titleBar = new JPanel();
-		titleBar.setLayout(null);
-		titleBar.setPreferredSize(new Dimension(1280, 26));
-		titleBar.setBounds(0,0,1280,40);
-		titleBar.setBackground(new Color(16,21,30));
-		
-		lTitleLogo = new JLabel();
-		Icon icoTitle = new ImageIcon("res\\gwasmol.png");
-		lTitleLogo.setIcon(icoTitle);
-		lTitleLogo.setBounds(10, 10, 40, 17);
-		titleBar.add(lTitleLogo);
-		
-		lTitle = new JLabel("GENERAL WEIGHTED AVERAGE CALCULATOR");
-		lTitle.setFont(gothamBook.deriveFont(Font.PLAIN,16));
-		lTitle.setBounds(56, 8, 400, 20);
-		lTitle.setForeground(Color.WHITE);
-		titleBar.add(lTitle);
-		
-		bClose = new JButton("X");
-		bClose.setFont(gothamBook.deriveFont(Font.PLAIN,16));
-		bClose.setBounds(1230, 0, 50, 30);
-		bClose.setBackground(new Color(16,21,30));
-		bClose.setBorderPainted(false);
-		bClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		bClose.setForeground(Color.WHITE);
-		titleBar.add(bClose);
-		
-		bClose.addMouseListener(new java.awt.event.MouseAdapter() {
-		    public void mouseEntered(java.awt.event.MouseEvent evt) {
-		    	bClose.setBackground(new Color(114,27,12));
-		    }
-
-		    public void mouseExited(java.awt.event.MouseEvent evt) {
-		    	bClose.setBackground(new Color(16,21,30));
-		    }
-		});
-		
-		bClose.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			dispose();
-			}
-		});
-		//end of custom titlebar
-		//add(titleBar);
+//		custom title bar
+//		titleBar = new JPanel();
+//		titleBar.setLayout(null);
+//		titleBar.setPreferredSize(new Dimension(1280, 26));
+//		titleBar.setBounds(0,0,1280,40);
+//		titleBar.setBackground(new Color(16,21,30));
+//		
+//		lTitleLogo = new JLabel();
+//		Icon icoTitle = new ImageIcon("res\\gwasmol.png");
+//		lTitleLogo.setIcon(icoTitle);
+//		lTitleLogo.setBounds(10, 10, 40, 17);
+//		titleBar.add(lTitleLogo);
+//		
+//		lTitle = new JLabel("GENERAL WEIGHTED AVERAGE CALCULATOR");
+//		lTitle.setFont(gothamBook.deriveFont(Font.PLAIN,16));
+//		lTitle.setBounds(56, 8, 400, 20);
+//		lTitle.setForeground(Color.WHITE);
+//		titleBar.add(lTitle);
+//		
+//		bClose = new JButton("X");
+//		bClose.setFont(gothamBook.deriveFont(Font.PLAIN,16));
+//		bClose.setBounds(1230, 0, 50, 30);
+//		bClose.setBackground(new Color(16,21,30));
+//		bClose.setBorderPainted(false);
+//		bClose.setCursor(new Cursor(Cursor.HAND_CURSOR));
+//		bClose.setForeground(Color.WHITE);
+//		titleBar.add(bClose);
+//		
+//		bClose.addMouseListener(new java.awt.event.MouseAdapter() {
+//		    public void mouseEntered(java.awt.event.MouseEvent evt) {
+//		    	bClose.setBackground(new Color(114,27,12));
+//		    }
+//
+//		    public void mouseExited(java.awt.event.MouseEvent evt) {
+//		    	bClose.setBackground(new Color(16,21,30));
+//		    }
+//		});
+//		
+//		bClose.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//			dispose();
+//			}
+//		});
+//		end of custom titlebar
+//		add(titleBar);
 
 		pack();
 		setLocationRelativeTo(null);
