@@ -1,5 +1,6 @@
 package com.main;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import com.gui.UsrLogin;
@@ -8,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class GwaCalc extends JFrame{
 	//variables
@@ -22,15 +24,16 @@ public class GwaCalc extends JFrame{
 	public GwaCalc(){
 		//customfont loader
 		try {
-			gothamBook = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBook.ttf"));
+			InputStream isgotham = getClass().getResourceAsStream("/res/fonts/GothamBook.ttf");
+			gothamBook = Font.createFont(Font.TRUETYPE_FONT, isgotham);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(gothamBook); 
 		}
 		catch(IOException ie){
-			ie.printStackTrace(); 
+			ie.printStackTrace();
 		}
 		catch(FontFormatException ffe){
-			ffe.printStackTrace(); 
+			ffe.printStackTrace();
 		}
 		
 		setTitle("GENERAL WEIGHTED AVERAGE CALCULATOR");
@@ -40,8 +43,13 @@ public class GwaCalc extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//setUndecorated(true);
 		
-		ImageIcon img = new ImageIcon("res\\gwasmol.png");
-		setIconImage(img.getImage());
+		try {
+			Image myImage = ImageIO.read(getClass().getResourceAsStream("/res/images/gwasmol.png"));
+			ImageIcon img = new ImageIcon(myImage);
+			setIconImage(img.getImage());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		usrlog = new UsrLogin();
 		usrlog.setPreferredSize(new Dimension(1280, 720));

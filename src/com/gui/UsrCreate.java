@@ -3,6 +3,7 @@ package com.gui;
 import com.exceptions.*;
 import com.user.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -18,9 +19,11 @@ public class UsrCreate extends guiCustoms {
 	JButton bCreate, bBack;
 	
 	public UsrCreate() {
-		try {
-			gothamBook = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBook.ttf"));
-			gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBold.ttf"));
+		try {	
+			InputStream isgotham = getClass().getResourceAsStream("/res/fonts/GothamBook.ttf");
+			InputStream isgothamBold = getClass().getResourceAsStream("/res/fonts/GothamBold.ttf");
+			gothamBook = Font.createFont(Font.TRUETYPE_FONT, isgotham);
+			gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, isgothamBold);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(gothamBook); 
 			ge.registerFont(gothamBookBold); 
@@ -31,7 +34,7 @@ public class UsrCreate extends guiCustoms {
 		catch(FontFormatException ffe){
 			ffe.printStackTrace();
 		}
-		
+
 		setLayout(null);
 		setPreferredSize(new Dimension(1280, 720));
 		
@@ -42,7 +45,13 @@ public class UsrCreate extends guiCustoms {
 		usrCreate.setLayout(null);
 		
 		lLogo = new JLabel();
-		lLogo.setIcon(new ImageIcon("res\\gwalogo2medium.png"));
+		try {
+			Image myImage = ImageIO.read(getClass().getResourceAsStream("/res/images/gwalogo2medium.png"));
+			ImageIcon icnPfp = new ImageIcon(myImage);
+			lLogo.setIcon(icnPfp);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		lLogo.setBounds(525, 120, 218, 113);
 		usrCreate.add(lLogo);
 		
@@ -165,7 +174,7 @@ public class UsrCreate extends guiCustoms {
 					&& !(tfPswrd.getText().isBlank()) && !(tfCnfPswrd.getText().isBlank()) && tfPswrd.getText().equals(tfCnfPswrd.getText()) ) {
 				
 					try {
-						File loginCreds = new File("data\\usr-login-creds.txt");
+						File loginCreds = new File("usr-login-creds.txt");
 						PrintWriter pw = new PrintWriter(new FileWriter(loginCreds, false));
 						
 						pw.println(tfUsrnm.getText());

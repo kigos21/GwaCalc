@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -28,8 +29,10 @@ public class CustomDialog extends guiCustoms{
 	//CustomDialog for confirmation dialogs that proceeds to a new content
 	public CustomDialog(String headContent, String messageContent, JPanel parentPane, JPanel childPane,JPanel newPane,String buttonContentCancel, String buttonContentConfirm, Color confirmColor) {
 		try {
-			gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBold.ttf"));
-			gothamLight = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamLight.ttf"));
+			InputStream isgothamBold = getClass().getResourceAsStream("/res/fonts/GothamBold.ttf");
+			InputStream isgothamLight = getClass().getResourceAsStream("/res/fonts/GothamLight.ttf");
+			gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, isgothamBold);
+			gothamLight = Font.createFont(Font.TRUETYPE_FONT, isgothamLight);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(gothamBookBold); 
 			ge.registerFont(gothamLight);
@@ -40,7 +43,7 @@ public class CustomDialog extends guiCustoms{
 		catch(FontFormatException ffe){
 			ffe.printStackTrace();
 		}
-		
+			
 		f = new JFrame();
 		customPane = new JDialog (f,true);
 		customPane.getContentPane().setBackground(customPaneColor);
@@ -105,8 +108,10 @@ public class CustomDialog extends guiCustoms{
 	//CustomDialog for Exceptions
 	public CustomDialog(String headContent, String messageContent, JPanel parentPane, String buttonContentConfirm, Color confirmColor) {
 		try {
-			gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBold.ttf"));
-			gothamLight = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamLight.ttf"));
+			InputStream isgothamBold = getClass().getResourceAsStream("/res/fonts/GothamBold.ttf");
+			InputStream isgothamLight = getClass().getResourceAsStream("/res/fonts/GothamLight.ttf");
+			gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, isgothamBold);
+			gothamLight = Font.createFont(Font.TRUETYPE_FONT, isgothamLight);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(gothamBookBold); 
 			ge.registerFont(gothamLight);
@@ -160,10 +165,12 @@ public class CustomDialog extends guiCustoms{
 	
 	//CustomDialog for Clearing	
 		public CustomDialog(String headContent, String messageContent, JPanel parentPane, String buttonContentCancel, String buttonContentConfirm, Color confirmColor) {
-			
+
 			try {
-				gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBold.ttf"));
-				gothamLight = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamLight.ttf"));
+				InputStream isgothamBold = getClass().getResourceAsStream("/res/fonts/GothamBold.ttf");
+				InputStream isgothamLight = getClass().getResourceAsStream("/res/fonts/GothamLight.ttf");
+				gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, isgothamBold);
+				gothamLight = Font.createFont(Font.TRUETYPE_FONT, isgothamLight);
 				GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 				ge.registerFont(gothamBookBold); 
 				ge.registerFont(gothamLight);
@@ -174,6 +181,7 @@ public class CustomDialog extends guiCustoms{
 			catch(FontFormatException ffe){
 				ffe.printStackTrace();
 			}
+			
 			
 			f = new JFrame();
 			customPane = new JDialog (f,true);

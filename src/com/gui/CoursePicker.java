@@ -1,18 +1,11 @@
 package com.gui;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import com.user.UserStudent;
@@ -28,10 +21,14 @@ public class CoursePicker extends guiCustoms{
 	
 	public CoursePicker() {
 		try {
-			futura = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\futur.ttf"));
-			gothamBook = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBook.ttf"));
-			gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBold.ttf"));
-			gothamLight = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamLight.ttf"));
+			InputStream isfutura = getClass().getResourceAsStream("/res/fonts/futur.ttf");
+			InputStream isgotham = getClass().getResourceAsStream("/res/fonts/GothamBook.ttf");
+			InputStream isgothamBold = getClass().getResourceAsStream("/res/fonts/GothamBold.ttf");
+			InputStream isgothamLight = getClass().getResourceAsStream("/res/fonts/GothamLight.ttf");
+			futura = Font.createFont(Font.TRUETYPE_FONT, isfutura);
+			gothamBook = Font.createFont(Font.TRUETYPE_FONT, isgotham);
+			gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, isgothamBold);
+			gothamLight = Font.createFont(Font.TRUETYPE_FONT, isgothamLight);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(futura); 
 			ge.registerFont(gothamBook); 
@@ -44,7 +41,7 @@ public class CoursePicker extends guiCustoms{
 		catch(FontFormatException ffe){
 			ffe.printStackTrace();
 		}
-		
+			
 		setPreferredSize(new Dimension(1280, 720));
 		setLayout(null);
 		
@@ -62,14 +59,19 @@ public class CoursePicker extends guiCustoms{
 		mainContainer.add(coursePicker);
 		
 		lUST = new JLabel();
-		icnPfp = new ImageIcon("res\\pfp-icon.png");
-		lUST.setIcon(icnPfp);
+		try {
+			Image myImage = ImageIO.read(getClass().getResourceAsStream("/res/images/pfp-icon.png"));
+			icnPfp = new ImageIcon(myImage);
+			lUST.setIcon(icnPfp);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		//lUST.setBounds(48, 30, 109, 110);
 		lUST.setBounds(48, 30, 80, 80);
 		coursePicker.add(lUST);
 		
 		try {
-			File loginCreds = new File("data\\usr-login-creds.txt");
+			File loginCreds = new File("usr-login-creds.txt");
 			BufferedReader br = new BufferedReader(new FileReader(loginCreds));
 			br = new BufferedReader(new FileReader(loginCreds));
 			UserStudent user = new UserStudent(br.readLine(), br.readLine());

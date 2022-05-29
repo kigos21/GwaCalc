@@ -21,6 +21,10 @@ public class UserStudent {
 		setReferenceNo(referenceNo);
 	}
 	
+	public UserStudent() {
+
+	}
+
 	public String getUsername() {
 		return username;
 	}

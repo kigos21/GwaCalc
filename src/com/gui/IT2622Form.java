@@ -2,6 +2,8 @@ package com.gui;
 
 import java.awt.*;
 import java.io.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import com.user.UserStudent;
@@ -75,13 +77,16 @@ public class IT2622Form extends guiCustoms {
 		} return true;
 	}
 	
-	public IT2622Form() {
-		
+	public IT2622Form() {	
 		try {
-			futura = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\futur.ttf"));
-			gothamBook = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBook.ttf"));
-			gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBold.ttf"));
-			gothamLight = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamLight.ttf"));
+			InputStream isfutura = getClass().getResourceAsStream("/res/fonts/futur.ttf");
+			InputStream isgotham = getClass().getResourceAsStream("/res/fonts/GothamBook.ttf");
+			InputStream isgothamBold = getClass().getResourceAsStream("/res/fonts/GothamBold.ttf");
+			InputStream isgothamLight = getClass().getResourceAsStream("/res/fonts/GothamLight.ttf");
+			futura = Font.createFont(Font.TRUETYPE_FONT, isfutura);
+			gothamBook = Font.createFont(Font.TRUETYPE_FONT, isgotham);
+			gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, isgothamBold);
+			gothamLight = Font.createFont(Font.TRUETYPE_FONT, isgothamLight);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(futura); 
 			ge.registerFont(gothamBook); 
@@ -109,13 +114,19 @@ public class IT2622Form extends guiCustoms {
 		gradeForm.setBounds(0, 0, 1280, 720);
 		mainContainer.add(gradeForm);
 		
-		icnPfp = new ImageIcon("res\\pfp-icon.png");
-		lblIconHolder = new JLabel(icnPfp);
+		lblIconHolder = new JLabel();
+		try {
+			Image myImage = ImageIO.read(getClass().getResourceAsStream("/res/images/pfp-icon.png"));
+			icnPfp = new ImageIcon(myImage);
+			lblIconHolder.setIcon(icnPfp);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		lblIconHolder.setBounds(48, 30, 80, 80);
 		gradeForm.add(lblIconHolder);
 		
 		try {
-			File loginCreds = new File("data\\usr-login-creds.txt");
+			File loginCreds = new File("usr-login-creds.txt");
 			BufferedReader br = new BufferedReader(new FileReader(loginCreds));
 			br = new BufferedReader(new FileReader(loginCreds));
 			UserStudent user = new UserStudent(br.readLine(), br.readLine());
@@ -137,13 +148,14 @@ public class IT2622Form extends guiCustoms {
 		gradeForm.add(lblDepartment);
 		
 		bLogout = new JButton("Logout");
-		bLogout.setFont(gothamLight.deriveFont(Font.PLAIN,24));
 		bLogout.setBounds(1069, 55, 150, 46);
+		bLogout.setFont(gothamLight.deriveFont(Font.PLAIN,24));
 		bLogout.setOpaque(false);
 		bLogout.setContentAreaFilled(false);
 		bLogout.setBorderPainted(false);
 		bLogout.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bLogout.setForeground(Color.WHITE);
+		bLogout.setFocusable(false);
 		bLogout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				UsrLogin usrLogin = new UsrLogin();
@@ -153,6 +165,7 @@ public class IT2622Form extends guiCustoms {
 				cd.setVisible(true);
 			}
 		});
+		gradeForm.add(bLogout);
 		
 		lblCourseName = new JLabel("IT2622", JLabel.CENTER);
 		lblCourseName.setBounds(567,66,147,35);
@@ -525,26 +538,6 @@ public class IT2622Form extends guiCustoms {
 		tfTransmutedFinalGrade.setEditable(false);
 		tfTransmutedFinalGrade.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(tfTransmutedFinalGrade);
-		
-		bLogout = new JButton("Logout");
-		bLogout.setFont(gothamLight.deriveFont(Font.PLAIN,26));
-		bLogout.setBounds(1069, 60, 150, 46);
-		bLogout.setOpaque(false);
-		bLogout.setContentAreaFilled(false);
-		bLogout.setBorderPainted(false);
-		bLogout.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		bLogout.setForeground(Color.WHITE);
-		bLogout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				UsrLogin usrLogin = new UsrLogin();
-				
-				//CustomDialog Constructor: headContent, messageContent, parentPane, childPane, newPane, buttonContentCancel, buttonContentConfirm, color
-				CustomDialog cd = new CustomDialog("Log Out","Are you sure you want to logout?",mainContainer,gradeForm,usrLogin,"Cancel","Logout",paneRed);
-				cd.setVisible(true);
-			}
-		});
-		
-		gradeForm.add(bLogout);
 		
 		bClear = new JButton("Clear");
 		bClear.setBounds(374, 610, 171, 46);

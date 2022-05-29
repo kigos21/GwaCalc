@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class UsrLogin extends guiCustoms{
@@ -20,9 +21,11 @@ public class UsrLogin extends guiCustoms{
 	Font gothamBook,gothamBookBold;
 	
 	public UsrLogin() {
-		try {
-			gothamBook = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBook.ttf"));
-			gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, new File("res\\fonts\\GothamBold.ttf"));
+		try {	
+			InputStream isgotham = getClass().getResourceAsStream("/res/fonts/GothamBook.ttf");
+			InputStream isgothamBold = getClass().getResourceAsStream("/res/fonts/GothamBold.ttf");
+			gothamBook = Font.createFont(Font.TRUETYPE_FONT, isgotham);
+			gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, isgothamBold);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(gothamBook); 
 			ge.registerFont(gothamBookBold); 
@@ -33,7 +36,7 @@ public class UsrLogin extends guiCustoms{
 		catch(FontFormatException ffe){
 			ffe.printStackTrace();
 		}
-		
+			
 		usrLogin = new JPanel();
 		setLayout(null);
 		setPreferredSize(new Dimension(1280, 720));
@@ -45,8 +48,15 @@ public class UsrLogin extends guiCustoms{
 		
 	
 		lLogo = new JLabel();
-		icnPfp = new ImageIcon("res\\gwalogo2.png");
-		lLogo.setIcon(icnPfp);
+		
+		try {
+			Image myImage = ImageIO.read(getClass().getResourceAsStream("/res/images/gwalogo2.png"));
+			icnPfp = new ImageIcon(myImage);
+			lLogo.setIcon(icnPfp);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		lLogo.setBounds(462, 118, 358, 180);
 		usrLogin.add(lLogo);
 		
@@ -139,9 +149,10 @@ public class UsrLogin extends guiCustoms{
 				
 				File loginCreds = null;
 				BufferedReader br = null;
+				InputStream is = null;
 				
 				try {
-					loginCreds = new File("data\\usr-login-creds.txt");
+					loginCreds = new File("usr-login-creds.txt");
 					br = new BufferedReader(new FileReader(loginCreds));
 				} 
 				catch (FileNotFoundException e1) {
