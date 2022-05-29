@@ -192,7 +192,7 @@ public class ICS2606Form extends guiCustoms{
 		
 		txtName = new JTextField("");
 		txtName.setBounds(270,138,340,18);
-		txtName.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
+		txtName.setFont(gothamBookBold.deriveFont(Font.PLAIN,16));
 		txtName.setForeground(textfieldGray);
 		txtName.setName("Name");
 		txtName.setBorder(BorderFactory.createEmptyBorder());
@@ -206,7 +206,7 @@ public class ICS2606Form extends guiCustoms{
 		
 		txtStudentNo = new JTextField("");
 		txtStudentNo.setBounds(749,138,164,18);
-		txtStudentNo.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
+		txtStudentNo.setFont(gothamBookBold.deriveFont(Font.PLAIN,16));
 		txtStudentNo.setForeground(textfieldGray);
 		txtStudentNo.setName("Student Number");
 		txtStudentNo.setBorder(BorderFactory.createEmptyBorder());
@@ -220,7 +220,7 @@ public class ICS2606Form extends guiCustoms{
 		
 		txtSection = new JTextField("");
 		txtSection.setBounds(990,138,87,18);
-		txtSection.setFont(gothamBookBold.deriveFont(Font.PLAIN,18));
+		txtSection.setFont(gothamBookBold.deriveFont(Font.PLAIN,16));
 		txtSection.setForeground(textfieldGray);
 		txtSection.setName("Section");
 		txtSection.setBorder(BorderFactory.createEmptyBorder());
@@ -361,7 +361,7 @@ public class ICS2606Form extends guiCustoms{
 		
 		txtPrelimGrade = new JTextField();
 		txtPrelimGrade.setBounds(541,501,68,28);
-		txtPrelimGrade.setFont(gothamBookBold.deriveFont(Font.PLAIN,26));
+		txtPrelimGrade.setFont(gothamBookBold.deriveFont(Font.PLAIN,22));
 		txtPrelimGrade.setForeground(textfieldGray);
 		txtPrelimGrade.setHorizontalAlignment(JTextField.RIGHT);
 		txtPrelimGrade.setEditable(false);
@@ -378,7 +378,7 @@ public class ICS2606Form extends guiCustoms{
 		
 		txtPrelimTransmuted = new JTextField();
 		txtPrelimTransmuted.setBounds(541,539,68,28);
-		txtPrelimTransmuted.setFont(gothamBookBold.deriveFont(Font.PLAIN,26));
+		txtPrelimTransmuted.setFont(gothamBookBold.deriveFont(Font.PLAIN,22));
 		txtPrelimTransmuted.setForeground(textfieldGray);
 		txtPrelimTransmuted.setHorizontalAlignment(JTextField.RIGHT);
 		txtPrelimTransmuted.setEditable(false);
@@ -473,7 +473,7 @@ public class ICS2606Form extends guiCustoms{
 		
 		txtFinalGrade = new JTextField();
 		txtFinalGrade.setBounds(1009,426,68,28);
-		txtFinalGrade.setFont(gothamBookBold.deriveFont(Font.PLAIN,26));
+		txtFinalGrade.setFont(gothamBookBold.deriveFont(Font.PLAIN,22));
 		txtFinalGrade.setForeground(textfieldGray);
 		txtFinalGrade.setHorizontalAlignment(JTextField.RIGHT);
 		txtFinalGrade.setEditable(false);
@@ -490,7 +490,7 @@ public class ICS2606Form extends guiCustoms{
 		
 		txtFinalTransmuted = new JTextField();
 		txtFinalTransmuted.setBounds(1009,466,68,28);
-		txtFinalTransmuted.setFont(gothamBookBold.deriveFont(Font.PLAIN,26));
+		txtFinalTransmuted.setFont(gothamBookBold.deriveFont(Font.PLAIN,22));
 		txtFinalTransmuted.setForeground(textfieldGray);
 		txtFinalTransmuted.setHorizontalAlignment(JTextField.RIGHT);
 		txtFinalTransmuted.setEditable(false);
@@ -666,8 +666,6 @@ public class ICS2606Form extends guiCustoms{
 					public void actionPerformed(ActionEvent e) {
 						
 						JTextField[] allTF = {txtName, txtStudentNo, txtSection, txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams, txtPrelimGrade, txtPrelimTransmuted, txtFinalGrade,txtFinalTransmuted};
-						JTextField[] scoreTF = {txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
-						JTextField[] studentDetailsTF = {txtName, txtStudentNo, txtSection};
 						JTextField[] strTF = {txtName, txtSection};
 						JTextField[] numTF = {txtStudentNo, txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2, txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
 						JTextField[] all100TF = {txtLabExer1, txtLabExer2, txtLabExer3,txtPrelimExams, txtLabExer4, txtFinalExams};
