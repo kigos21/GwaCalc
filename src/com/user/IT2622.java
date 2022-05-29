@@ -11,34 +11,38 @@ public class IT2622 {
 	classStandingFinal, longTestFinal, deliverableFinal, integratedAssmnt,
 	rawFinalGrade, transmutedFinalGrade;
 	
-	private double computeClassStandingPrelim(double attendance, double recitation, double FA) {
+	// PRELIMS
+	public double computeClassStandingPrelim(double attendance, double recitation, double FA) {
 		classStandingPrelim = (attendance + recitation + FA)/3.0 * 0.1;
 		return classStandingPrelim;
 	}
 	
-	private double computeLongTestPrelim(double longTest) {
+	public double computeLongTestPrelim(double longTest) {
 		longTestPrelim = (longTest/70.0 * 100) * 0.3;
 		return longTestPrelim;
 	}
 	
-	private double computeDeliverablePrelim(double wireframe, double storyboard, double prototype) {
-		deliverablePrelim = (wireframe + storyboard + prototype)/3.0 * 0.3;
+	public double computeDeliverablePrelim(double wireframe, double storyboard, double prototype) {
+		deliverablePrelim = (((wireframe/24*100) + (storyboard/40*100) + (prototype/32*100))/3.0 * 0.3);
 		return deliverablePrelim;
 	}
 	
-	private double computeExamPrelim(double exam) {
+	public double computeExamPrelim(double exam) {
 		examPrelim = exam * 0.3;
 		return examPrelim;
 	}
 	
-	private double computeRawPrelimGrade() {
-		rawPrelimGrade = (classStandingPrelim + longTestPrelim + deliverablePrelim + examPrelim);
+	public double computeRawPrelimGrade() {
+		DecimalFormat df = new DecimalFormat("##.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        
+		rawPrelimGrade = Double.parseDouble(df.format(classStandingPrelim + longTestPrelim + deliverablePrelim + examPrelim));
 		return rawPrelimGrade;
 	}
 	
-	private double computeTransmutedPrelimGrade() {
+	public double computeTransmutedPrelimGrade() {
 		DecimalFormat df = new DecimalFormat("##.#");
-        df.setRoundingMode(RoundingMode.CEILING);
+        df.setRoundingMode(RoundingMode.HALF_UP);
 		
 		transmutedPrelimGrade = Double.parseDouble(df.format(0.625 * (rawPrelimGrade-60) + 75));
 		return transmutedPrelimGrade;
@@ -46,35 +50,38 @@ public class IT2622 {
 	
 	
 	// FINALS
-	private double computeClassStandingFinal(double attendance, double recitation, double assigment) {
+	public double computeClassStandingFinal(double attendance, double recitation, double assigment) {
 		classStandingFinal = (attendance + recitation + assigment)/3.0 * 0.1;
 		return classStandingFinal;
 	}
 	
-	private double computeLongTestFinal(double longTest) {
+	public double computeLongTestFinal(double longTest) {
 		longTestFinal = longTest * 0.3;
 		return longTestFinal;
 	}
 	
-	private double computeDeliverableFinal(double deliverable) {
+	public double computeDeliverableFinal(double deliverable) {
 		deliverableFinal = deliverable * 0.3;
 		return deliverableFinal;
 	}
 	
-	private double computeIntegratedAssmnt(double IA) {
+	public double computeIntegratedAssmnt(double IA) {
 		integratedAssmnt = IA * 0.3;
 		return integratedAssmnt;
 	}
 	
-	private double computeRawFinalGrade() {
+	public double computeRawFinalGrade() {
+		DecimalFormat df = new DecimalFormat("##.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        
 		double tentativeFinalGrade = classStandingFinal + longTestFinal + deliverableFinal + integratedAssmnt;
-		rawFinalGrade = (tentativeFinalGrade * 0.5) + (rawPrelimGrade * 0.5);
+		rawFinalGrade = Double.parseDouble(df.format((tentativeFinalGrade * 0.5) + (rawPrelimGrade * 0.5)));
 		return rawFinalGrade;
 	}
 	
-	private double computeTransmutedFinalGrade() {
+	public double computeTransmutedFinalGrade() {
 		DecimalFormat df = new DecimalFormat("##.#");
-        df.setRoundingMode(RoundingMode.CEILING);
+        df.setRoundingMode(RoundingMode.HALF_UP);
 		
 		transmutedFinalGrade = Double.parseDouble(df.format(0.625 * (rawFinalGrade-60) + 75));
 		return transmutedFinalGrade;

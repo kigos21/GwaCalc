@@ -5,9 +5,7 @@ import java.io.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
-import com.user.UserStudent;
-
+import com.user.*;
 import java.awt.event.*;
 
 public class IT2622Form extends guiCustoms {
@@ -28,7 +26,7 @@ public class IT2622Form extends guiCustoms {
 			lblPrelimExam, lblPrelimGrade, lblTransmutedPrelimGrade,
 			
 			lblFinalClassStanding, lblFinalAttendance, lblFinalRecitation, lblAssignment,
-			lblFinalLongTest, lblLongTest2, lblLongTest3,
+			lblFinalLongTest, lblLongTest2, 
 			lblFinalDeliverable, lblDeliverable1, lblIntegratedAsmnt,
 			lblFinalGrade, lblTransmutedFinalGrade;
 	
@@ -38,7 +36,7 @@ public class IT2622Form extends guiCustoms {
 			tfPrelimExam, tfPrelimGrade, tfTransmutedPrelimGrade,
 			
 			tfFinalAttendance, tfFinalRecitation, tfAssignment,
-			tfLongTest2, tfLongTest3, tfDeliverable1, tfIntegratedAsmnt,
+			tfLongTest2, tfDeliverable1, tfIntegratedAsmnt,
 			tfFinalGrade, tfTransmutedFinalGrade;
 
 	// returns false when there are letters in the String, otherwise true 
@@ -370,7 +368,7 @@ public class IT2622Form extends guiCustoms {
 		
 		tfPrelimGrade = new JTextField("");
 		tfPrelimGrade.setBounds(541,501,68,28);
-		tfPrelimGrade.setFont(gothamBook.deriveFont(Font.BOLD,26));
+		tfPrelimGrade.setFont(gothamBook.deriveFont(Font.BOLD,20));
 		tfPrelimGrade.setForeground(textfieldGray);
 		tfPrelimGrade.setHorizontalAlignment(JTextField.RIGHT);
 		tfPrelimGrade.setEditable(false);
@@ -385,7 +383,7 @@ public class IT2622Form extends guiCustoms {
 		
 		tfTransmutedPrelimGrade = new JTextField("");
 		tfTransmutedPrelimGrade.setBounds(541,539,68,28);
-		tfTransmutedPrelimGrade.setFont(gothamBook.deriveFont(Font.BOLD,26));
+		tfTransmutedPrelimGrade.setFont(gothamBook.deriveFont(Font.BOLD,20));
 		tfTransmutedPrelimGrade.setForeground(textfieldGray);
 		tfTransmutedPrelimGrade.setHorizontalAlignment(JTextField.RIGHT);
 		tfTransmutedPrelimGrade.setEditable(false);
@@ -448,32 +446,18 @@ public class IT2622Form extends guiCustoms {
 		gradeForm.add(lblFinalLongTest);
 		
 		lblLongTest2 = new JLabel("Long Test 2", JLabel.RIGHT);
-		lblLongTest2.setBounds(760,356,103,18);
+		lblLongTest2.setBounds(674,356,189,18);
 		lblLongTest2.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblLongTest2.setForeground(Color.WHITE);
 		gradeForm.add(lblLongTest2);
 		
 		tfLongTest2 = new JTextField("");
-		tfLongTest2.setBounds(866,356,42,18);
+		tfLongTest2.setBounds(866,356,196,18);
 		tfLongTest2.setFont(gothamBook.deriveFont(Font.PLAIN,15));
 		tfLongTest2.setForeground(textfieldGray);
 		tfLongTest2.setHorizontalAlignment(JTextField.RIGHT);
 		tfLongTest2.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(tfLongTest2);
-		
-		lblLongTest3 = new JLabel("Long Test 3", JLabel.RIGHT);
-		lblLongTest3.setBounds(914,356,103,18);
-		lblLongTest3.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
-		lblLongTest3.setForeground(Color.WHITE);
-		gradeForm.add(lblLongTest3);
-		
-		tfLongTest3 = new JTextField("");
-		tfLongTest3.setBounds(1020,356,42,18);
-		tfLongTest3.setFont(gothamBook.deriveFont(Font.PLAIN,15));
-		tfLongTest3.setForeground(textfieldGray);
-		tfLongTest3.setHorizontalAlignment(JTextField.RIGHT);
-		tfLongTest3.setBorder(BorderFactory.createEmptyBorder());
-		gradeForm.add(tfLongTest3);
 		
 		lblFinalDeliverable = new JLabel("Deliverable (30%)");
 		lblFinalDeliverable.setBounds(672,386,150,18);
@@ -523,7 +507,7 @@ public class IT2622Form extends guiCustoms {
 		
 		tfFinalGrade = new JTextField("");
 		tfFinalGrade.setBounds(994,501,68,28);
-		tfFinalGrade.setFont(gothamBook.deriveFont(Font.BOLD,26));
+		tfFinalGrade.setFont(gothamBook.deriveFont(Font.BOLD,20));
 		tfFinalGrade.setForeground(textfieldGray);
 		tfFinalGrade.setHorizontalAlignment(JTextField.RIGHT);
 		tfFinalGrade.setEditable(false);
@@ -532,7 +516,7 @@ public class IT2622Form extends guiCustoms {
 		
 		tfTransmutedFinalGrade = new JTextField("");
 		tfTransmutedFinalGrade.setBounds(994,539,68,28);
-		tfTransmutedFinalGrade.setFont(gothamBook.deriveFont(Font.BOLD,26));
+		tfTransmutedFinalGrade.setFont(gothamBook.deriveFont(Font.BOLD,20));
 		tfTransmutedFinalGrade.setForeground(textfieldGray);
 		tfTransmutedFinalGrade.setHorizontalAlignment(JTextField.RIGHT);
 		tfTransmutedFinalGrade.setEditable(false);
@@ -596,18 +580,12 @@ public class IT2622Form extends guiCustoms {
 		// display listener
 		bDisplay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		
-		// save listener
-		bSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+				IT2622 hci = new IT2622();
 				
 				// check if inputs are proper for respective fields
-				JTextField[] allTF = {tfName, tfSection, tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfLongTest3, tfDeliverable1, tfIntegratedAsmnt};
+				JTextField[] allTF = {tfName, tfSection, tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfDeliverable1, tfIntegratedAsmnt};
 				JTextField[] strTF = {tfName, tfSection};
-				JTextField[] numTF = {tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfLongTest3, tfDeliverable1, tfIntegratedAsmnt};
+				JTextField[] numTF = {tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfDeliverable1, tfIntegratedAsmnt};
 				
 				try {
 					if (!(noBlankTF(allTF))) { // if there is a blank TF
@@ -627,6 +605,50 @@ public class IT2622Form extends guiCustoms {
 					return ; // terminate actionPerformed method
 				}
 				
+				hci.computeClassStandingPrelim(Double.parseDouble(tfPrelimAttendance.getText()), Double.parseDouble(tfPrelimRecitation.getText()), Double.parseDouble(tfFA.getText()));
+				hci.computeLongTestPrelim(Double.parseDouble(tfLongTest1.getText()));
+				hci.computeDeliverablePrelim(Double.parseDouble(tfWireframe.getText()), Double.parseDouble(tfStoryboard.getText()), Double.parseDouble(tfPrototype.getText()));
+				hci.computeExamPrelim(Double.parseDouble(tfPrelimExam.getText()));
+				tfPrelimGrade.setText(hci.computeRawPrelimGrade()+"");
+				tfTransmutedPrelimGrade.setText(hci.computeTransmutedPrelimGrade()+"");
+				
+				hci.computeClassStandingFinal(Double.parseDouble(tfFinalAttendance.getText()), Double.parseDouble(tfFinalRecitation.getText()), Double.parseDouble(tfAssignment.getText()));
+				hci.computeLongTestFinal(Double.parseDouble(tfLongTest2.getText()));
+				hci.computeDeliverableFinal(Double.parseDouble(tfDeliverable1.getText()));
+				hci.computeIntegratedAssmnt(Double.parseDouble(tfIntegratedAsmnt.getText()));
+				tfFinalGrade.setText(hci.computeRawFinalGrade()+"");
+				tfTransmutedFinalGrade.setText(hci.computeTransmutedFinalGrade()+"");
+			}
+		});
+		
+		// save listener
+		bSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				// check if inputs are proper for respective fields
+				JTextField[] allTF = {tfName, tfSection, tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfDeliverable1, tfIntegratedAsmnt};
+				JTextField[] strTF = {tfName, tfSection};
+				JTextField[] numTF = {tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfDeliverable1, tfIntegratedAsmnt};
+				
+				try {
+					if (!(noBlankTF(allTF))) { // if there is a blank TF
+						JOptionPane.showMessageDialog(null, "Please fill out every field!", "Error", JOptionPane.ERROR_MESSAGE);
+						throw new Exception();
+					}
+					if (!(validStrTF(strTF))) {
+						JOptionPane.showMessageDialog(null, "Invalid Name or Section!", "Error", JOptionPane.ERROR_MESSAGE);
+						throw new Exception();
+					}
+					if (!(validNumTF(numTF))) {
+						JOptionPane.showMessageDialog(null, "Invalid student number or grade! Please check all of your inputs.", "Error", JOptionPane.ERROR_MESSAGE);
+						throw new Exception();
+					}
+				
+				} catch (Exception exc) {
+					return ; // terminate actionPerformed method
+				}
+				
+				
 				File hciSheet = new File("data\\IT2622 Sheet.csv");
 				PrintWriter pw = null;
 				BufferedReader br = null;
@@ -636,10 +658,10 @@ public class IT2622Form extends guiCustoms {
 					br = new BufferedReader(new FileReader(hciSheet));
 					
 					if (br.readLine() == null)
-						pw.println("Name,Student Number,Section,PRELIMS,Prelim Grade,Transmuted Prelim Grade,Attendance,Recitation,Formatives,Long Test 1,Wireframe,Storyboard,Prototype,Exam,FINALS,Final Grade,Transmuted Final Grade,Attendance,Recitation,Assignment,Long Test 2,Long Test 3,Deliverable 1,Integrated Assmnt");
+						pw.println("Name,Student Number,Section,PRELIMS,Prelim Grade,Transmuted Prelim Grade,Attendance,Recitation,Formatives,Long Test 1,Wireframe,Storyboard,Prototype,Exam,FINALS,Final Grade,Transmuted Final Grade,Attendance,Recitation,Assignment,Long Test 2,Deliverable 1,Integrated Assmnt");
 					
 					pw.println(tfName.getText() + "," + tfStudentNo.getText() + "," + tfSection.getText() + "," + " " + "," + tfPrelimGrade.getText() + "," + tfTransmutedPrelimGrade.getText() + "," + tfPrelimAttendance.getText() + "," + tfPrelimRecitation.getText() + "," + tfFA.getText() + "," + tfLongTest1.getText() + "," + tfWireframe.getText() + "," + tfStoryboard.getText() + 
-							 "," + tfPrototype.getText() + "," + tfPrelimExam.getText() + "," + " " + "," + tfFinalGrade.getText() + "," + tfTransmutedFinalGrade.getText() + "," + tfFinalAttendance.getText() + "," + tfFinalRecitation.getText() + "," + tfAssignment.getText() + "," + tfLongTest2.getText() + "," + tfLongTest3.getText() + "," + tfDeliverable1.getText() + "," + tfIntegratedAsmnt.getText());
+							 "," + tfPrototype.getText() + "," + tfPrelimExam.getText() + "," + " " + "," + tfFinalGrade.getText() + "," + tfTransmutedFinalGrade.getText() + "," + tfFinalAttendance.getText() + "," + tfFinalRecitation.getText() + "," + tfAssignment.getText() + "," + tfLongTest2.getText() + "," + tfDeliverable1.getText() + "," + tfIntegratedAsmnt.getText());
 					pw.close();
 					
 					JOptionPane.showMessageDialog(null, "Done! Info saved to sheet.", "Info", JOptionPane.INFORMATION_MESSAGE);
