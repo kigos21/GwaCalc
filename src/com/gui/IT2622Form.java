@@ -325,7 +325,7 @@ public class IT2622Form extends guiCustoms {
 		tfFA.setHorizontalAlignment(JTextField.RIGHT);
 		tfFA.setBorder(BorderFactory.createEmptyBorder());
 		tfFA.setMaxScore(100);
-		tfFA.setName("Prelim Formative Assessments");
+		tfFA.setName("Formative Assessments");
 		gradeForm.add(tfFA);
 		
 		lblPrelimLongTest = new JLabel("Long Test (30%)");
@@ -450,8 +450,8 @@ public class IT2622Form extends guiCustoms {
 		tfTransmutedPrelimGrade.setHorizontalAlignment(JTextField.RIGHT);
 		tfTransmutedPrelimGrade.setEditable(false);
 		tfTransmutedPrelimGrade.setBorder(BorderFactory.createEmptyBorder());
-		tfPrelimExam.setMaxScore(100);
-		tfPrelimExam.setName("Transmuted Prelim Grade");
+		tfTransmutedPrelimGrade.setMaxScore(100);
+		tfTransmutedPrelimGrade.setName("Transmuted Prelim Grade");
 		gradeForm.add(tfTransmutedPrelimGrade);
 		
 		// FINALS
