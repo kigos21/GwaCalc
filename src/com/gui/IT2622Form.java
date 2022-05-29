@@ -589,15 +589,16 @@ public class IT2622Form extends guiCustoms {
 				
 				try {
 					if (!(noBlankTF(allTF))) { // if there is a blank TF
-						JOptionPane.showMessageDialog(null, "Please fill out every field!", "Error", JOptionPane.ERROR_MESSAGE);
+						// CustomDialog(String headContent, String messageContent, JPanel parentPane, String buttonContentConfirm, Color confirmColor)
+						CustomDialog cd = new CustomDialog("Err!", "Please fill out every field.", gradeForm, "OK", paneRed);
 						throw new Exception();
 					}
 					if (!(validStrTF(strTF))) {
-						JOptionPane.showMessageDialog(null, "Invalid Name or Section!", "Error", JOptionPane.ERROR_MESSAGE);
+						CustomDialog cd = new CustomDialog("Err!", "Invalid Name or Section.", gradeForm, "OK", paneRed);
 						throw new Exception();
 					}
 					if (!(validNumTF(numTF))) {
-						JOptionPane.showMessageDialog(null, "Invalid student number or grade! Please check all of your inputs.", "Error", JOptionPane.ERROR_MESSAGE);
+						CustomDialog cd = new CustomDialog("Err!", "Invalid student number or grade! Please check your inputs.", gradeForm, "OK", paneRed);
 						throw new Exception();
 					}
 				
@@ -632,22 +633,22 @@ public class IT2622Form extends guiCustoms {
 				
 				try {
 					if (!(noBlankTF(allTF))) { // if there is a blank TF
-						JOptionPane.showMessageDialog(null, "Please fill out every field!", "Error", JOptionPane.ERROR_MESSAGE);
+						// CustomDialog(String headContent, String messageContent, JPanel parentPane, String buttonContentConfirm, Color confirmColor)
+						CustomDialog cd = new CustomDialog("Err!", "Please fill out every field.", gradeForm, "OK", paneRed);
 						throw new Exception();
 					}
 					if (!(validStrTF(strTF))) {
-						JOptionPane.showMessageDialog(null, "Invalid Name or Section!", "Error", JOptionPane.ERROR_MESSAGE);
+						CustomDialog cd = new CustomDialog("Err!", "Invalid Name or Section.", gradeForm, "OK", paneRed);
 						throw new Exception();
 					}
 					if (!(validNumTF(numTF))) {
-						JOptionPane.showMessageDialog(null, "Invalid student number or grade! Please check all of your inputs.", "Error", JOptionPane.ERROR_MESSAGE);
+						CustomDialog cd = new CustomDialog("Err!", "Invalid student number or grade! Please check your inputs.", gradeForm, "OK", paneRed);
 						throw new Exception();
 					}
 				
 				} catch (Exception exc) {
 					return ; // terminate actionPerformed method
 				}
-				
 				
 				File hciSheet = new File("data\\IT2622 Sheet.csv");
 				PrintWriter pw = null;
@@ -664,7 +665,7 @@ public class IT2622Form extends guiCustoms {
 							 "," + tfPrototype.getText() + "," + tfPrelimExam.getText() + "," + " " + "," + tfFinalGrade.getText() + "," + tfTransmutedFinalGrade.getText() + "," + tfFinalAttendance.getText() + "," + tfFinalRecitation.getText() + "," + tfAssignment.getText() + "," + tfLongTest2.getText() + "," + tfDeliverable1.getText() + "," + tfIntegratedAsmnt.getText());
 					pw.close();
 					
-					JOptionPane.showMessageDialog(null, "Done! Info saved to sheet.", "Info", JOptionPane.INFORMATION_MESSAGE);
+					CustomDialog cd = new CustomDialog("Success!", "Info saved to sheet.",gradeForm,"OK",paneGreen);
 					
 				} catch (IOException e1) {
 					e1.printStackTrace();
