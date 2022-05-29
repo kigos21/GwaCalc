@@ -56,7 +56,7 @@ public class IT2622 {
 	}
 	
 	public double computeLongTestFinal(double longTest) {
-		longTestFinal = longTest * 0.3;
+		longTestFinal = (longTest/105*100)* 0.3;
 		return longTestFinal;
 	}
 	
