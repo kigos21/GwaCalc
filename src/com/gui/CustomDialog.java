@@ -8,7 +8,7 @@ import java.io.InputStream;
 
 import javax.swing.*;
 
-import com.gui.ICS2606Form.subjectGrade;
+import com.gui.ICS2606Form.SubjectGrade;
 
 public class CustomDialog extends guiCustoms{
 	Font gothamBookBold,gothamLight;
@@ -211,14 +211,14 @@ public class CustomDialog extends guiCustoms{
 				                JTextField j = (JTextField)c;
 				                j.setText("");
 				            }
-				            if (c instanceof subjectGrade)
+				            if (c instanceof SubjectGrade)
 				            {
-				            	subjectGrade j = (subjectGrade)c;
+				            	SubjectGrade j = (SubjectGrade)c;
 				                j.setText("");
 				            }
 				       }
 					 customPane.dispose();
-				}
+					}
 			});
 			
 			

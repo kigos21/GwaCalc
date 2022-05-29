@@ -63,4 +63,49 @@ public class ICS2606 {
 		subjectGrade = round(25*(ave-60)/40+75);
 		return subjectGrade;
 	}
+
+	public double getLabExerPrelims() {
+		return labExerPrelims;
+	}
+
+	public double getLongTestPrelims() {
+		return longTestPrelims;
+	}
+
+	public double getExamPrelims() {
+		return examPrelims;
+	}
+
+	public double getLabExerFinals() {
+		return labExerFinals;
+	}
+
+	public double getLongTestFinals() {
+		return longTestFinals;
+	}
+
+	public double getExamFinals() {
+		return examFinals;
+	}
+
+	public double getPrelimGrade() {
+		return prelimGrade;
+	}
+
+	public double getTransmutedPrelim() {
+		return transmutedPrelim;
+	}
+
+	public double getFinalGrade() {
+		return finalGrade;
+	}
+
+	public double getTransmutedFinal() {
+		return transmutedFinal;
+	}
+
+	public double getSubjectGrade() {
+		return subjectGrade;
+	}
+	
 }

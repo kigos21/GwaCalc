@@ -8,6 +8,8 @@ import java.io.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import com.gui.IT2622Form.ScoreOverloadException;
+import com.gui.IT2622Form.ScoreTextField;
 import com.user.*;
 
 public class ICS2606Form extends guiCustoms{
@@ -34,11 +36,12 @@ public class ICS2606Form extends guiCustoms{
 			lblIconHolder,lblStudentName,lblDepartment,
 			lblTransmutedTitle,lblSubjectGradeTitle;
 	
-	Integer scoreMax;
-	class subjectGrade extends JLabel{
+	ICS2606 comProg;
+	SubjectGrade lblSubjectGrade;
+	
+	class SubjectGrade extends JLabel{
 	}
 	
-	subjectGrade lblSubjectGrade;
 	// returns false when there are letters in the String, otherwise true 
 	public boolean isNumeric(String str) { 
 		try {  
@@ -49,31 +52,6 @@ public class ICS2606Form extends guiCustoms{
 			return false;  
 		}  
 	} 
-	
-	public boolean noBlankTF(JTextField[] allTF) {
-		for (JTextField tf: allTF) {
-			if (!(tf.getText().isBlank()))
-				continue;
-			return false;
-		
-		} return true;
-	}
-	
-	public boolean validStrTF(JTextField[] strTF) {
-		for (JTextField tf: strTF) {
-			if (isNumeric(tf.getText()))
-				return false;
-		
-		} return true;
-	}
-	
-	public boolean validNumTF(JTextField[] numTF) {
-		for (JTextField tf: numTF) {
-			if (!(isNumeric(tf.getText())))
-				return false;
-		
-		} return true;
-	}
 	
 	class BlankTextFieldException extends Exception {
 		public BlankTextFieldException(String textFieldName, JPanel parentPane) {
@@ -92,8 +70,8 @@ public class ICS2606Form extends guiCustoms{
 		}
 	}
 	class ScoreOverloadException extends Exception{
-		public ScoreOverloadException(String textFieldName, JPanel parentPane) {
-			CustomDialog cd = new CustomDialog("Error","Score exceeds the maximum grade in " + textFieldName, parentPane, "OK", paneRed);
+		public ScoreOverloadException(String header, String textFieldName, int maxScore,JPanel parentPane) {
+			CustomDialog cd = new CustomDialog(header,textFieldName +" exceeds the maximum score of " + maxScore, parentPane, "OK", paneRed);
 		}
 	}
 	
@@ -537,7 +515,7 @@ public class ICS2606Form extends guiCustoms{
 		lblSubjectGradeTitle.setForeground(Color.WHITE);
 		gradeForm.add(lblSubjectGradeTitle);
 		
-		lblSubjectGrade = new subjectGrade();
+		lblSubjectGrade = new SubjectGrade();
 		lblSubjectGrade.setBounds(829, 530, 300, 56);
 		lblSubjectGrade.setFont(gothamBook.deriveFont(Font.PLAIN,56));
 		lblSubjectGrade.setName("Subject Grade");
@@ -588,8 +566,7 @@ public class ICS2606Form extends guiCustoms{
 		bDisplay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//JTextField[] allTF = {txtName, txtStudentNo, txtSection, txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
-				JTextField[] prelimTF = {txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams};
-				JTextField[] finalTF = {txtLabExer4, txtLongTest3, txtFinalExams};
+				JTextField[] scoreTF = {txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
 				JTextField[] studentDetailsTF = {txtName, txtStudentNo, txtSection};
 				JTextField[] strTF = {txtName, txtSection};
 				JTextField[] numTF = {txtStudentNo, txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2, txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
@@ -597,23 +574,12 @@ public class ICS2606Form extends guiCustoms{
 				JTextField[] all50TF = {txtLongTest1, txtLongTest2, txtLongTest3};
 				
 				try {
-					for(int i = 0; i<prelimTF.length;i++) {
-						if(!prelimTF[i].getText().isBlank()){
+					for(int i = 0; i<scoreTF.length;i++) {
+						if(!scoreTF[i].getText().isBlank()){
 							continue;
 						}
 						else {
-							prelimTF[i].setText("0");
-							//throw new BlankTextFieldException(prelimTF[i].getName(),gradeForm);
-						}
-					}
-					
-					for(int i = 0; i<finalTF.length;i++) {
-						if(!finalTF[i].getText().isBlank()){
-							continue;
-						}
-						else {
-							finalTF[i].setText("0");
-							//throw new BlankTextFieldException(prelimTF[i].getName(),gradeForm);
+							scoreTF[i].setText("0");
 						}
 					}
 					
@@ -649,7 +615,7 @@ public class ICS2606Form extends guiCustoms{
 							continue;
 						}
 						else {
-						  throw new ScoreOverloadException(all100TF[i].getName(),gradeForm);
+						  throw new ScoreOverloadException("Cannot Compute!",all100TF[i].getName(),100,gradeForm);
 						}
 					}
 					
@@ -658,11 +624,11 @@ public class ICS2606Form extends guiCustoms{
 							continue;
 						}
 						else {
-						  throw new ScoreOverloadException(all50TF[i].getName(),gradeForm);
+						  throw new ScoreOverloadException("Cannot Compute!",all50TF[i].getName(),50,gradeForm);
 						}
 					}
 					
-					ICS2606 comProg = new ICS2606();
+					comProg = new ICS2606();
 	
 						comProg.labExerPrelims(Integer.parseInt(txtLabExer1.getText()), Integer.parseInt(txtLabExer2.getText()), Integer.parseInt(txtLabExer3.getText()));
 						comProg.longTestPrelims(Integer.parseInt(txtLongTest1.getText()), Integer.parseInt(txtLongTest2.getText()));
@@ -693,8 +659,93 @@ public class ICS2606Form extends guiCustoms{
 		bSave.setBorder(BorderFactory.createEmptyBorder());
 		bSave.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bSave.setForeground(Color.BLACK);
-		gradeForm.add(bSave);
 		
+		gradeForm.add(bSave);
+		// save listener
+				bSave.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						JTextField[] allTF = {txtName, txtStudentNo, txtSection, txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams, txtPrelimGrade, txtPrelimTransmuted, txtFinalGrade,txtFinalTransmuted};
+						JTextField[] scoreTF = {txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
+						JTextField[] studentDetailsTF = {txtName, txtStudentNo, txtSection};
+						JTextField[] strTF = {txtName, txtSection};
+						JTextField[] numTF = {txtStudentNo, txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2, txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
+						JTextField[] all100TF = {txtLabExer1, txtLabExer2, txtLabExer3,txtPrelimExams, txtLabExer4, txtFinalExams};
+						JTextField[] all50TF = {txtLongTest1, txtLongTest2, txtLongTest3};
+						
+						try {
+							for(int i = 0; i<allTF.length;i++) {
+								if(!allTF[i].getText().isBlank()){
+									continue;
+								}
+								else {
+									throw new BlankTextFieldException(allTF[i].getName()+". Please click Display again.",gradeForm);
+								}
+							}
+							
+							for(int i = 0; i<strTF.length;i++) {
+								if(!isNumeric(strTF[i].getText())){
+									continue;
+								}
+								else {
+								  throw new NumericsInStringException(strTF[i].getName(),gradeForm);
+								}
+							}
+							
+							for(int i = 0; i<numTF.length;i++) {
+								if(isNumeric(numTF[i].getText())){
+									continue;
+								}
+								else {
+									throw new StringInNumericsException(numTF[i].getName(),gradeForm);
+								}
+							}
+							
+							for(int i = 0; i<all100TF.length;i++) {
+								if(Integer.parseInt(all100TF[i].getText())>=0 && Integer.parseInt(all100TF[i].getText())<=100){
+									continue;
+								}
+								else {
+								  throw new ScoreOverloadException("Cannot Compute!",all100TF[i].getName(),100,gradeForm);
+								}
+							}
+							
+							for(int i = 0; i<all50TF.length;i++) {
+								if(Integer.parseInt(all50TF[i].getText())>=0 && Integer.parseInt(all50TF[i].getText())<=50){
+									continue;
+								}
+								else {
+								  throw new ScoreOverloadException("Cannot Compute!",all50TF[i].getName(),50,gradeForm);
+								}
+							}
+							
+						} catch (Exception exc) {
+							return ; // terminate actionPerformed method
+						}
+						
+						
+						File comProgSheet = new File("ICS2606 Sheet.csv");
+						PrintWriter pw = null;
+						BufferedReader br = null;
+						
+						try {
+							pw = new PrintWriter(new FileWriter(comProgSheet, true));
+							br = new BufferedReader(new FileReader(comProgSheet));
+							
+							if (br.readLine() == null)
+								pw.println("Name,Student Number,Section,PRELIMS,Prelim Grade,Transmuted Prelim Grade,Prelims Lab Exercise,Prelims Long Test,Prelims Exam,FINALS,Final Grade,Transmuted Final Grade,Finals Lab Exercise,Finals Long Test,Finals Exam");
+							
+							pw.println(txtName.getText() + "," + txtStudentNo.getText() + "," + txtSection.getText() + "," + "  " + "," + comProg.getPrelimGrade() + "," + comProg.getTransmutedPrelim() + "," + comProg.getLabExerPrelims() + ","  + comProg.getLongTestPrelims() +
+									"," + comProg.getExamPrelims() + "," + "  " + "," + comProg.getFinalGrade()+ "," + comProg.transmutedFinal() + "," + comProg.getLabExerFinals() + "," + comProg.getLongTestFinals() + "," + comProg.getExamFinals());
+							pw.close();
+							
+							CustomDialog cd = new CustomDialog("Success!", "Info saved to sheet.",gradeForm,"OK",paneGreen);
+							
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+					}
+				});
 		add(mainContainer);
 		setVisible(true);
 	}

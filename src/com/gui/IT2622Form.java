@@ -5,6 +5,11 @@ import java.io.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import com.gui.ICS2606Form.BlankTextFieldException;
+import com.gui.ICS2606Form.NumericsInStringException;
+import com.gui.ICS2606Form.ScoreOverloadException;
+import com.gui.ICS2606Form.StringInNumericsException;
 import com.user.*;
 import java.awt.event.*;
 
@@ -30,15 +35,29 @@ public class IT2622Form extends guiCustoms {
 			lblFinalDeliverable, lblDeliverable1, lblIntegratedAsmnt,
 			lblFinalGrade, lblTransmutedFinalGrade;
 	
-	JTextField tfName, tfStudentNo, tfSection, 
-			tfPrelimAttendance, tfPrelimRecitation,  tfFA,
+	JTextField tfName, tfStudentNo, tfSection;
+	
+	ScoreTextField tfPrelimAttendance, tfPrelimRecitation,  tfFA,
 			tfLongTest1, tfWireframe, tfStoryboard, tfPrototype,
 			tfPrelimExam, tfPrelimGrade, tfTransmutedPrelimGrade,
 			
 			tfFinalAttendance, tfFinalRecitation, tfAssignment,
 			tfLongTest2, tfDeliverable1, tfIntegratedAsmnt,
 			tfFinalGrade, tfTransmutedFinalGrade;
+	
+	
+	class ScoreTextField extends JTextField{
+		private int maxScore;
 
+		public int getMaxScore() {
+			return maxScore;
+		}
+
+		public void setMaxScore(int maxScore) {
+			this.maxScore = maxScore;
+		}
+	} 
+	
 	// returns false when there are letters in the String, otherwise true 
 	public boolean isNumeric(String str) { 
 		try {  
@@ -69,10 +88,32 @@ public class IT2622Form extends guiCustoms {
 	
 	public boolean validNumTF(JTextField[] numTF) {
 		for (JTextField tf: numTF) {
-			if (!(isNumeric(tf.getText())))
+			if (!(isNumeric(tf.getText()))) 
 				return false;
 		
 		} return true;
+	}
+	
+	class BlankTextFieldException extends Exception {
+		public BlankTextFieldException(String textFieldName, JPanel parentPane) {
+			CustomDialog cd = new CustomDialog("Error", "Empty " + textFieldName, parentPane, "OK", paneRed);
+		}
+	}
+
+	class NumericsInStringException extends Exception {
+		public NumericsInStringException(String textFieldName, JPanel parentPane) {
+			CustomDialog cd = new CustomDialog("Error", "Invalid character found in " + textFieldName, parentPane, "OK", paneRed);
+		}
+	}
+	class StringInNumericsException extends Exception {
+		public StringInNumericsException(String textFieldName, JPanel parentPane) {
+			CustomDialog cd = new CustomDialog("Error","Invalid number found in " + textFieldName, parentPane, "OK", paneRed);
+		}
+	}
+	class ScoreOverloadException extends Exception{
+		public ScoreOverloadException(String header, String textFieldName, int maxScore,JPanel parentPane) {
+			CustomDialog cd = new CustomDialog(header,textFieldName +" exceeds the maximum score of " + maxScore, parentPane, "OK", paneRed);
+		}
 	}
 	
 	public IT2622Form() {	
@@ -82,7 +123,7 @@ public class IT2622Form extends guiCustoms {
 			InputStream isgothamBold = getClass().getResourceAsStream("/res/fonts/GothamBold.ttf");
 			InputStream isgothamLight = getClass().getResourceAsStream("/res/fonts/GothamLight.ttf");
 			futura = Font.createFont(Font.TRUETYPE_FONT, isfutura);
-			gothamBook = Font.createFont(Font.TRUETYPE_FONT, isgotham);
+			gothamBook = Font.createFont(Font.TRUETYPE_FONT, isgotham); 
 			gothamBookBold = Font.createFont(Font.TRUETYPE_FONT, isgothamBold);
 			gothamLight = Font.createFont(Font.TRUETYPE_FONT, isgothamLight);
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -187,9 +228,10 @@ public class IT2622Form extends guiCustoms {
 		
 		tfName = new JTextField("");
 		tfName.setBounds(270,138,340,18);
-		tfName.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfName.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfName.setForeground(textfieldGray);
 		tfName.setBorder(BorderFactory.createEmptyBorder());
+		tfName.setName("Name");
 		gradeForm.add(tfName);
 		
 		lblStudentNo = new JLabel("Student Number");
@@ -200,9 +242,10 @@ public class IT2622Form extends guiCustoms {
 		
 		tfStudentNo = new JTextField("");
 		tfStudentNo.setBounds(749,138,164,18);
-		tfStudentNo.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfStudentNo.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfStudentNo.setForeground(textfieldGray);
 		tfStudentNo.setBorder(BorderFactory.createEmptyBorder());
+		tfStudentNo.setName("Student Number");
 		gradeForm.add(tfStudentNo);
 		
 		lblSection = new JLabel("Section");
@@ -213,9 +256,10 @@ public class IT2622Form extends guiCustoms {
 		
 		tfSection = new JTextField("");
 		tfSection.setBounds(990,138,72,18);
-		tfSection.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfSection.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfSection.setForeground(textfieldGray);
 		tfSection.setBorder(BorderFactory.createEmptyBorder());
+		tfSection.setName("Section");
 		gradeForm.add(tfSection);
 		
 		lblPrelims = new JLabel("Prelims");
@@ -242,12 +286,14 @@ public class IT2622Form extends guiCustoms {
 		lblPrelimAttendance.setForeground(Color.WHITE);
 		gradeForm.add(lblPrelimAttendance);
 		
-		tfPrelimAttendance = new JTextField("");
+		tfPrelimAttendance = new ScoreTextField();
 		tfPrelimAttendance.setBounds(413,232,196,18);
-		tfPrelimAttendance.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfPrelimAttendance.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfPrelimAttendance.setForeground(textfieldGray);
 		tfPrelimAttendance.setHorizontalAlignment(JTextField.RIGHT);
 		tfPrelimAttendance.setBorder(BorderFactory.createEmptyBorder());
+		tfPrelimAttendance.setMaxScore(100);
+		tfPrelimAttendance.setName("Prelim Attendance");
 		gradeForm.add(tfPrelimAttendance);
 		
 		lblPrelimRecitation = new JLabel("Recitation", JLabel.RIGHT);
@@ -256,12 +302,14 @@ public class IT2622Form extends guiCustoms {
 		lblPrelimRecitation.setForeground(Color.WHITE);
 		gradeForm.add(lblPrelimRecitation);
 		
-		tfPrelimRecitation = new JTextField("");
+		tfPrelimRecitation = new ScoreTextField();
 		tfPrelimRecitation.setBounds(413,262,196,18);
-		tfPrelimRecitation.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfPrelimRecitation.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfPrelimRecitation.setForeground(textfieldGray);
 		tfPrelimRecitation.setHorizontalAlignment(JTextField.RIGHT);
 		tfPrelimRecitation.setBorder(BorderFactory.createEmptyBorder());
+		tfPrelimRecitation.setMaxScore(100);
+		tfPrelimRecitation.setName("Prelim Recitation");
 		gradeForm.add(tfPrelimRecitation);
 		
 		lblFA = new JLabel("Formative Assessments", JLabel.RIGHT);
@@ -270,12 +318,14 @@ public class IT2622Form extends guiCustoms {
 		lblFA.setForeground(Color.WHITE);
 		gradeForm.add(lblFA);
 		
-		tfFA = new JTextField("");
+		tfFA = new ScoreTextField();
 		tfFA.setBounds(413,292,196,18);
-		tfFA.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfFA.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfFA.setForeground(textfieldGray);
 		tfFA.setHorizontalAlignment(JTextField.RIGHT);
 		tfFA.setBorder(BorderFactory.createEmptyBorder());
+		tfFA.setMaxScore(100);
+		tfFA.setName("Prelim Formative Assessments");
 		gradeForm.add(tfFA);
 		
 		lblPrelimLongTest = new JLabel("Long Test (30%)");
@@ -290,12 +340,14 @@ public class IT2622Form extends guiCustoms {
 		lblLongTest1.setForeground(Color.WHITE);
 		gradeForm.add(lblLongTest1);
 		
-		tfLongTest1 = new JTextField("");
+		tfLongTest1 = new ScoreTextField();
 		tfLongTest1.setBounds(413,356,196,18);
-		tfLongTest1.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfLongTest1.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfLongTest1.setForeground(textfieldGray);
 		tfLongTest1.setHorizontalAlignment(JTextField.RIGHT);
 		tfLongTest1.setBorder(BorderFactory.createEmptyBorder());
+		tfLongTest1.setMaxScore(70);
+		tfLongTest1.setName("Long Test 1");
 		gradeForm.add(tfLongTest1);
 		
 		lblPrelimDeliverable = new JLabel("Deliverable (30%)");
@@ -310,12 +362,14 @@ public class IT2622Form extends guiCustoms {
 		lblWireframe.setForeground(Color.WHITE);
 		gradeForm.add(lblWireframe);
 		
-		tfWireframe = new JTextField("");
+		tfWireframe = new ScoreTextField();
 		tfWireframe.setBounds(302,416,42,18);
-		tfWireframe.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfWireframe.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfWireframe.setForeground(textfieldGray);
 		tfWireframe.setHorizontalAlignment(JTextField.RIGHT);
 		tfWireframe.setBorder(BorderFactory.createEmptyBorder());
+		tfWireframe.setMaxScore(24);
+		tfWireframe.setName("Wireframe");
 		gradeForm.add(tfWireframe);
 		
 		lblStoryboard = new JLabel("Storyboard");
@@ -324,12 +378,14 @@ public class IT2622Form extends guiCustoms {
 		lblStoryboard.setForeground(Color.WHITE);
 		gradeForm.add(lblStoryboard);
 		
-		tfStoryboard = new JTextField("");
+		tfStoryboard = new ScoreTextField();
 		tfStoryboard.setBounds(440,416,42,18);
-		tfStoryboard.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfStoryboard.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfStoryboard.setForeground(textfieldGray);
 		tfStoryboard.setHorizontalAlignment(JTextField.RIGHT);
 		tfStoryboard.setBorder(BorderFactory.createEmptyBorder());
+		tfStoryboard.setMaxScore(40);
+		tfStoryboard.setName("Storyboard");
 		gradeForm.add(tfStoryboard);
 		
 		lblPrototype = new JLabel("Prototype", JLabel.RIGHT);
@@ -338,12 +394,14 @@ public class IT2622Form extends guiCustoms {
 		lblPrototype.setForeground(Color.WHITE);
 		gradeForm.add(lblPrototype);
 		
-		tfPrototype = new JTextField("");
+		tfPrototype = new ScoreTextField();
 		tfPrototype.setBounds(567,416,42,18);
-		tfPrototype.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfPrototype.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfPrototype.setForeground(textfieldGray);
 		tfPrototype.setHorizontalAlignment(JTextField.RIGHT);
 		tfPrototype.setBorder(BorderFactory.createEmptyBorder());
+		tfPrototype.setMaxScore(32);
+		tfPrototype.setName("Prototype");
 		gradeForm.add(tfPrototype);
 		
 		lblPrelimExam = new JLabel("Prelim Exam (30%)");
@@ -352,12 +410,14 @@ public class IT2622Form extends guiCustoms {
 		lblPrelimExam.setForeground(Color.WHITE);
 		gradeForm.add(lblPrelimExam);
 		
-		tfPrelimExam = new JTextField("");
+		tfPrelimExam = new ScoreTextField();
 		tfPrelimExam.setBounds(413,461,196,18);
-		tfPrelimExam.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfPrelimExam.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfPrelimExam.setForeground(textfieldGray);
 		tfPrelimExam.setHorizontalAlignment(JTextField.RIGHT);
 		tfPrelimExam.setBorder(BorderFactory.createEmptyBorder());
+		tfPrelimExam.setMaxScore(100);
+		tfPrelimExam.setName("Prelim Exams");
 		gradeForm.add(tfPrelimExam);
 		
 		lblPrelimGrade = new JLabel("Prelim Grade", JLabel.RIGHT);
@@ -366,13 +426,15 @@ public class IT2622Form extends guiCustoms {
 		lblPrelimGrade.setForeground(Color.WHITE);
 		gradeForm.add(lblPrelimGrade);
 		
-		tfPrelimGrade = new JTextField("");
+		tfPrelimGrade = new ScoreTextField();
 		tfPrelimGrade.setBounds(541,501,68,28);
-		tfPrelimGrade.setFont(gothamBook.deriveFont(Font.BOLD,20));
+		tfPrelimGrade.setFont(gothamBookBold.deriveFont(Font.BOLD,20));
 		tfPrelimGrade.setForeground(textfieldGray);
 		tfPrelimGrade.setHorizontalAlignment(JTextField.RIGHT);
 		tfPrelimGrade.setEditable(false);
 		tfPrelimGrade.setBorder(BorderFactory.createEmptyBorder());
+		tfPrelimExam.setMaxScore(100);
+		tfPrelimExam.setName("Prelim Grade");
 		gradeForm.add(tfPrelimGrade);
 		
 		lblTransmutedPrelimGrade = new JLabel("Transmuted Prelim Grade", JLabel.RIGHT);
@@ -381,13 +443,15 @@ public class IT2622Form extends guiCustoms {
 		lblTransmutedPrelimGrade.setForeground(Color.WHITE);
 		gradeForm.add(lblTransmutedPrelimGrade);
 		
-		tfTransmutedPrelimGrade = new JTextField("");
+		tfTransmutedPrelimGrade = new ScoreTextField();
 		tfTransmutedPrelimGrade.setBounds(541,539,68,28);
-		tfTransmutedPrelimGrade.setFont(gothamBook.deriveFont(Font.BOLD,20));
+		tfTransmutedPrelimGrade.setFont(gothamBookBold.deriveFont(Font.BOLD,20));
 		tfTransmutedPrelimGrade.setForeground(textfieldGray);
 		tfTransmutedPrelimGrade.setHorizontalAlignment(JTextField.RIGHT);
 		tfTransmutedPrelimGrade.setEditable(false);
 		tfTransmutedPrelimGrade.setBorder(BorderFactory.createEmptyBorder());
+		tfPrelimExam.setMaxScore(100);
+		tfPrelimExam.setName("Transmuted Prelim Grade");
 		gradeForm.add(tfTransmutedPrelimGrade);
 		
 		// FINALS
@@ -415,28 +479,34 @@ public class IT2622Form extends guiCustoms {
 		lblAssignment.setForeground(Color.WHITE);
 		gradeForm.add(lblAssignment);
 		
-		tfFinalAttendance = new JTextField("");
+		tfFinalAttendance = new ScoreTextField();
 		tfFinalAttendance.setBounds(866,232,196,18);
-		tfFinalAttendance.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfFinalAttendance.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfFinalAttendance.setForeground(textfieldGray);
 		tfFinalAttendance.setHorizontalAlignment(JTextField.RIGHT);
 		tfFinalAttendance.setBorder(BorderFactory.createEmptyBorder());
+		tfFinalAttendance.setMaxScore(100);
+		tfFinalAttendance.setName("Finals Attendance");
 		gradeForm.add(tfFinalAttendance);
 		
-		tfFinalRecitation = new JTextField("");
+		tfFinalRecitation = new ScoreTextField();
 		tfFinalRecitation.setBounds(866,262,196,18);
-		tfFinalRecitation.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfFinalRecitation.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfFinalRecitation.setForeground(textfieldGray);
 		tfFinalRecitation.setHorizontalAlignment(JTextField.RIGHT);
 		tfFinalRecitation.setBorder(BorderFactory.createEmptyBorder());
+		tfFinalRecitation.setMaxScore(100);
+		tfFinalRecitation.setName("Finals Recitation");
 		gradeForm.add(tfFinalRecitation);
 		
-		tfAssignment = new JTextField("");
+		tfAssignment = new ScoreTextField();
 		tfAssignment.setBounds(866,292,196,18);
-		tfAssignment.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfAssignment.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfAssignment.setForeground(textfieldGray);
 		tfAssignment.setHorizontalAlignment(JTextField.RIGHT);
 		tfAssignment.setBorder(BorderFactory.createEmptyBorder());
+		tfAssignment.setMaxScore(100);
+		tfAssignment.setName("Finals Assignments");
 		gradeForm.add(tfAssignment);
 		
 		lblFinalLongTest = new JLabel("Long Test (30%)");
@@ -451,12 +521,14 @@ public class IT2622Form extends guiCustoms {
 		lblLongTest2.setForeground(Color.WHITE);
 		gradeForm.add(lblLongTest2);
 		
-		tfLongTest2 = new JTextField("");
+		tfLongTest2 = new ScoreTextField();
 		tfLongTest2.setBounds(866,356,196,18);
-		tfLongTest2.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfLongTest2.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfLongTest2.setForeground(textfieldGray);
 		tfLongTest2.setHorizontalAlignment(JTextField.RIGHT);
 		tfLongTest2.setBorder(BorderFactory.createEmptyBorder());
+		tfLongTest2.setMaxScore(105);
+		tfLongTest2.setName("Long Test 2");
 		gradeForm.add(tfLongTest2);
 		
 		lblFinalDeliverable = new JLabel("Deliverable (30%)");
@@ -471,12 +543,14 @@ public class IT2622Form extends guiCustoms {
 		lblDeliverable1.setForeground(Color.WHITE);
 		gradeForm.add(lblDeliverable1);
 		
-		tfDeliverable1 = new JTextField("");
+		tfDeliverable1 = new ScoreTextField();
 		tfDeliverable1.setBounds(866,416,196,18);
-		tfDeliverable1.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfDeliverable1.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfDeliverable1.setForeground(textfieldGray);
 		tfDeliverable1.setHorizontalAlignment(JTextField.RIGHT);
 		tfDeliverable1.setBorder(BorderFactory.createEmptyBorder());
+		tfDeliverable1.setMaxScore(100);
+		tfDeliverable1.setName("Deliverable 1");
 		gradeForm.add(tfDeliverable1);
 		
 		lblIntegratedAsmnt = new JLabel("Integrated Asmnt. (30%)");
@@ -485,12 +559,14 @@ public class IT2622Form extends guiCustoms {
 		lblIntegratedAsmnt.setForeground(Color.WHITE);
 		gradeForm.add(lblIntegratedAsmnt);
 		
-		tfIntegratedAsmnt = new JTextField("");
+		tfIntegratedAsmnt = new ScoreTextField();
 		tfIntegratedAsmnt.setBounds(866,461,196,18);
-		tfIntegratedAsmnt.setFont(gothamBook.deriveFont(Font.PLAIN,15));
+		tfIntegratedAsmnt.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfIntegratedAsmnt.setForeground(textfieldGray);
 		tfIntegratedAsmnt.setHorizontalAlignment(JTextField.RIGHT);
 		tfIntegratedAsmnt.setBorder(BorderFactory.createEmptyBorder());
+		tfIntegratedAsmnt.setMaxScore(100);
+		tfIntegratedAsmnt.setName("Integrated Assessment");
 		gradeForm.add(tfIntegratedAsmnt);
 		
 		lblFinalGrade = new JLabel("Final Grade", JLabel.RIGHT);
@@ -505,22 +581,26 @@ public class IT2622Form extends guiCustoms {
 		lblTransmutedFinalGrade.setForeground(Color.WHITE);
 		gradeForm.add(lblTransmutedFinalGrade);
 		
-		tfFinalGrade = new JTextField("");
+		tfFinalGrade = new ScoreTextField();
 		tfFinalGrade.setBounds(994,501,68,28);
-		tfFinalGrade.setFont(gothamBook.deriveFont(Font.BOLD,20));
+		tfFinalGrade.setFont(gothamBookBold.deriveFont(Font.BOLD,20));
 		tfFinalGrade.setForeground(textfieldGray);
 		tfFinalGrade.setHorizontalAlignment(JTextField.RIGHT);
 		tfFinalGrade.setEditable(false);
 		tfFinalGrade.setBorder(BorderFactory.createEmptyBorder());
+		tfFinalGrade.setMaxScore(100);
+		tfFinalGrade.setName("Final Grade");
 		gradeForm.add(tfFinalGrade);
 		
-		tfTransmutedFinalGrade = new JTextField("");
+		tfTransmutedFinalGrade = new ScoreTextField();
 		tfTransmutedFinalGrade.setBounds(994,539,68,28);
-		tfTransmutedFinalGrade.setFont(gothamBook.deriveFont(Font.BOLD,20));
+		tfTransmutedFinalGrade.setFont(gothamBookBold.deriveFont(Font.BOLD,20));
 		tfTransmutedFinalGrade.setForeground(textfieldGray);
 		tfTransmutedFinalGrade.setHorizontalAlignment(JTextField.RIGHT);
 		tfTransmutedFinalGrade.setEditable(false);
 		tfTransmutedFinalGrade.setBorder(BorderFactory.createEmptyBorder());
+		tfTransmutedFinalGrade.setMaxScore(100);
+		tfTransmutedFinalGrade.setName("Transmuted Final Grade");
 		gradeForm.add(tfTransmutedFinalGrade);
 		
 		bClear = new JButton("Clear");
@@ -530,13 +610,6 @@ public class IT2622Form extends guiCustoms {
 		bClear.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bClear.setForeground(Color.BLACK);
 		gradeForm.add(bClear);
-		
-		bClear.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CoursePicker cP = new CoursePicker();
-				CustomDialog cd = new CustomDialog("Changes will be discarded","Are you sure you want to clear the forms?",gradeForm,"Cancel","Continue	",paneRed);
-			}
-		});
 		
 		bDisplay = new JButton("Display");
 		bDisplay.setBounds(555, 610, 171, 46);
@@ -584,41 +657,76 @@ public class IT2622Form extends guiCustoms {
 				
 				// check if inputs are proper for respective fields
 				JTextField[] allTF = {tfName, tfSection, tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfDeliverable1, tfIntegratedAsmnt};
+				ScoreTextField[] prelimTF = {tfPrelimAttendance, tfPrelimRecitation, tfFA,tfLongTest1, tfWireframe, tfStoryboard,tfPrototype,tfPrelimExam};
+				ScoreTextField[] finalTF = {tfFinalAttendance, tfFinalRecitation, tfAssignment,tfLongTest2,tfDeliverable1,tfIntegratedAsmnt};
+				ScoreTextField[] scoreTF = {tfPrelimAttendance, tfPrelimRecitation, tfFA,tfLongTest1, tfWireframe, tfStoryboard,tfPrototype,tfPrelimExam,tfFinalAttendance, tfFinalRecitation, tfAssignment,tfLongTest2,tfDeliverable1,tfIntegratedAsmnt};
+				JTextField[] studentDetailsTF = {tfName, tfStudentNo, tfSection};
 				JTextField[] strTF = {tfName, tfSection};
 				JTextField[] numTF = {tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfDeliverable1, tfIntegratedAsmnt};
 				
 				try {
-					if (!(noBlankTF(allTF))) { // if there is a blank TF
-						// CustomDialog(String headContent, String messageContent, JPanel parentPane, String buttonContentConfirm, Color confirmColor)
-						CustomDialog cd = new CustomDialog("Err!", "Please fill out every field.", gradeForm, "OK", paneRed);
-						throw new Exception();
-					}
-					if (!(validStrTF(strTF))) {
-						CustomDialog cd = new CustomDialog("Err!", "Invalid Name or Section.", gradeForm, "OK", paneRed);
-						throw new Exception();
-					}
-					if (!(validNumTF(numTF))) {
-						CustomDialog cd = new CustomDialog("Err!", "Invalid student number or grade! Please check your inputs.", gradeForm, "OK", paneRed);
-						throw new Exception();
-					}
-				
+						for(int i = 0; i<scoreTF.length;i++) {
+							if(!scoreTF[i].getText().isBlank()){
+								continue;
+							}
+							else {
+								scoreTF[i].setText("0");
+								//throw new BlankTextFieldException(prelimTF[i].getName(),gradeForm);
+							}
+						}
+						
+						for(int i = 0; i<studentDetailsTF.length;i++) {
+							if(!studentDetailsTF[i].getText().isBlank()){
+								continue;
+							}
+							else {
+							  throw new BlankTextFieldException(studentDetailsTF[i].getName(),gradeForm);
+							}
+						}
+						
+						for(int i = 0; i<strTF.length;i++) {
+							if(!isNumeric(strTF[i].getText())){
+								continue;
+							}
+							else {
+							  throw new NumericsInStringException(strTF[i].getName(),gradeForm);
+							}
+						}
+						
+						for(int i = 0; i<numTF.length;i++) {
+							if(isNumeric(numTF[i].getText())){
+								continue;
+							}
+							else {
+								throw new StringInNumericsException(numTF[i].getName(),gradeForm);
+							}
+						}
+						
+						for(int i = 0; i<scoreTF.length;i++) {
+							if(Integer.parseInt(scoreTF[i].getText())>=0 && Integer.parseInt(scoreTF[i].getText())<=scoreTF[i].maxScore){
+								continue;
+							}
+							else {
+							  throw new ScoreOverloadException("Cannot Compute!",scoreTF[i].getName(),scoreTF[i].maxScore,gradeForm);
+							}
+						}
+						
+						hci.computeClassStandingPrelim(Double.parseDouble(tfPrelimAttendance.getText()), Double.parseDouble(tfPrelimRecitation.getText()), Double.parseDouble(tfFA.getText()));
+						hci.computeLongTestPrelim(Double.parseDouble(tfLongTest1.getText()));
+						hci.computeDeliverablePrelim(Double.parseDouble(tfWireframe.getText()), Double.parseDouble(tfStoryboard.getText()), Double.parseDouble(tfPrototype.getText()));
+						hci.computeExamPrelim(Double.parseDouble(tfPrelimExam.getText()));
+						tfPrelimGrade.setText(hci.computeRawPrelimGrade()+"");
+						tfTransmutedPrelimGrade.setText(hci.computeTransmutedPrelimGrade()+"");
+						
+						hci.computeClassStandingFinal(Double.parseDouble(tfFinalAttendance.getText()), Double.parseDouble(tfFinalRecitation.getText()), Double.parseDouble(tfAssignment.getText()));
+						hci.computeLongTestFinal(Double.parseDouble(tfLongTest2.getText()));
+						hci.computeDeliverableFinal(Double.parseDouble(tfDeliverable1.getText()));
+						hci.computeIntegratedAssmnt(Double.parseDouble(tfIntegratedAsmnt.getText()));
+						tfFinalGrade.setText(hci.computeRawFinalGrade()+"");
+						tfTransmutedFinalGrade.setText(hci.computeTransmutedFinalGrade()+"");
 				} catch (Exception exc) {
 					return ; // terminate actionPerformed method
 				}
-				
-				hci.computeClassStandingPrelim(Double.parseDouble(tfPrelimAttendance.getText()), Double.parseDouble(tfPrelimRecitation.getText()), Double.parseDouble(tfFA.getText()));
-				hci.computeLongTestPrelim(Double.parseDouble(tfLongTest1.getText()));
-				hci.computeDeliverablePrelim(Double.parseDouble(tfWireframe.getText()), Double.parseDouble(tfStoryboard.getText()), Double.parseDouble(tfPrototype.getText()));
-				hci.computeExamPrelim(Double.parseDouble(tfPrelimExam.getText()));
-				tfPrelimGrade.setText(hci.computeRawPrelimGrade()+"");
-				tfTransmutedPrelimGrade.setText(hci.computeTransmutedPrelimGrade()+"");
-				
-				hci.computeClassStandingFinal(Double.parseDouble(tfFinalAttendance.getText()), Double.parseDouble(tfFinalRecitation.getText()), Double.parseDouble(tfAssignment.getText()));
-				hci.computeLongTestFinal(Double.parseDouble(tfLongTest2.getText()));
-				hci.computeDeliverableFinal(Double.parseDouble(tfDeliverable1.getText()));
-				hci.computeIntegratedAssmnt(Double.parseDouble(tfIntegratedAsmnt.getText()));
-				tfFinalGrade.setText(hci.computeRawFinalGrade()+"");
-				tfTransmutedFinalGrade.setText(hci.computeTransmutedFinalGrade()+"");
 			}
 		});
 		
@@ -630,6 +738,7 @@ public class IT2622Form extends guiCustoms {
 				JTextField[] allTF = {tfName, tfSection, tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfDeliverable1, tfIntegratedAsmnt};
 				JTextField[] strTF = {tfName, tfSection};
 				JTextField[] numTF = {tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfDeliverable1, tfIntegratedAsmnt};
+				ScoreTextField[] scoreTF = {tfPrelimAttendance, tfPrelimRecitation, tfFA,tfLongTest1, tfWireframe, tfStoryboard,tfPrototype,tfPrelimExam,tfFinalAttendance, tfFinalRecitation, tfAssignment,tfLongTest2,tfDeliverable1,tfIntegratedAsmnt};
 				
 				try {
 					if (!(noBlankTF(allTF))) { // if there is a blank TF
@@ -645,12 +754,22 @@ public class IT2622Form extends guiCustoms {
 						CustomDialog cd = new CustomDialog("Err!", "Invalid student number or grade! Please check your inputs.", gradeForm, "OK", paneRed);
 						throw new Exception();
 					}
-				
+					
+					for(int i = 0; i<scoreTF.length;i++) {
+						if(Integer.parseInt(scoreTF[i].getText())>=0 && Integer.parseInt(scoreTF[i].getText())<=scoreTF[i].maxScore){
+							continue;
+						}
+						else {
+						  throw new ScoreOverloadException("Cannot Print!",scoreTF[i].getName(),scoreTF[i].maxScore,gradeForm);
+						}
+					}
+					
 				} catch (Exception exc) {
 					return ; // terminate actionPerformed method
 				}
 				
-				File hciSheet = new File("data\\IT2622 Sheet.csv");
+				
+				File hciSheet = new File("IT2622 Sheet.csv");
 				PrintWriter pw = null;
 				BufferedReader br = null;
 				
