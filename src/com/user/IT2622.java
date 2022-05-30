@@ -87,32 +87,32 @@ public class IT2622 {
 		return transmutedFinalGrade;
 	}
 	
-	public double gwaReturn(double transmutedFG) {
-		if(transmutedFG==0) {
+	public double gwa(double transmutedFG) {
+		if(transmutedFG>=0 && transmutedFG<75) {
 			gwa = 5.00;
 		}
-		else if (transmutedFG>=75 && transmutedFG<=78) {
+		else if (transmutedFG>=75 && transmutedFG<79) {
 			gwa = 3.00;
 		}
-		else if (transmutedFG>=79 && transmutedFG<=81) {
+		else if (transmutedFG>=79 && transmutedFG<82) {
 			gwa = 2.75;
 		}
-		else if (transmutedFG>=82 && transmutedFG<=83) {
+		else if (transmutedFG>=82 && transmutedFG<84) {
 			gwa = 2.50;
 		}
-		else if (transmutedFG>=84 && transmutedFG<=86) {
+		else if (transmutedFG>=84 && transmutedFG<87) {
 			gwa = 2.25;
 		}
-		else if (transmutedFG>=87 && transmutedFG<=88) {
+		else if (transmutedFG>=87 && transmutedFG<89) {
 			gwa = 2.00;
 		}
-		else if (transmutedFG>=89 && transmutedFG<=91) {
+		else if (transmutedFG>=89 && transmutedFG<92) {
 			gwa = 1.75;
 		}
-		else if (transmutedFG>=92 && transmutedFG<=93) {
+		else if (transmutedFG>=92 && transmutedFG<94) {
 			gwa = 1.50;
 		}
-		else if (transmutedFG>=94 && transmutedFG<=95) {
+		else if (transmutedFG>=94 && transmutedFG<96) {
 			gwa = 1.25;
 		}
 		else if (transmutedFG>=96 && transmutedFG<=100) {

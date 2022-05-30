@@ -65,31 +65,31 @@ public class ICS2606 {
 	}
 	
 	public double gwa(double subjGrade) {
-		if(subjGrade==0) {
+		if(subjGrade>=0 && subjGrade<75) {
 			gwa = 5.00;
 		}
-		else if (subjGrade>=75 && subjGrade<=78) {
+		else if (subjGrade>=75 && subjGrade<79) {
 			gwa = 3.00;
 		}
-		else if (subjGrade>=79 && subjGrade<=81) {
+		else if (subjGrade>=79 && subjGrade<82) {
 			gwa = 2.75;
 		}
-		else if (subjGrade>=82 && subjGrade<=83) {
+		else if (subjGrade>=82 && subjGrade<84) {
 			gwa = 2.50;
 		}
-		else if (subjGrade>=84 && subjGrade<=86) {
+		else if (subjGrade>=84 && subjGrade<87) {
 			gwa = 2.25;
 		}
-		else if (subjGrade>=87 && subjGrade<=88) {
+		else if (subjGrade>=87 && subjGrade<89) {
 			gwa = 2.00;
 		}
-		else if (subjGrade>=89 && subjGrade<=91) {
+		else if (subjGrade>=89 && subjGrade<92) {
 			gwa = 1.75;
 		}
-		else if (subjGrade>=92 && subjGrade<=93) {
+		else if (subjGrade>=92 && subjGrade<94) {
 			gwa = 1.50;
 		}
-		else if (subjGrade>=94 && subjGrade<=95) {
+		else if (subjGrade>=94 && subjGrade<96) {
 			gwa = 1.25;
 		}
 		else if (subjGrade>=96 && subjGrade<=100) {
