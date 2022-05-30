@@ -9,7 +9,7 @@ public class IT2622 {
 	private double classStandingPrelim, longTestPrelim, deliverablePrelim, examPrelim,
 	rawPrelimGrade, transmutedPrelimGrade, 
 	classStandingFinal, longTestFinal, deliverableFinal, integratedAssmnt,
-	rawFinalGrade, transmutedFinalGrade;
+	rawFinalGrade, transmutedFinalGrade,gwa;
 	
 	// PRELIMS
 	public double computeClassStandingPrelim(double attendance, double recitation, double FA) {
@@ -85,5 +85,39 @@ public class IT2622 {
 		
 		transmutedFinalGrade = Double.parseDouble(df.format(0.625 * (rawFinalGrade-60) + 75));
 		return transmutedFinalGrade;
+	}
+	
+	public double gwaReturn(double transmutedFG) {
+		if(transmutedFG==0) {
+			gwa = 5.00;
+		}
+		else if (transmutedFG>=75 && transmutedFG<=78) {
+			gwa = 3.00;
+		}
+		else if (transmutedFG>=79 && transmutedFG<=81) {
+			gwa = 2.75;
+		}
+		else if (transmutedFG>=82 && transmutedFG<=83) {
+			gwa = 2.50;
+		}
+		else if (transmutedFG>=84 && transmutedFG<=86) {
+			gwa = 2.25;
+		}
+		else if (transmutedFG>=87 && transmutedFG<=88) {
+			gwa = 2.00;
+		}
+		else if (transmutedFG>=89 && transmutedFG<=91) {
+			gwa = 1.75;
+		}
+		else if (transmutedFG>=92 && transmutedFG<=93) {
+			gwa = 1.50;
+		}
+		else if (transmutedFG>=94 && transmutedFG<=95) {
+			gwa = 1.25;
+		}
+		else if (transmutedFG>=96 && transmutedFG<=100) {
+			gwa = 1.00;
+		}
+		return gwa;
 	}
 }

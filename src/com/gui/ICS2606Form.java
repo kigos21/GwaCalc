@@ -643,6 +643,8 @@ public class ICS2606Form extends guiCustoms{
 						txtFinalTransmuted.setText(comProg.transmutedFinal()+"");
 								
 						lblSubjectGrade.setText(comProg.subjectGrade()+"");
+						
+						CustomDialog cd = new CustomDialog("Success!", "Your GWA is: " + comProg.gwa(Double.parseDouble(lblSubjectGrade.getText())),gradeForm,"OK",paneGreen);
 				}
 				 catch(BlankTextFieldException btfe) {	
 				}catch(NumericsInStringException nse) {
@@ -731,9 +733,9 @@ public class ICS2606Form extends guiCustoms{
 							br = new BufferedReader(new FileReader(comProgSheet));
 							
 							if (br.readLine() == null)
-								pw.println("Name,Student Number,Section,PRELIMS,Prelim Grade,Transmuted Prelim Grade,Prelims Lab Exercise,Prelims Long Test,Prelims Exam,FINALS,Final Grade,Transmuted Final Grade,Finals Lab Exercise,Finals Long Test,Finals Exam");
+								pw.println("Name,Student Number,Section,GWA,PRELIMS,Prelim Grade,Transmuted Prelim Grade,Prelims Lab Exercise,Prelims Long Test,Prelims Exam,FINALS,Final Grade,Transmuted Final Grade,Finals Lab Exercise,Finals Long Test,Finals Exam");
 							
-							pw.println(txtName.getText() + "," + txtStudentNo.getText() + "," + txtSection.getText() + "," + "  " + "," + comProg.getPrelimGrade() + "," + comProg.getTransmutedPrelim() + "," + comProg.getLabExerPrelims() + ","  + comProg.getLongTestPrelims() +
+							pw.println(txtName.getText() + "," + txtStudentNo.getText() + "," + txtSection.getText() + "," + comProg.gwa(Double.parseDouble(lblSubjectGrade.getText())) + "," + "  " + "," + comProg.getPrelimGrade() + "," + comProg.getTransmutedPrelim() + "," + comProg.getLabExerPrelims() + ","  + comProg.getLongTestPrelims() +
 									"," + comProg.getExamPrelims() + "," + "  " + "," + comProg.getFinalGrade()+ "," + comProg.transmutedFinal() + "," + comProg.getLabExerFinals() + "," + comProg.getLongTestFinals() + "," + comProg.getExamFinals());
 							pw.close();
 							

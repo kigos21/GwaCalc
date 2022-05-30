@@ -724,6 +724,8 @@ public class IT2622Form extends guiCustoms {
 						hci.computeIntegratedAssmnt(Double.parseDouble(tfIntegratedAsmnt.getText()));
 						tfFinalGrade.setText(hci.computeRawFinalGrade()+"");
 						tfTransmutedFinalGrade.setText(hci.computeTransmutedFinalGrade()+"");
+						
+						CustomDialog cd = new CustomDialog("Success!", "Your GWA is: " + hci.gwaReturn(Double.parseDouble(tfTransmutedFinalGrade.getText())),gradeForm,"OK",paneGreen);
 				} catch (Exception exc) {
 					return ; // terminate actionPerformed method
 				}
@@ -777,7 +779,7 @@ public class IT2622Form extends guiCustoms {
 				} catch (Exception exc) {
 					return ;
 				}
-				
+				IT2622 hci = new IT2622();
 				File hciSheet = new File("IT2622 Sheet.csv");
 				PrintWriter pw = null;
 				BufferedReader br = null;
@@ -787,9 +789,9 @@ public class IT2622Form extends guiCustoms {
 					br = new BufferedReader(new FileReader(hciSheet));
 					
 					if (br.readLine() == null)
-						pw.println("Name,Student Number,Section,PRELIMS,Prelim Grade,Transmuted Prelim Grade,Attendance,Recitation,Formatives,Long Test 1,Wireframe,Storyboard,Prototype,Exam,FINALS,Final Grade,Transmuted Final Grade,Attendance,Recitation,Assignment,Long Test 2,Deliverable 1,Integrated Assmnt");
+						pw.println("Name,Student Number,Section,GWA,PRELIMS,Prelim Grade,Transmuted Prelim Grade,Attendance,Recitation,Formatives,Long Test 1,Wireframe,Storyboard,Prototype,Exam,FINALS,Final Grade,Transmuted Final Grade,Attendance,Recitation,Assignment,Long Test 2,Deliverable 1,Integrated Assmnt");
 					
-					pw.println(tfName.getText() + "," + tfStudentNo.getText() + "," + tfSection.getText() + "," + " " + "," + tfPrelimGrade.getText() + "," + tfTransmutedPrelimGrade.getText() + "," + tfPrelimAttendance.getText() + "," + tfPrelimRecitation.getText() + "," + tfFA.getText() + "," + tfLongTest1.getText() + "," + tfWireframe.getText() + "," + tfStoryboard.getText() + 
+					pw.println(tfName.getText() + "," + tfStudentNo.getText() + "," + tfSection.getText() + "," +hci.gwaReturn(Double.parseDouble(tfTransmutedFinalGrade.getText()))+"," +" " + "," + tfPrelimGrade.getText() + "," + tfTransmutedPrelimGrade.getText() + "," + tfPrelimAttendance.getText() + "," + tfPrelimRecitation.getText() + "," + tfFA.getText() + "," + tfLongTest1.getText() + "," + tfWireframe.getText() + "," + tfStoryboard.getText() + 
 							 "," + tfPrototype.getText() + "," + tfPrelimExam.getText() + "," + " " + "," + tfFinalGrade.getText() + "," + tfTransmutedFinalGrade.getText() + "," + tfFinalAttendance.getText() + "," + tfFinalRecitation.getText() + "," + tfAssignment.getText() + "," + tfLongTest2.getText() + "," + tfDeliverable1.getText() + "," + tfIntegratedAsmnt.getText());
 					pw.close();
 					
