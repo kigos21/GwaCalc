@@ -23,7 +23,7 @@ public class IT2622 {
 	}
 	
 	public double computeDeliverablePrelim(double wireframe, double storyboard, double prototype) {
-		deliverablePrelim = (((wireframe/24*100) + (storyboard/40*100) + (prototype/32*100))/3.0 * 0.3);
+		deliverablePrelim = (((wireframe/24.0*100) + (storyboard/40.0*100) + (prototype/32.0*100))/3.0 * 0.3);
 		return deliverablePrelim;
 	}
 	
@@ -56,7 +56,7 @@ public class IT2622 {
 	}
 	
 	public double computeLongTestFinal(double longTest) {
-		longTestFinal = (longTest/105*100)* 0.3;
+		longTestFinal = (longTest/105.0*100)* 0.3;
 		return longTestFinal;
 	}
 	
@@ -87,7 +87,7 @@ public class IT2622 {
 		return transmutedFinalGrade;
 	}
 	
-	public double gwa(double transmutedFG) {
+	public double gwaReturn(double transmutedFG) {
 		if(transmutedFG>=0 && transmutedFG<75) {
 			gwa = 5.00;
 		}

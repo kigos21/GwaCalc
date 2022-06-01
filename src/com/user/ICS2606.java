@@ -12,7 +12,7 @@ public class ICS2606 {
 	subjectGrade,gwa;
 	
 	public double labExerPrelims(int lab1, int lab2, int lab3) {
-		labExerPrelims = (lab1 + lab2 + lab3)/3 * 0.3;
+		labExerPrelims = (lab1 + lab2 + lab3)/3.0 * 0.3;
 		return labExerPrelims;
 	}
 	
@@ -50,7 +50,7 @@ public class ICS2606 {
 	}
 	
 	public double transmutedPrelim() {
-		transmutedPrelim = round(25*(prelimGrade-60)/40+75);
+		transmutedPrelim = round(25*(prelimGrade-60)/40.0+75);
 		return transmutedPrelim;
 	}
 	
@@ -63,13 +63,13 @@ public class ICS2606 {
 	}
 	
 	public double transmutedFinal() {
-		transmutedFinal = round(25*(finalGrade-60)/40+75);
+		transmutedFinal = round(25*(finalGrade-60)/40.0+75);
 		return transmutedFinal;
 	}
 	
 	public double subjectGrade() {
-		double ave = (prelimGrade+finalGrade)/2;
-		subjectGrade = round(25*(ave-60)/40+75);
+		double ave = (prelimGrade+finalGrade)/2.0;
+		subjectGrade = round(25*(ave-60)/40.0+75);
 		return subjectGrade;
 	}
 	

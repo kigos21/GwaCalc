@@ -702,8 +702,8 @@ public class IT2622Form extends guiCustoms {
 							}
 						}
 						
-						for(int i = 0; i<scoreTF.length;i++) {
-							if(Integer.parseInt(scoreTF[i].getText())>=0 && Integer.parseInt(scoreTF[i].getText())<=scoreTF[i].maxScore){
+						for(int i = 0; i<scoreTF.length;i++) { 
+							if(Double.parseDouble(scoreTF[i].getText()) >= 0 && Double.parseDouble(scoreTF[i].getText()) <= scoreTF[i].maxScore){
 								continue;
 							}
 							else {
@@ -727,7 +727,7 @@ public class IT2622Form extends guiCustoms {
 						
 						CustomDialog cd = new CustomDialog("Success!", "Your GWA is: " + hci.gwaReturn(Double.parseDouble(tfTransmutedFinalGrade.getText())),gradeForm,"OK",paneGreen);
 				} catch (Exception exc) {
-					return ; // terminate actionPerformed method
+					exc.printStackTrace(); // terminate actionPerformed method
 				}
 			}
 		});
@@ -758,7 +758,7 @@ public class IT2622Form extends guiCustoms {
 					}
 					
 					for(int i = 0; i<scoreTF.length;i++) {
-						if(Integer.parseInt(scoreTF[i].getText())>=0 && Integer.parseInt(scoreTF[i].getText())<=scoreTF[i].maxScore){
+						if(Double.parseDouble(scoreTF[i].getText())>=0 && Double.parseDouble(scoreTF[i].getText())<=scoreTF[i].maxScore){
 							continue;
 						}
 						else {
@@ -767,6 +767,7 @@ public class IT2622Form extends guiCustoms {
 					}
 					
 				} catch (Exception exc) {
+					exc.printStackTrace();
 					return ; // terminate actionPerformed method
 				}
 				
@@ -777,6 +778,7 @@ public class IT2622Form extends guiCustoms {
 					}
 					
 				} catch (Exception exc) {
+					exc.printStackTrace();
 					return ;
 				}
 				IT2622 hci = new IT2622();
