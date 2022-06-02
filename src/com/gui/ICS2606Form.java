@@ -226,7 +226,7 @@ public class ICS2606Form extends guiCustoms{
 		txtSection.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtSection);
 		
-		//Prelims
+		//Prelims	
 		
 		lblPrelims = new JLabel("Prelims");
 		lblPrelims.setBounds(389,167,103,22);
@@ -242,8 +242,8 @@ public class ICS2606Form extends guiCustoms{
 		lblLabExerTitle.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(lblLabExerTitle);
 		
-		lblLabExer1 = new JLabel("Lab Exercise 1");
-		lblLabExer1.setBounds(290,232,139,18);
+		lblLabExer1 = new JLabel("Lab Exercise 1 (100 pts)", JLabel.RIGHT);
+		lblLabExer1.setBounds(212,232,218,18);
 		lblLabExer1.setFont(gothamBook.deriveFont(Font.PLAIN,18));
 		lblLabExer1.setForeground(Color.WHITE);
 		lblLabExer1.setBorder(BorderFactory.createEmptyBorder());
@@ -258,8 +258,8 @@ public class ICS2606Form extends guiCustoms{
 		txtLabExer1.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtLabExer1);
 		
-		lblLabExer2 = new JLabel("Lab Exercise 2");
-		lblLabExer2.setBounds(290,262,139,18);
+		lblLabExer2 = new JLabel("Lab Exercise 2 (100 pts)", JLabel.RIGHT);
+		lblLabExer2.setBounds(202,262,228,18);
 		lblLabExer2.setFont(gothamBook.deriveFont(Font.PLAIN,18));
 		lblLabExer2.setForeground(Color.WHITE);
 		lblLabExer2.setBorder(BorderFactory.createEmptyBorder());
@@ -274,8 +274,8 @@ public class ICS2606Form extends guiCustoms{
 		txtLabExer2.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtLabExer2);
 		
-		lblLabExer3 = new JLabel("Lab Exercise 3");
-		lblLabExer3.setBounds(290,291,139,18);
+		lblLabExer3 = new JLabel("Lab Exercise 3 (100 pts)", JLabel.RIGHT);
+		lblLabExer3.setBounds(202,291,228,18);
 		lblLabExer3.setFont(gothamBook.deriveFont(Font.PLAIN,18));
 		lblLabExer3.setForeground(Color.WHITE);
 		lblLabExer3.setBorder(BorderFactory.createEmptyBorder());
@@ -297,8 +297,8 @@ public class ICS2606Form extends guiCustoms{
 		lblLongTextTitle.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(lblLongTextTitle);
 		
-		lblLongTest1 = new JLabel("Long Test 1");
-		lblLongTest1.setBounds(290,356,139,18);
+		lblLongTest1 = new JLabel("Long Test 1 (50 pts)", JLabel.RIGHT);
+		lblLongTest1.setBounds(240,356,188,18);
 		lblLongTest1.setFont(gothamBook.deriveFont(Font.PLAIN,18));
 		lblLongTest1.setForeground(Color.WHITE);
 		lblLongTest1.setBorder(BorderFactory.createEmptyBorder());
@@ -313,8 +313,8 @@ public class ICS2606Form extends guiCustoms{
 		txtLongTest1.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(txtLongTest1);
 		
-		lblLongTest2 = new JLabel("Long Test 2");
-		lblLongTest2.setBounds(290,386,139,18);
+		lblLongTest2 = new JLabel("Long Test 2 (50 pts)", JLabel.RIGHT);
+		lblLongTest2.setBounds(240,386,188,18);
 		lblLongTest2.setFont(gothamBook.deriveFont(Font.PLAIN,18));
 		lblLongTest2.setForeground(Color.WHITE);
 		lblLongTest2.setBorder(BorderFactory.createEmptyBorder());
@@ -330,14 +330,14 @@ public class ICS2606Form extends guiCustoms{
 		gradeForm.add(txtLongTest2);
 		
 		lblPrelimExamTitle = new JLabel("Examinations (40%)");
-		lblPrelimExamTitle.setBounds(219,430,180,18);
+		lblPrelimExamTitle.setBounds(219,430,210,18);
 		lblPrelimExamTitle.setFont(gothamBook.deriveFont(Font.PLAIN,18));
 		lblPrelimExamTitle.setForeground(Color.WHITE);
 		lblPrelimExamTitle.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(lblPrelimExamTitle);
 		
-		lblPrelimExams = new JLabel("Prelim Exam");
-		lblPrelimExams.setBounds(290,461,139,18);
+		lblPrelimExams = new JLabel("Prelim Exam (100 pts)", JLabel.RIGHT);
+		lblPrelimExams.setBounds(214,460,215,18);
 		lblPrelimExams.setFont(gothamBook.deriveFont(Font.PLAIN,18));
 		lblPrelimExams.setForeground(Color.WHITE);
 		lblPrelimExams.setBorder(BorderFactory.createEmptyBorder());
@@ -402,8 +402,8 @@ public class ICS2606Form extends guiCustoms{
 		lblLabExerTitle2.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(lblLabExerTitle2);
 		
-		lblLabExer4 = new JLabel("Lab Exercise 4");
-		lblLabExer4.setBounds(751,232,139,18);
+		lblLabExer4 = new JLabel("Lab Exercise 4 (100 pts)", JLabel.RIGHT);
+		lblLabExer4.setBounds(663,232,229,18);
 		lblLabExer4.setFont(gothamBook.deriveFont(Font.PLAIN,18));
 		lblLabExer4.setForeground(Color.WHITE);
 		lblLabExer4.setBorder(BorderFactory.createEmptyBorder());
@@ -425,8 +425,8 @@ public class ICS2606Form extends guiCustoms{
 		lblLongTextTitle2.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(lblLongTextTitle2);
 		
-		lblLongTest2 = new JLabel("Long Test 3");
-		lblLongTest2.setBounds(751,291,139,18);
+		lblLongTest2 = new JLabel("Long Test 3 (50 pts)", JLabel.RIGHT);
+		lblLongTest2.setBounds(704,294,187,18);
 		lblLongTest2.setFont(gothamBook.deriveFont(Font.PLAIN,18));
 		lblLongTest2.setForeground(Color.WHITE);
 		lblLongTest2.setBorder(BorderFactory.createEmptyBorder());
@@ -442,14 +442,14 @@ public class ICS2606Form extends guiCustoms{
 		gradeForm.add(txtLongTest3);
 		
 		lblFinalExamTitle = new JLabel("Examinations (40%)");
-		lblFinalExamTitle.setBounds(672,325,180,18);
+		lblFinalExamTitle.setBounds(672,325,210,18);
 		lblFinalExamTitle.setFont(gothamBook.deriveFont(Font.PLAIN,18));
 		lblFinalExamTitle.setForeground(Color.WHITE);
 		lblFinalExamTitle.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(lblFinalExamTitle);
 		
-		lblFinalExams = new JLabel("Final Exam");
-		lblFinalExams.setBounds(751,356,139,18);
+		lblFinalExams = new JLabel("Final Exam (100 pts)", JLabel.RIGHT);
+		lblFinalExams.setBounds(704,356,188,18);
 		lblFinalExams.setFont(gothamBook.deriveFont(Font.PLAIN,18));
 		lblFinalExams.setForeground(Color.WHITE);
 		lblFinalExams.setBorder(BorderFactory.createEmptyBorder());

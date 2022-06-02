@@ -280,7 +280,7 @@ public class IT2622Form extends guiCustoms {
 		lblPrelimClassStanding.setForeground(Color.WHITE);
 		gradeForm.add(lblPrelimClassStanding);
 		
-		lblPrelimAttendance = new JLabel("Attendance", JLabel.RIGHT);
+		lblPrelimAttendance = new JLabel("Attendance (100 pts)", JLabel.RIGHT);
 		lblPrelimAttendance.setBounds(221,232,188,18);
 		lblPrelimAttendance.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblPrelimAttendance.setForeground(Color.WHITE);
@@ -296,7 +296,7 @@ public class IT2622Form extends guiCustoms {
 		tfPrelimAttendance.setName("Prelim Attendance");
 		gradeForm.add(tfPrelimAttendance);
 		
-		lblPrelimRecitation = new JLabel("Recitation", JLabel.RIGHT);
+		lblPrelimRecitation = new JLabel("Recitation (100 pts)", JLabel.RIGHT);
 		lblPrelimRecitation.setBounds(221,262,188,18);
 		lblPrelimRecitation.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblPrelimRecitation.setForeground(Color.WHITE);
@@ -312,8 +312,8 @@ public class IT2622Form extends guiCustoms {
 		tfPrelimRecitation.setName("Prelim Recitation");
 		gradeForm.add(tfPrelimRecitation);
 		
-		lblFA = new JLabel("Formative Assessments", JLabel.RIGHT);
-		lblFA.setBounds(221,291,188,18);
+		lblFA = new JLabel("Formative Assessments (100 pts)", JLabel.RIGHT);
+		lblFA.setBounds(154,291,255,18);
 		lblFA.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblFA.setForeground(Color.WHITE);
 		gradeForm.add(lblFA);
@@ -334,8 +334,8 @@ public class IT2622Form extends guiCustoms {
 		lblPrelimLongTest.setForeground(Color.WHITE);
 		gradeForm.add(lblPrelimLongTest);
 		
-		lblLongTest1 = new JLabel("Long Test 1", JLabel.RIGHT);
-		lblLongTest1.setBounds(322,356,87,18);
+		lblLongTest1 = new JLabel("Long Test 1 (70 pts)", JLabel.RIGHT);
+		lblLongTest1.setBounds(221,356,188,18);
 		lblLongTest1.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblLongTest1.setForeground(Color.WHITE);
 		gradeForm.add(lblLongTest1);
@@ -356,14 +356,14 @@ public class IT2622Form extends guiCustoms {
 		lblPrelimDeliverable.setForeground(Color.WHITE);
 		gradeForm.add(lblPrelimDeliverable);
 		
-		lblWireframe = new JLabel("Wireframe");
-		lblWireframe.setBounds(219,416,80,18);
+		lblWireframe = new JLabel("Wireframe (24 pts)", JLabel.RIGHT);
+		lblWireframe.setBounds(413,395,150,18);
 		lblWireframe.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblWireframe.setForeground(Color.WHITE);
 		gradeForm.add(lblWireframe);
 		
 		tfWireframe = new ScoreTextField();
-		tfWireframe.setBounds(302,416,42,18);
+		tfWireframe.setBounds(567,395,42,18);
 		tfWireframe.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfWireframe.setForeground(textfieldGray);
 		tfWireframe.setHorizontalAlignment(JTextField.RIGHT);
@@ -372,14 +372,14 @@ public class IT2622Form extends guiCustoms {
 		tfWireframe.setName("Wireframe");
 		gradeForm.add(tfWireframe);
 		
-		lblStoryboard = new JLabel("Storyboard");
-		lblStoryboard.setBounds(350,416,90,18);
+		lblStoryboard = new JLabel("Storyboard (40 pts)", JLabel.RIGHT);
+		lblStoryboard.setBounds(190,425,158,18);
 		lblStoryboard.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblStoryboard.setForeground(Color.WHITE);
 		gradeForm.add(lblStoryboard);
 		
 		tfStoryboard = new ScoreTextField();
-		tfStoryboard.setBounds(440,416,42,18);
+		tfStoryboard.setBounds(355,425,58,18);
 		tfStoryboard.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfStoryboard.setForeground(textfieldGray);
 		tfStoryboard.setHorizontalAlignment(JTextField.RIGHT);
@@ -388,14 +388,14 @@ public class IT2622Form extends guiCustoms {
 		tfStoryboard.setName("Storyboard");
 		gradeForm.add(tfStoryboard);
 		
-		lblPrototype = new JLabel("Prototype", JLabel.RIGHT);
-		lblPrototype.setBounds(477,416,87,18);
+		lblPrototype = new JLabel("Prototype (32 pts)", JLabel.RIGHT);
+		lblPrototype.setBounds(413,425,151,18);
 		lblPrototype.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblPrototype.setForeground(Color.WHITE);
 		gradeForm.add(lblPrototype);
 		
 		tfPrototype = new ScoreTextField();
-		tfPrototype.setBounds(567,416,42,18);
+		tfPrototype.setBounds(567,425,42,18);
 		tfPrototype.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfPrototype.setForeground(textfieldGray);
 		tfPrototype.setHorizontalAlignment(JTextField.RIGHT);
@@ -404,14 +404,14 @@ public class IT2622Form extends guiCustoms {
 		tfPrototype.setName("Prototype");
 		gradeForm.add(tfPrototype);
 		
-		lblPrelimExam = new JLabel("Prelim Exam (30%)");
-		lblPrelimExam.setBounds(221,460,148,18);
+		lblPrelimExam = new JLabel("Prelim Exam (30%) (100 pts)");
+		lblPrelimExam.setBounds(206,460,222,18);
 		lblPrelimExam.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblPrelimExam.setForeground(Color.WHITE);
 		gradeForm.add(lblPrelimExam);
 		
 		tfPrelimExam = new ScoreTextField();
-		tfPrelimExam.setBounds(413,461,196,18);
+		tfPrelimExam.setBounds(432,461,177,18);
 		tfPrelimExam.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfPrelimExam.setForeground(textfieldGray);
 		tfPrelimExam.setHorizontalAlignment(JTextField.RIGHT);
@@ -461,19 +461,19 @@ public class IT2622Form extends guiCustoms {
 		lblFinalClassStanding.setForeground(Color.WHITE);
 		gradeForm.add(lblFinalClassStanding);
 		
-		lblFinalAttendance = new JLabel("Attendance", JLabel.RIGHT);
+		lblFinalAttendance = new JLabel("Attendance (100 pts)", JLabel.RIGHT);
 		lblFinalAttendance.setBounds(674,232,188,18);
 		lblFinalAttendance.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblFinalAttendance.setForeground(Color.WHITE);
 		gradeForm.add(lblFinalAttendance);
 		
-		lblFinalRecitation = new JLabel("Recitation", JLabel.RIGHT);
+		lblFinalRecitation = new JLabel("Recitation (100 pts)", JLabel.RIGHT);
 		lblFinalRecitation.setBounds(674,262,188,18);
 		lblFinalRecitation.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblFinalRecitation.setForeground(Color.WHITE);
 		gradeForm.add(lblFinalRecitation);
 		
-		lblAssignment = new JLabel("Assignment", JLabel.RIGHT);
+		lblAssignment = new JLabel("Assignment (100 pts)", JLabel.RIGHT);
 		lblAssignment.setBounds(674,291,188,18);
 		lblAssignment.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblAssignment.setForeground(Color.WHITE);
@@ -515,7 +515,7 @@ public class IT2622Form extends guiCustoms {
 		lblFinalLongTest.setForeground(Color.WHITE);
 		gradeForm.add(lblFinalLongTest);
 		
-		lblLongTest2 = new JLabel("Long Test 2", JLabel.RIGHT);
+		lblLongTest2 = new JLabel("Long Test 2 (105 pts)", JLabel.RIGHT);
 		lblLongTest2.setBounds(674,356,189,18);
 		lblLongTest2.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblLongTest2.setForeground(Color.WHITE);
@@ -537,7 +537,7 @@ public class IT2622Form extends guiCustoms {
 		lblFinalDeliverable.setForeground(Color.WHITE);
 		gradeForm.add(lblFinalDeliverable);
 		
-		lblDeliverable1 = new JLabel("Deliverable 1", JLabel.RIGHT);
+		lblDeliverable1 = new JLabel("Deliverable 1 (100 pts)", JLabel.RIGHT);
 		lblDeliverable1.setBounds(674,416,188,18);
 		lblDeliverable1.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblDeliverable1.setForeground(Color.WHITE);
@@ -553,14 +553,14 @@ public class IT2622Form extends guiCustoms {
 		tfDeliverable1.setName("Deliverable 1");
 		gradeForm.add(tfDeliverable1);
 		
-		lblIntegratedAsmnt = new JLabel("Integrated Asmnt. (30%)");
-		lblIntegratedAsmnt.setBounds(672,460,203,18);
+		lblIntegratedAsmnt = new JLabel("Integrated Asmnt. (30%) (100 pts)");
+		lblIntegratedAsmnt.setBounds(659,460,269,18);
 		lblIntegratedAsmnt.setFont(gothamBook.deriveFont(Font.PLAIN, 15));
 		lblIntegratedAsmnt.setForeground(Color.WHITE);
 		gradeForm.add(lblIntegratedAsmnt);
 		
 		tfIntegratedAsmnt = new ScoreTextField();
-		tfIntegratedAsmnt.setBounds(866,461,196,18);
+		tfIntegratedAsmnt.setBounds(930,461,132,18);
 		tfIntegratedAsmnt.setFont(gothamBookBold.deriveFont(Font.PLAIN,15));
 		tfIntegratedAsmnt.setForeground(textfieldGray);
 		tfIntegratedAsmnt.setHorizontalAlignment(JTextField.RIGHT);
