@@ -70,16 +70,8 @@ public class CoursePicker extends guiCustoms{
 		lUST.setBounds(48, 30, 80, 80);
 		coursePicker.add(lUST);
 		
-		try {
-			File loginCreds = new File("usr-login-creds.txt");
-			BufferedReader br = new BufferedReader(new FileReader(loginCreds));
-			br = new BufferedReader(new FileReader(loginCreds));
-			UserStudent user = new UserStudent(br.readLine(), br.readLine());
-			lStudentName = new JLabel(user.getUsername());
-		} 
-		catch (IOException e1) {
-			e1.printStackTrace();
-		}
+		lStudentName = new JLabel(UsrLogin.user.getUsername());
+
 		//lStudentName.setBounds(179, 77, 500, 28);
 		lStudentName.setBounds(145, 57, 500, 28);
 		lStudentName.setFont(futura.deriveFont(Font.PLAIN,28));

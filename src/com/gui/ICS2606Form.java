@@ -125,18 +125,8 @@ public class ICS2606Form extends guiCustoms{
 		lblIconHolder.setBounds(48, 30, 80, 80);
 		gradeForm.add(lblIconHolder);
 		
-		
-		try {
-			File loginCreds = new File("usr-login-creds.txt");
-			BufferedReader br = new BufferedReader(new FileReader(loginCreds));
-			br = new BufferedReader(new FileReader(loginCreds));
-			UserStudent user = new UserStudent(br.readLine(), br.readLine());
-			lblStudentName = new JLabel(user.getUsername());
-		} 
-		catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
+		lblStudentName = new JLabel(UsrLogin.user.getUsername());
+
 		lblStudentName.setBounds(145, 57, 500, 28);
 		lblStudentName.setFont(futura.deriveFont(Font.PLAIN,28));
 		lblStudentName.setForeground(userFontGray);

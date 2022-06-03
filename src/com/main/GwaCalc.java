@@ -4,6 +4,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import com.gui.UsrLogin;
+import com.user.UserStudent;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,27 +16,10 @@ import java.io.InputStream;
 public class GwaCalc extends JFrame{
 	// variables
 	private UsrLogin usrlog;
-	
 	// title bar variables
-	Font gothamBook;	
-	JPanel titleBar;
-	JLabel lTitleLogo, lTitle;
-	JButton bClose;
 	
 	public GwaCalc(){
 		// custom font loader
-		try {
-			InputStream isgotham = getClass().getResourceAsStream("/res/fonts/GothamBook.ttf");
-			gothamBook = Font.createFont(Font.TRUETYPE_FONT, isgotham);
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			ge.registerFont(gothamBook); 
-		}
-		catch(IOException ie){
-			ie.printStackTrace();
-		}
-		catch(FontFormatException ffe){
-			ffe.printStackTrace();
-		}
 		
 		setTitle("GENERAL WEIGHTED AVERAGE CALCULATOR");
 		setLayout(null);

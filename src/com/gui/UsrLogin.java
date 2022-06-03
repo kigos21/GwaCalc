@@ -4,12 +4,13 @@ import com.user.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class UsrLogin extends guiCustoms{
-	
+	static UserStudent user;
 	JPanel usrLogin;
 	JLabel lLogo,lUser,lPswrd,lTitle;
 	Icon icnPfp;
@@ -19,6 +20,19 @@ public class UsrLogin extends guiCustoms{
 	JButton bLogin;
 	JButton bCrtUser;
 	Font gothamBook,gothamBookBold;
+	
+	class BlankTextFieldException extends Exception {
+		public BlankTextFieldException(String textFieldName, JPanel parentPane) {
+			CustomDialog cd = new CustomDialog("Error", "Empty " + textFieldName, parentPane, "OK", paneRed);
+		}
+	}
+	
+	class UserDoesNotExist extends Exception {
+		public UserDoesNotExist(String passedUname, JPanel parentPane) {
+			CustomDialog cd = new CustomDialog("Error", "User "+passedUname+" does not exist!", parentPane, "OK", paneRed);
+		}
+	}
+	
 	
 	public UsrLogin() {
 		try {	
@@ -72,6 +86,7 @@ public class UsrLogin extends guiCustoms{
 		tfUser.setHorizontalAlignment(JTextField.CENTER);
 		tfUser.setForeground(textfieldGray);
 		tfUser.setBorder(BorderFactory.createEmptyBorder());
+		tfUser.setName("Username");
 		tfUser.addFocusListener(new FocusListener() {
 		    public void focusGained(FocusEvent e) {
 		    	if (tfUser.getText().equals("Username"))
@@ -98,6 +113,7 @@ public class UsrLogin extends guiCustoms{
 		tfPswrd.setHorizontalAlignment(JTextField.CENTER);
 		tfPswrd.setForeground(textfieldGray);
 		tfPswrd.setBorder(BorderFactory.createEmptyBorder());
+		tfPswrd.setName("Password");
 		tfPswrd.addFocusListener(new FocusListener() {
 		    public void focusGained(FocusEvent e) {
 		    	if (tfPswrd.getText().equals("Password"))
@@ -150,6 +166,7 @@ public class UsrLogin extends guiCustoms{
 				File loginCreds = null;
 				BufferedReader br = null;
 				InputStream is = null;
+				int unameLoc = 0;
 				
 				try {
 					loginCreds = new File("usr-login-creds.txt");
@@ -157,21 +174,66 @@ public class UsrLogin extends guiCustoms{
 				} 
 				catch (FileNotFoundException e1) {
 					CustomDialog cd = new CustomDialog("No user found!", "Please create an account.", usrLogin,"OK", paneRed);
+					bCrtUser.requestFocus();
 					return ;
 				}
 				
 				try {
-					if (br.readLine() == null) {
-						CustomDialog cd = new CustomDialog("No user found!", "Please create an account.", usrLogin,"OK", paneRed);
-						//JOptionPane.showMessageDialog(null, "No user found! Please create an account.", "Error", JOptionPane.ERROR_MESSAGE);
-						bCrtUser.requestFocus();
-					}
-					else {
 						
+						ArrayList al = new ArrayList();
+		                ArrayList username = new ArrayList();
+		                ArrayList password = new ArrayList();
+		                
+		                String line1 = br.readLine();
+		                if(line1.trim().isBlank()) {
+		                	CustomDialog cd = new CustomDialog("No user found!", "Please create an account.", usrLogin,"OK", paneRed);
+							bCrtUser.requestFocus();
+		                }
+		                
+		                while (line1 != null)
+		                {
+		                    al.add(line1);
+		                    line1 = br.readLine();
+		                }
+
+		                for (int x = 0; x < al.size(); x++)
+		                {
+		                	if(x%2==0) {
+		                    username.add(al.get(x));
+		                        continue;
+		                	}
+		                	
+		                    else {    
+		                    password.add(al.get(x));
+		                        continue;
+		                    }
+		                }
+		                
+		                for (int x = 0; x < username.size(); x++)
+		                {
+		                	if(tfUser.getText().isBlank() || tfUser.getText().equals("Username")) {
+		                		throw new BlankTextFieldException(tfUser.getName(),usrLogin);
+		                	}
+		                	
+		                	else if(tfUser.getText().equals(username.get(x))) {
+		                		unameLoc = x;
+		                		break;
+		                	}
+		                	
+		                	else if (!tfUser.getText().equals(username.get(x)) && x==(username.size()-1)){
+		                		throw new UserDoesNotExist(tfUser.getText(),usrLogin);
+		                	}
+		                	
+		                	else if (!tfUser.getText().equals(username.get(x)));
+		                	{
+		                		continue;
+		                	}
+		                }
+
 						br.close();
 						br = new BufferedReader(new FileReader(loginCreds)); // cheap alternative
-						UserStudent user = new UserStudent(br.readLine(), br.readLine());
-						if (tfUser.getText().equals(user.getUsername()) && tfPswrd.getText().equals(user.getPassword())) {
+						if (tfUser.getText().equals(username.get(unameLoc)) && tfPswrd.getText().equals(password.get(unameLoc))) {
+							user = new UserStudent(tfUser.getText(), tfPswrd.getText());
 							CoursePicker cp = new CoursePicker();
 				            cp.setPreferredSize(new Dimension(1280, 720));
 				            cp.setBounds(0, 0, 1280, 720);
@@ -181,12 +243,18 @@ public class UsrLogin extends guiCustoms{
 				            cp.setVisible(true);
 						}
 						else {
-							CustomDialog cd = new CustomDialog("Incorrect Info!", "Incorrect details. Try again.", usrLogin,"OK", paneRed);
+							CustomDialog cd = new CustomDialog("Incorrect Info!", "The password you’ve entered for "+username.get(unameLoc)+" is incorrect", usrLogin,"OK", paneRed);
 						}
 					}
-				}
+				
 				catch (IOException e1) {
 					e1.printStackTrace();
+				}
+				catch (BlankTextFieldException btfe) {
+					
+				}
+				catch (UserDoesNotExist udne) {
+					
 				}
 			}
 		});
