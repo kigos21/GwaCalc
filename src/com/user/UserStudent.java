@@ -1,5 +1,7 @@
 package com.user;
 
+import java.util.ArrayList;
+
 public class UserStudent {
 	private String username;
 	private String password;
@@ -7,11 +9,17 @@ public class UserStudent {
 	private String section;
 	private String programCourse;
 	private int referenceNo;
-	//private ArrayList<Course> courses; 
+	private ArrayList<String> usernames; 
+	private ArrayList<String> passwords; 
 	
 	public UserStudent(String username, String password) {
 		setUsername(username);
 		setPassword(password);
+	}
+	
+	public UserStudent(ArrayList<String> usernames, ArrayList<String> passwords) {
+		setUsernames(usernames);
+		setPasswords(passwords);
 	}
 	
 	public UserStudent(String name, String section, String programCourse, int referenceNo) {
@@ -45,6 +53,22 @@ public class UserStudent {
 		return name;
 	}
 	
+	public ArrayList<String> getUsernames() {
+		return usernames;
+	}
+
+	public void setUsernames(ArrayList<String> usernames) {
+		this.usernames = usernames;
+	}
+
+	public ArrayList<String> getPasswords() {
+		return passwords;
+	}
+
+	public void setPasswords(ArrayList<String> passwords) {
+		this.passwords = passwords;
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}

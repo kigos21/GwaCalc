@@ -175,7 +175,7 @@ public class UsrCreate extends guiCustoms {
 				
 					try {
 						File loginCreds = new File("usr-login-creds.txt");
-						PrintWriter pw = new PrintWriter(new FileWriter(loginCreds, false));
+						PrintWriter pw = new PrintWriter(new FileWriter(loginCreds, true));
 						
 						pw.println(tfUsrnm.getText());
 						pw.println(tfPswrd.getText());
