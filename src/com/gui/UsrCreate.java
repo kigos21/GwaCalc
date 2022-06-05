@@ -2,8 +2,7 @@ package com.gui;
 
 import com.exceptions.*;
 import com.user.*;
-
-import javax.imageio.ImageIO;
+import javax.imageio.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -11,6 +10,7 @@ import java.io.*;
 
 public class UsrCreate extends guiCustoms {
 	
+	// declare variables
 	Font gothamBook, gothamBookBold;
 	JPanel usrCreate;
 	JLabel lLogo, lCreateTtl, lUser, lPswrd, lCnfPswrd;
@@ -19,7 +19,9 @@ public class UsrCreate extends guiCustoms {
 	JButton bCreate, bBack;
 	
 	public UsrCreate() {
-		try {	
+		
+		// load custom fonts
+		try {
 			InputStream isgotham = getClass().getResourceAsStream("/res/fonts/GothamBook.ttf");
 			InputStream isgothamBold = getClass().getResourceAsStream("/res/fonts/GothamBold.ttf");
 			gothamBook = Font.createFont(Font.TRUETYPE_FONT, isgotham);
@@ -27,23 +29,24 @@ public class UsrCreate extends guiCustoms {
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(gothamBook); 
 			ge.registerFont(gothamBookBold); 
-		}
-		catch(IOException ie){
+		} catch(IOException ie){
 			ie.printStackTrace();
-		}
-		catch(FontFormatException ffe){
+		} catch(FontFormatException ffe){
 			ffe.printStackTrace();
 		}
-
+		
+		// set JPanel attributes
 		setLayout(null);
 		setPreferredSize(new Dimension(1280, 720));
 		
+		// create new JPanel above the main panel
 		usrCreate = new JPanel();
 		usrCreate.setPreferredSize(new Dimension(1280, 720));
 		usrCreate.setBackground(bgColor);
 		usrCreate.setBounds(0, 0, 1280, 720);
 		usrCreate.setLayout(null);
 		
+		// build the UI
 		lLogo = new JLabel();
 		try {
 			Image myImage = ImageIO.read(getClass().getResourceAsStream("/res/images/gwalogo2medium.png"));
@@ -75,17 +78,6 @@ public class UsrCreate extends guiCustoms {
 		tfUsrnm.setHorizontalAlignment(JTextField.CENTER);
 		tfUsrnm.setForeground(textfieldGray);
 		tfUsrnm.setBorder(BorderFactory.createEmptyBorder());
-		tfUsrnm.addFocusListener(new FocusListener() {
-		    public void focusGained(FocusEvent e) {
-		    	if (tfUsrnm.getText().equals("Username"))
-		    		tfUsrnm.setText("");
-		    }
-
-		    public void focusLost(FocusEvent e) {
-		    	if (tfUsrnm.getText().isBlank())
-		    		tfUsrnm.setText("Username");
-		    }
-		});
 		usrCreate.add(tfUsrnm);
 		
 		lPswrd = new JLabel("PASSWORD");
@@ -101,17 +93,6 @@ public class UsrCreate extends guiCustoms {
 		tfPswrd.setHorizontalAlignment(JTextField.CENTER);
 		tfPswrd.setForeground(textfieldGray);
 		tfPswrd.setBorder(BorderFactory.createEmptyBorder());
-		tfPswrd.addFocusListener(new FocusListener() {
-		    public void focusGained(FocusEvent e) {
-		    	if (tfPswrd.getText().equals("Password"))
-		    		tfPswrd.setText("");
-		    }
-
-		    public void focusLost(FocusEvent e) {
-		        if (tfPswrd.getText().isBlank())
-		        	tfPswrd.setText("Password");
-		    }
-		});
 		usrCreate.add(tfPswrd);
 		
 		lCnfPswrd = new JLabel("CONFIRM PASSWORD");
@@ -127,17 +108,6 @@ public class UsrCreate extends guiCustoms {
 		tfCnfPswrd.setHorizontalAlignment(JTextField.CENTER);
 		tfCnfPswrd.setForeground(textfieldGray);
 		tfCnfPswrd.setBorder(BorderFactory.createEmptyBorder());
-		tfCnfPswrd.addFocusListener(new FocusListener() {
-		    public void focusGained(FocusEvent e) {
-		    	if (tfCnfPswrd.getText().equals("Password"))
-		    		tfCnfPswrd.setText("");
-		    }
-
-		    public void focusLost(FocusEvent e) {
-		        if (tfCnfPswrd.getText().isBlank())
-		        	tfCnfPswrd.setText("Password");
-		    }
-		});
 		usrCreate.add(tfCnfPswrd);
 		
 		bCreate = new JButton("Create");
@@ -157,21 +127,83 @@ public class UsrCreate extends guiCustoms {
 		bBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bBack.setForeground(hyperColor);
 		usrCreate.add(bBack);
+		// end of UI building
 		
-		// first focus
+		// drive first focus away from text field
 		usrCreate.setFocusable(true);
 		usrCreate.requestFocus();
-				
+		
+		// add to main panel and set to visible
 		add(usrCreate);
 		setVisible(true);
 		
+		// set listeners for the textfields, same concept as earlier, auto clearing
+		tfUsrnm.addFocusListener(new FocusListener() {
+		    public void focusGained(FocusEvent e) {
+		    	if (tfUsrnm.getText().equals("Username"))
+		    		tfUsrnm.setText("");
+		    }
+
+		    public void focusLost(FocusEvent e) {
+		    	if (tfUsrnm.getText().isBlank())
+		    		tfUsrnm.setText("Username");
+		    }
+		});
+		
+		// set listeners for the textfields, same concept as earlier, auto clearing
+		tfPswrd.addFocusListener(new FocusListener() {
+		    public void focusGained(FocusEvent e) {
+		    	if (tfPswrd.getText().equals("Password"))
+		    		tfPswrd.setText("");
+		    }
+
+		    public void focusLost(FocusEvent e) {
+		        if (tfPswrd.getText().isBlank())
+		        	tfPswrd.setText("Password");
+		    }
+		});
+		
+		// set listeners for the textfields, same concept as earlier, auto clearing
+		tfCnfPswrd.addFocusListener(new FocusListener() {
+		    public void focusGained(FocusEvent e) {
+		    	if (tfCnfPswrd.getText().equals("Password"))
+		    		tfCnfPswrd.setText("");
+		    }
+
+		    public void focusLost(FocusEvent e) {
+		        if (tfCnfPswrd.getText().isBlank())
+		        	tfCnfPswrd.setText("Password");
+		    }
+		});
+		
+		// set back button listener, back to the user login screen
+		bBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UsrLogin usrLogin = new UsrLogin();
+				usrLogin.setPreferredSize(new Dimension(1280, 720));
+				usrLogin.setBounds(0, 0, 1280, 720);
+				
+				usrCreate.setVisible(false);
+				add(usrLogin);
+				usrLogin.setVisible(true);
+			}
+		});
+		
+		// set Create button listener
 		bCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				//check if passwords match
-				if ( !(tfUsrnm.getText().equals("Username")) && !(tfPswrd.getText().equals("Password"))
-					&& !(tfCnfPswrd.getText().equals("Password")) && !(tfUsrnm.getText().isBlank()) 
-					&& !(tfPswrd.getText().isBlank()) && !(tfCnfPswrd.getText().isBlank()) && tfPswrd.getText().equals(tfCnfPswrd.getText()) ) {
+				/*
+				 * check if:
+				 * username, password, and confirm password are not set to default,
+				 * not blank,
+				 * passwords match
+				 * 
+				 * if true, prepare for file writing and save the data to a text file
+				 */
+				if (!(tfUsrnm.getText().equals("Username")) && !(tfPswrd.getText().equals("Password")) && 
+					!(tfCnfPswrd.getText().equals("Password")) && !(tfUsrnm.getText().isBlank()) && 
+					!(tfPswrd.getText().isBlank()) && !(tfCnfPswrd.getText().isBlank()) && tfPswrd.getText().equals(tfCnfPswrd.getText()) ) {
 				
 					try {
 						File loginCreds = new File("usr-login-creds.txt");
@@ -181,18 +213,21 @@ public class UsrCreate extends guiCustoms {
 						pw.println(tfPswrd.getText());
 						pw.close();
 						CustomDialog cd = new CustomDialog("Success!", "Account created. You can use your account to login.",usrCreate,"OK",paneGreen);
+						
+						// automatically go back to the login screen
 						UsrLogin usrLogin = new UsrLogin();
 						usrLogin.setPreferredSize(new Dimension(1280, 720));
 						usrLogin.setBounds(0, 0, 1280, 720);
 						usrCreate.setVisible(false);
 						add(usrLogin);
 						usrLogin.setVisible(true);
-					} 
-					catch (IOException e1) {
+					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
 				
 				} else {
+					
+					// try every condition and throw exceptions to identify the errors produced by the user
 					try {
 						if (tfUsrnm.getText().equals("Username") || tfUsrnm.getText().isBlank())
 							throw new InvalidUNameException(usrCreate, paneRed);
@@ -216,18 +251,6 @@ public class UsrCreate extends guiCustoms {
 						
 					}
 				}
-			}
-		});
-		
-		bBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				UsrLogin usrLogin = new UsrLogin();
-				usrLogin.setPreferredSize(new Dimension(1280, 720));
-				usrLogin.setBounds(0, 0, 1280, 720);
-				
-				usrCreate.setVisible(false);
-				add(usrLogin);
-				usrLogin.setVisible(true);
 			}
 		});
 	}

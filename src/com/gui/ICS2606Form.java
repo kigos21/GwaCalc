@@ -1,21 +1,18 @@
 package com.gui;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.*;
-
-import javax.imageio.ImageIO;
+import javax.imageio.*;
 import javax.swing.*;
-
-import com.gui.IT2622Form.ScoreOverloadException;
-import com.gui.IT2622Form.ScoreTextField;
+import com.gui.IT2622Form.*;
 import com.user.*;
 
-public class ICS2606Form extends guiCustoms{
+public class ICS2606Form extends guiCustoms {
+	
+	// declare the variables
 	Font gothamBook,gothamBookBold,futura,gothamLight;
 	Icon icnPfp;
-	
 	JPanel mainContainer, gradeForm;
 	JButton bBack,bLogout,bClear,bDisplay,bSave;
 	
@@ -39,20 +36,21 @@ public class ICS2606Form extends guiCustoms{
 	ICS2606 comProg;
 	SubjectGrade lblSubjectGrade;
 	
-	class SubjectGrade extends JLabel{
+	class SubjectGrade extends JLabel {
+	
 	}
 	
-	// returns false when there are letters in the String, otherwise true 
+	// if the String is numeric, returns true, otherwise false 
 	public boolean isNumeric(String str) { 
 		try {  
 			Double.parseDouble(str);  
 			return true;
-		}
-		catch(NumberFormatException e) {  
+		} catch(NumberFormatException e) {  
 			return false;  
 		}  
 	} 
 	
+	// user defined exceptions that calls feedback panes when thrown
 	class BlankTextFieldException extends Exception {
 		public BlankTextFieldException(String textFieldName, JPanel parentPane) {
 			CustomDialog cd = new CustomDialog("Error", "Empty " + textFieldName, parentPane, "OK", paneRed);
@@ -76,6 +74,8 @@ public class ICS2606Form extends guiCustoms{
 	}
 	
 	public ICS2606Form(){
+		
+		// load custom fonts
 		try {
 			InputStream isfutura = getClass().getResourceAsStream("/res/fonts/futur.ttf");
 			InputStream isgotham = getClass().getResourceAsStream("/res/fonts/GothamBook.ttf");
@@ -90,17 +90,17 @@ public class ICS2606Form extends guiCustoms{
 			ge.registerFont(gothamBook); 
 			ge.registerFont(gothamBookBold); 
 			ge.registerFont(gothamLight);
-		}
-		catch(IOException ie){
+		} catch(IOException ie) {
 			ie.printStackTrace();
-		}
-		catch(FontFormatException ffe){
+		} catch(FontFormatException ffe) {
 			ffe.printStackTrace();
 		}
-			
+		
+		// set JPanel attributes
 		setPreferredSize(new Dimension(1280, 720));
 		setLayout(null);
 		
+		// create hierarchy of JPanels
 		mainContainer = new JPanel();
 		mainContainer.setPreferredSize(new Dimension(1280, 720));
 		mainContainer.setBounds(0, 0, 1280, 720);
@@ -114,6 +114,7 @@ public class ICS2606Form extends guiCustoms{
 		gradeForm.setLayout(null);
 		mainContainer.add(gradeForm);
 		
+		// instantiate profile icon
 		lblIconHolder = new JLabel();
 		try {
 			Image myImage = ImageIO.read(getClass().getResourceAsStream("/res/images/pfp-icon.png"));
@@ -121,17 +122,18 @@ public class ICS2606Form extends guiCustoms{
 			lblIconHolder.setIcon(icnPfp);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		lblIconHolder.setBounds(48, 30, 80, 80);
+		
+		} lblIconHolder.setBounds(48, 30, 80, 80);
 		gradeForm.add(lblIconHolder);
 		
+		// put username beside the image icon
 		lblStudentName = new JLabel(UsrLogin.user.getUsername());
-
 		lblStudentName.setBounds(145, 57, 500, 28);
 		lblStudentName.setFont(futura.deriveFont(Font.PLAIN,28));
 		lblStudentName.setForeground(userFontGray);
 		gradeForm.add(lblStudentName);
 		
+		// build the UI
 		lblDepartment = new JLabel("UNIVERSITY OF SANTO TOMAS");
 		lblDepartment.setBounds(145, 83, 500, 18);
 		lblDepartment.setFont(gothamBook.deriveFont(Font.PLAIN,16));
@@ -147,18 +149,8 @@ public class ICS2606Form extends guiCustoms{
 		bLogout.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bLogout.setForeground(Color.WHITE);
 		bLogout.setFocusable(false);
-		bLogout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				UsrLogin usrLogin = new UsrLogin();
-				
-				//CustomDialog Constructor: headContent, messageContent, parentPane, childPane, newPane, buttonContentCancel, buttonContentConfirm, color
-				CustomDialog cd = new CustomDialog("Log Out","Are you sure you want to logout?",mainContainer,gradeForm,usrLogin,"Cancel","Logout",paneRed);
-				cd.setVisible(true);
-			}
-		});
-		
 		gradeForm.add(bLogout);
-		//end of header
+		
 		lblCourseName = new JLabel("ICS2606");
 		lblCourseName.setBounds(577,66,200,35);
 		lblCourseName.setFont(gothamBookBold.deriveFont(Font.PLAIN,28));
@@ -166,7 +158,6 @@ public class ICS2606Form extends guiCustoms{
 		lblCourseName.setBorder(BorderFactory.createEmptyBorder());
 		gradeForm.add(lblCourseName);
 		
-
 		JLabel lblStudentDetails = new JLabel("Student Details", JLabel.CENTER);
 		lblStudentDetails.setBounds(513,97,254,31);
 		lblStudentDetails.setFont(gothamBook.deriveFont(Font.PLAIN,25));
@@ -522,13 +513,6 @@ public class ICS2606Form extends guiCustoms{
 		bBack.setForeground(hyperColor);
 		gradeForm.add(bBack);
 		
-		bBack.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CoursePicker cP = new CoursePicker();
-				CustomDialog cd = new CustomDialog("Changes will be discarded","Are you sure you want to go back?",mainContainer,gradeForm,cP,"Cancel","Continue	",paneRed);
-			}
-		});
-		
 		bClear = new JButton("Clear");
 		bClear.setFont(gothamBook.deriveFont(Font.PLAIN,16));
 		bClear.setBounds(374, 610, 171, 46);
@@ -537,12 +521,6 @@ public class ICS2606Form extends guiCustoms{
 		bClear.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bClear.setForeground(Color.BLACK);
 		gradeForm.add(bClear);
-		
-		bClear.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				CustomDialog cd = new CustomDialog("Changes will be discarded","Are you sure you want to clear the forms?",gradeForm,"Cancel","Continue	",paneRed);
-			}
-		});
 		
 		bDisplay = new JButton("Display");
 		bDisplay.setFont(gothamBook.deriveFont(Font.PLAIN,16));
@@ -553,9 +531,51 @@ public class ICS2606Form extends guiCustoms{
 		bDisplay.setForeground(Color.BLACK);
 		gradeForm.add(bDisplay);
 		
+		bSave = new JButton("Save to Sheet");
+		bSave.setFont(gothamBook.deriveFont(Font.PLAIN,16));
+		bSave.setBounds(736, 610, 171, 46);
+		bSave.setBackground(Color.WHITE);
+		bSave.setBorder(BorderFactory.createEmptyBorder());
+		bSave.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		bSave.setForeground(Color.BLACK);
+		gradeForm.add(bSave);
+		// end of UI building
+		
+		// add and set as visible
+		add(mainContainer);
+		setVisible(true);
+		
+		// logout listener
+		bLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UsrLogin usrLogin = new UsrLogin();
+				
+				//CustomDialog Constructor: headContent, messageContent, parentPane, childPane, newPane, buttonContentCancel, buttonContentConfirm, color
+				CustomDialog cd = new CustomDialog("Log Out","Are you sure you want to logout?",mainContainer,gradeForm,usrLogin,"Cancel","Logout",paneRed);
+				cd.setVisible(true);
+			}
+		});
+		
+		// back button listener
+		bBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CoursePicker cP = new CoursePicker();
+				CustomDialog cd = new CustomDialog("Changes will be discarded","Are you sure you want to go back?",mainContainer,gradeForm,cP,"Cancel","Continue	",paneRed);
+			}
+		});
+		
+		// clear button listener, sets all text fields to ""
+		bClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CustomDialog cd = new CustomDialog("Changes will be discarded","Are you sure you want to clear the forms?",gradeForm,"Cancel","Continue	",paneRed);
+			}
+		});
+		
+		// display grades listener
 		bDisplay.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//JTextField[] allTF = {txtName, txtStudentNo, txtSection, txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
+				
+				// create arrays of text fields accordingly for later use
 				JTextField[] scoreTF = {txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
 				JTextField[] studentDetailsTF = {txtName, txtStudentNo, txtSection};
 				JTextField[] strTF = {txtName, txtSection};
@@ -564,179 +584,163 @@ public class ICS2606Form extends guiCustoms{
 				JTextField[] all50TF = {txtLongTest1, txtLongTest2, txtLongTest3};
 				
 				try {
-					for(int i = 0; i<scoreTF.length;i++) {
-						if(!scoreTF[i].getText().isBlank()){
+					
+					// if no grade has been input in textfields, set text to 0
+					for (int i = 0; i < scoreTF.length; i++) {
+						if (!scoreTF[i].getText().isBlank())
 							continue;
-						}
-						else {
+						else
 							scoreTF[i].setText("0");
-						}
 					}
 					
-					for(int i = 0; i<studentDetailsTF.length;i++) {
-						if(!studentDetailsTF[i].getText().isBlank()){
+					// throws feedback pane if [name, student number, section] is/are blank
+					for (int i = 0; i < studentDetailsTF.length; i++) {
+						if(!studentDetailsTF[i].getText().isBlank())
 							continue;
-						}
-						else {
-						  throw new BlankTextFieldException(studentDetailsTF[i].getName(),gradeForm);
-						}
+						else
+							throw new BlankTextFieldException(studentDetailsTF[i].getName(),gradeForm);
 					}
 					
-					for(int i = 0; i<strTF.length;i++) {
-						if(!isNumeric(strTF[i].getText())){
+					// checks whether name and section are valid strings
+					for (int i = 0; i < strTF.length; i++) {
+						if(!isNumeric(strTF[i].getText()))
 							continue;
-						}
-						else {
-						  throw new NumericsInStringException(strTF[i].getName(),gradeForm);
-						}
+						else
+							throw new NumericsInStringException(strTF[i].getName(),gradeForm);
 					}
 					
-					for(int i = 0; i<numTF.length;i++) {
-						if(isNumeric(numTF[i].getText())){
+					// checks whether score textfields contain numerals only
+					for (int i = 0; i < numTF.length; i++) {
+						if(isNumeric(numTF[i].getText()))
 							continue;
-						}
-						else {
+						else
 							throw new StringInNumericsException(numTF[i].getName(),gradeForm);
-						}
 					}
 					
-					for(int i = 0; i<all100TF.length;i++) {
-						if(Integer.parseInt(all100TF[i].getText())>=0 && Integer.parseInt(all100TF[i].getText())<=100){
+					// all items that are over 100 points are validated; should be 0-100
+					for (int i = 0; i < all100TF.length; i++) {
+						if(Integer.parseInt(all100TF[i].getText()) >= 0 && Integer.parseInt(all100TF[i].getText()) <= 100)
 							continue;
-						}
-						else {
-						  throw new ScoreOverloadException("Cannot Compute!",all100TF[i].getName(),100,gradeForm);
-						}
+						else
+							throw new ScoreOverloadException("Cannot Compute!",all100TF[i].getName(),100,gradeForm);
 					}
 					
-					for(int i = 0; i<all50TF.length;i++) {
-						if(Integer.parseInt(all50TF[i].getText())>=0 && Integer.parseInt(all50TF[i].getText())<=50){
+					// all items that are over 50 points are validated; should be 0-50
+					for (int i = 0; i<all50TF.length;i++) {
+						if(Integer.parseInt(all50TF[i].getText()) >= 0 && Integer.parseInt(all50TF[i].getText()) <= 50)
 							continue;
-						}
-						else {
-						  throw new ScoreOverloadException("Cannot Compute!",all50TF[i].getName(),50,gradeForm);
-						}
+						else
+							throw new ScoreOverloadException("Cannot Compute!",all50TF[i].getName(),50,gradeForm);
 					}
 					
+					// this block then computes the grades for prelims
 					comProg = new ICS2606();
-	
-						comProg.labExerPrelims(Integer.parseInt(txtLabExer1.getText()), Integer.parseInt(txtLabExer2.getText()), Integer.parseInt(txtLabExer3.getText()));
-						comProg.longTestPrelims(Integer.parseInt(txtLongTest1.getText()), Integer.parseInt(txtLongTest2.getText()));
-						comProg.examPrelims(Integer.parseInt(txtPrelimExams.getText()));
-						txtPrelimGrade.setText(comProg.prelimGrade()+"");
-						txtPrelimTransmuted.setText(comProg.transmutedPrelim()+"");
-								
-						comProg.labExerFinals(Integer.parseInt(txtLabExer4.getText()));
-						comProg.longTestFinals(Integer.parseInt(txtLongTest3.getText()));
-						comProg.examFinals(Integer.parseInt(txtFinalExams.getText()));
-						txtFinalGrade.setText(comProg.finalGrade()+"");
-						txtFinalTransmuted.setText(comProg.transmutedFinal()+"");
-								
-						lblSubjectGrade.setText(comProg.subjectGrade()+"");
-						
-						CustomDialog cd = new CustomDialog("Success!", "Your GWA is: " + comProg.gwa(Double.parseDouble(lblSubjectGrade.getText())),gradeForm,"OK",paneGreen);
-				}
-				 catch(BlankTextFieldException btfe) {	
-				}catch(NumericsInStringException nse) {
-				}catch(StringInNumericsException sin) {
-				}catch(ScoreOverloadException soe) {
+					comProg.labExerPrelims(Integer.parseInt(txtLabExer1.getText()), Integer.parseInt(txtLabExer2.getText()), Integer.parseInt(txtLabExer3.getText()));
+					comProg.longTestPrelims(Integer.parseInt(txtLongTest1.getText()), Integer.parseInt(txtLongTest2.getText()));
+					comProg.examPrelims(Integer.parseInt(txtPrelimExams.getText()));
+					txtPrelimGrade.setText(comProg.prelimGrade()+"");
+					txtPrelimTransmuted.setText(comProg.transmutedPrelim()+"");
+					
+					// then for finals
+					comProg.labExerFinals(Integer.parseInt(txtLabExer4.getText()));
+					comProg.longTestFinals(Integer.parseInt(txtLongTest3.getText()));
+					comProg.examFinals(Integer.parseInt(txtFinalExams.getText()));
+					txtFinalGrade.setText(comProg.finalGrade()+"");
+					txtFinalTransmuted.setText(comProg.transmutedFinal()+"");
+					
+					// and display final subject grade
+					lblSubjectGrade.setText(comProg.subjectGrade()+"");
+					CustomDialog cd = new CustomDialog("Success!", "Your GWA is: " + comProg.gwa(Double.parseDouble(lblSubjectGrade.getText())),gradeForm,"OK",paneGreen);
+				
+				} catch(BlankTextFieldException btfe) {	
+					
+				} catch(NumericsInStringException nse) {
+					
+				} catch(StringInNumericsException sin) {
+					
+				} catch(ScoreOverloadException soe) {
+					
 				}
 			}
 		});
 		
-		bSave = new JButton("Save to Sheet");
-		bSave.setFont(gothamBook.deriveFont(Font.PLAIN,16));
-		bSave.setBounds(736, 610, 171, 46);
-		bSave.setBackground(Color.WHITE);
-		bSave.setBorder(BorderFactory.createEmptyBorder());
-		bSave.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		bSave.setForeground(Color.BLACK);
-		
-		gradeForm.add(bSave);
-		// save listener
-				bSave.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						
-						JTextField[] allTF = {txtName, txtStudentNo, txtSection, txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams, txtPrelimGrade, txtPrelimTransmuted, txtFinalGrade,txtFinalTransmuted};
-						JTextField[] strTF = {txtName, txtSection};
-						JTextField[] numTF = {txtStudentNo, txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2, txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
-						JTextField[] all100TF = {txtLabExer1, txtLabExer2, txtLabExer3,txtPrelimExams, txtLabExer4, txtFinalExams};
-						JTextField[] all50TF = {txtLongTest1, txtLongTest2, txtLongTest3};
-						
-						try {
-							for(int i = 0; i<allTF.length;i++) {
-								if(!allTF[i].getText().isBlank()){
-									continue;
-								}
-								else {
-									throw new BlankTextFieldException(allTF[i].getName()+". Please click Display again.",gradeForm);
-								}
-							}
-							
-							for(int i = 0; i<strTF.length;i++) {
-								if(!isNumeric(strTF[i].getText())){
-									continue;
-								}
-								else {
-								  throw new NumericsInStringException(strTF[i].getName(),gradeForm);
-								}
-							}
-							
-							for(int i = 0; i<numTF.length;i++) {
-								if(isNumeric(numTF[i].getText())){
-									continue;
-								}
-								else {
-									throw new StringInNumericsException(numTF[i].getName(),gradeForm);
-								}
-							}
-							
-							for(int i = 0; i<all100TF.length;i++) {
-								if(Integer.parseInt(all100TF[i].getText())>=0 && Integer.parseInt(all100TF[i].getText())<=100){
-									continue;
-								}
-								else {
-								  throw new ScoreOverloadException("Cannot Compute!",all100TF[i].getName(),100,gradeForm);
-								}
-							}
-							
-							for(int i = 0; i<all50TF.length;i++) {
-								if(Integer.parseInt(all50TF[i].getText())>=0 && Integer.parseInt(all50TF[i].getText())<=50){
-									continue;
-								}
-								else {
-								  throw new ScoreOverloadException("Cannot Compute!",all50TF[i].getName(),50,gradeForm);
-								}
-							}
-							
-						} catch (Exception exc) {
-							return ; // terminate actionPerformed method
-						}
-						
-						
-						File comProgSheet = new File("ICS2606 Sheet.csv");
-						PrintWriter pw = null;
-						BufferedReader br = null;
-						
-						try {
-							pw = new PrintWriter(new FileWriter(comProgSheet, true));
-							br = new BufferedReader(new FileReader(comProgSheet));
-							
-							if (br.readLine() == null)
-								pw.println("Name,Student Number,Section,GWA,PRELIMS,Prelim Grade,Transmuted Prelim Grade,Prelims Lab Exercise,Prelims Long Test,Prelims Exam,FINALS,Final Grade,Transmuted Final Grade,Finals Lab Exercise,Finals Long Test,Finals Exam");
-							
-							pw.println(txtName.getText() + "," + txtStudentNo.getText() + "," + txtSection.getText() + "," + comProg.gwa(Double.parseDouble(lblSubjectGrade.getText())) + "," + "  " + "," + comProg.getPrelimGrade() + "," + comProg.getTransmutedPrelim() + "," + comProg.getLabExerPrelims() + ","  + comProg.getLongTestPrelims() +
-									"," + comProg.getExamPrelims() + "," + "  " + "," + comProg.getFinalGrade()+ "," + comProg.transmutedFinal() + "," + comProg.getLabExerFinals() + "," + comProg.getLongTestFinals() + "," + comProg.getExamFinals());
-							pw.close();
-							
-							CustomDialog cd = new CustomDialog("Success!", "Info saved to sheet.",gradeForm,"OK",paneGreen);
-							
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
+		bSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				// create arrays of text fields accordingly for later use
+				JTextField[] allTF = {txtName, txtStudentNo, txtSection, txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2,txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams, txtPrelimGrade, txtPrelimTransmuted, txtFinalGrade,txtFinalTransmuted};
+				JTextField[] strTF = {txtName, txtSection};
+				JTextField[] numTF = {txtStudentNo, txtLabExer1, txtLabExer2, txtLabExer3, txtLongTest1, txtLongTest2, txtPrelimExams, txtLabExer4, txtLongTest3, txtFinalExams};
+				JTextField[] all100TF = {txtLabExer1, txtLabExer2, txtLabExer3,txtPrelimExams, txtLabExer4, txtFinalExams};
+				JTextField[] all50TF = {txtLongTest1, txtLongTest2, txtLongTest3};
+				
+				try {
+					
+					// perform the same validations
+					for (int i = 0; i < strTF.length; i++) {
+						if (!isNumeric(strTF[i].getText()))
+							continue;
+						else
+							throw new NumericsInStringException(strTF[i].getName(),gradeForm);
 					}
-				});
-		add(mainContainer);
-		setVisible(true);
+					
+					for (int i = 0; i < numTF.length; i++) {
+						if (isNumeric(numTF[i].getText()))
+							continue;
+						else
+							throw new StringInNumericsException(numTF[i].getName(),gradeForm);
+					}
+					
+					for (int i = 0; i < all100TF.length; i++) {
+						if (Integer.parseInt(all100TF[i].getText()) >= 0 && Integer.parseInt(all100TF[i].getText()) <= 100)
+							continue;
+						else
+							throw new ScoreOverloadException("Cannot Compute!",all100TF[i].getName(),100,gradeForm);
+					}
+					
+					for (int i = 0; i < all50TF.length; i++) {
+						if (Integer.parseInt(all50TF[i].getText()) >= 0 && Integer.parseInt(all50TF[i].getText()) <= 50)
+							continue;
+						else
+						  throw new ScoreOverloadException("Cannot Compute!",all50TF[i].getName(),50,gradeForm);
+					}
+					
+					// if grade has been computed, continue, otherwise tell user to click display button
+					for (int i = 0; i < allTF.length; i++) {
+						if(!allTF[i].getText().isBlank())
+							continue;
+						else
+							throw new BlankTextFieldException(allTF[i].getName()+". Please click Display again.",gradeForm);
+					}
+					
+				} catch (Exception exc) {
+					return ; 
+				}
+				
+				// prepare variables for writing to file
+				File comProgSheet = new File("ICS2606 Sheet.csv");
+				PrintWriter pw = null;
+				BufferedReader br = null;
+				
+				try {
+					pw = new PrintWriter(new FileWriter(comProgSheet, true));
+					br = new BufferedReader(new FileReader(comProgSheet));
+					
+					// to produce header titles in the sheet file, if null, printwrite the headers
+					if (br.readLine() == null)
+						pw.println("Name,Student Number,Section,GWA,PRELIMS,Prelim Grade,Transmuted Prelim Grade,Prelims Lab Exercise,Prelims Long Test,Prelims Exam,FINALS,Final Grade,Transmuted Final Grade,Finals Lab Exercise,Finals Long Test,Finals Exam");
+					
+					// printwrite the data computed earlier
+					pw.println(txtName.getText() + "," + txtStudentNo.getText() + "," + txtSection.getText() + "," + comProg.gwa(Double.parseDouble(lblSubjectGrade.getText())) + "," + "  " + "," + comProg.getPrelimGrade() + "," + comProg.getTransmutedPrelim() + "," + comProg.getLabExerPrelims() + ","  + comProg.getLongTestPrelims() +
+							"," + comProg.getExamPrelims() + "," + "  " + "," + comProg.getFinalGrade()+ "," + comProg.transmutedFinal() + "," + comProg.getLabExerFinals() + "," + comProg.getLongTestFinals() + "," + comProg.getExamFinals());
+					pw.close();
+					
+					CustomDialog cd = new CustomDialog("Success!", "Info saved to sheet.",gradeForm,"OK",paneGreen);
+					
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 	}
 }

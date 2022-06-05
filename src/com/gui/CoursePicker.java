@@ -1,25 +1,26 @@
 package com.gui;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.*;
-
-import javax.imageio.ImageIO;
+import javax.imageio.*;
 import javax.swing.*;
+import com.user.*;
 
-import com.user.UserStudent;
-
-public class CoursePicker extends guiCustoms{
+public class CoursePicker extends guiCustoms {
+	
+	// declare the variables to be used in the class
 	JPanel mainContainer, coursePicker;
 	JComboBox cbCoursePicker;
 	JButton bNext,bLogout;
 	Font gothamBook,gothamBookBold,futura,gothamLight;
 	Icon icnPfp;
-	JLabel lSelect,lUST,lStudentName,lDepartment;
+	JLabel lSelect,lProfilePic,lStudentName,lDepartment;
 	String[] cbOptions = {"    Choose your course","  ICS2606","  IT2622"};
 	
 	public CoursePicker() {
+		
+		// load custom fonts
 		try {
 			InputStream isfutura = getClass().getResourceAsStream("/res/fonts/futur.ttf");
 			InputStream isgotham = getClass().getResourceAsStream("/res/fonts/GothamBook.ttf");
@@ -34,17 +35,17 @@ public class CoursePicker extends guiCustoms{
 			ge.registerFont(gothamBook); 
 			ge.registerFont(gothamBookBold); 
 			ge.registerFont(gothamLight);
-		}
-		catch(IOException ie){
+		} catch(IOException ie) {
 			ie.printStackTrace();
-		}
-		catch(FontFormatException ffe){
+		} catch(FontFormatException ffe) {
 			ffe.printStackTrace();
 		}
-			
+		
+		// set JPanel attributes
 		setPreferredSize(new Dimension(1280, 720));
 		setLayout(null);
 		
+		// create hierarchy of JPanels
 		mainContainer = new JPanel();
 		mainContainer.setPreferredSize(new Dimension(1280, 720));
 		mainContainer.setBounds(0, 0, 1280, 720);
@@ -58,28 +59,27 @@ public class CoursePicker extends guiCustoms{
 		coursePicker.setLayout(null);
 		mainContainer.add(coursePicker);
 		
-		lUST = new JLabel();
+		// instantiate profile icon
+		lProfilePic = new JLabel();
 		try {
 			Image myImage = ImageIO.read(getClass().getResourceAsStream("/res/images/pfp-icon.png"));
 			icnPfp = new ImageIcon(myImage);
-			lUST.setIcon(icnPfp);
+			lProfilePic.setIcon(icnPfp);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//lUST.setBounds(48, 30, 109, 110);
-		lUST.setBounds(48, 30, 80, 80);
-		coursePicker.add(lUST);
+		lProfilePic.setBounds(48, 30, 80, 80);
+		coursePicker.add(lProfilePic);
 		
+		// put username beside the image icon
 		lStudentName = new JLabel(UsrLogin.user.getUsername());
-
-		//lStudentName.setBounds(179, 77, 500, 28);
 		lStudentName.setBounds(145, 57, 500, 28);
 		lStudentName.setFont(futura.deriveFont(Font.PLAIN,28));
 		lStudentName.setForeground(userFontGray);
 		coursePicker.add(lStudentName);
 		
+		// build the rest of the UI
 		lDepartment = new JLabel("UNIVERSITY OF SANTO TOMAS");
-		//lDepartment.setBounds(179, 103, 500, 18);
 		lDepartment.setBounds(145, 83, 500, 18);
 		lDepartment.setFont(gothamBook.deriveFont(Font.PLAIN,16));
 		lDepartment.setForeground(userFontGray);
@@ -87,7 +87,6 @@ public class CoursePicker extends guiCustoms{
 		
 		bLogout = new JButton("Logout");
 		bLogout.setFont(gothamLight.deriveFont(Font.PLAIN,24));
-		//bLogout.setBounds(1069, 60, 150, 46);
 		bLogout.setBounds(1069, 55, 150, 46);
 		bLogout.setOpaque(false);
 		bLogout.setContentAreaFilled(false);
@@ -117,12 +116,28 @@ public class CoursePicker extends guiCustoms{
 		bNext.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bNext.setForeground(Color.BLACK);
 		coursePicker.add(bNext);
+		// end of UI building
 		
+		// add to main panel and set as visible
 		add(mainContainer);
 		setVisible(true);
+		
+		// logout button listener
+		bLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UsrLogin usrLogin = new UsrLogin();
+				CustomDialog cd = new CustomDialog("Log Out","Are you sure you want to logout?",mainContainer,coursePicker,usrLogin,"Cancel","Logout",paneRed);
+			}
+		});
+		
+		// next button listener
 		bNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				// store the selected course to a variable
 				String courseChosen = cbCoursePicker.getSelectedItem().toString().trim();
+				
+				// determine the course and call the corresponding class
 				if(courseChosen.equals("ICS2606")) {
 					ICS2606Form gradeForm = new ICS2606Form();
 					gradeForm.setPreferredSize(new Dimension(1280, 720));
@@ -131,8 +146,8 @@ public class CoursePicker extends guiCustoms{
 					mainContainer.add(gradeForm);
 					coursePicker.setVisible(false);
 					gradeForm.setVisible(true);
-				}
-				else if (courseChosen.equals("IT2622")) {
+				
+				} else if (courseChosen.equals("IT2622")) {
 					IT2622Form gradeForm = new IT2622Form();
 					gradeForm.setPreferredSize(new Dimension(1280, 720));
 					gradeForm.setBounds(0, 0, 1280, 720);
@@ -140,19 +155,11 @@ public class CoursePicker extends guiCustoms{
 					coursePicker.setVisible(false);
 					mainContainer.add(gradeForm);
 					gradeForm.setVisible(true);
-				}
-				else {
+				
+				// if no course selected, throw error feedback to the user
+				} else {
 					CustomDialog cd = new CustomDialog("Err!", "Please choose a course", mainContainer,"OK", paneRed);
 				}
-			}
-		});
-		
-		bLogout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				UsrLogin usrLogin = new UsrLogin();
-				
-				//CustomDialog Constructor: headContent, messageContent, parentPane, childPane, newPane, buttonContentCancel, buttonContentConfirm, color
-				CustomDialog cd = new CustomDialog("Log Out","Are you sure you want to logout?",mainContainer,coursePicker,usrLogin,"Cancel","Logout",paneRed);
 			}
 		});
 	}

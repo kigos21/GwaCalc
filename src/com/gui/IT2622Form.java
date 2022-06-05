@@ -2,22 +2,17 @@ package com.gui;
 
 import java.awt.*;
 import java.io.*;
-
-import javax.imageio.ImageIO;
+import javax.imageio.*;
 import javax.swing.*;
-
-import com.gui.ICS2606Form.BlankTextFieldException;
-import com.gui.ICS2606Form.NumericsInStringException;
-import com.gui.ICS2606Form.ScoreOverloadException;
-import com.gui.ICS2606Form.StringInNumericsException;
+import com.gui.ICS2606Form.*;
 import com.user.*;
 import java.awt.event.*;
 
 public class IT2622Form extends guiCustoms {
 	
+	// declare the variables
 	Font gothamBook,gothamBookBold,futura,gothamLight;
 	Icon icnPfp;
-	
 	JPanel mainContainer, gradeForm;
 	JButton bBack,bLogout,bClear,bDisplay,bSave;
 	
@@ -45,7 +40,7 @@ public class IT2622Form extends guiCustoms {
 			tfLongTest2, tfDeliverable1, tfIntegratedAsmnt,
 			tfFinalGrade, tfTransmutedFinalGrade;
 	
-	
+	// textfield that has a max score attribute
 	class ScoreTextField extends JTextField{
 		private int maxScore;
 
@@ -67,33 +62,9 @@ public class IT2622Form extends guiCustoms {
 		catch(NumberFormatException e) {  
 			return false;  
 		}  
-	} 
-	
-	public boolean noBlankTF(JTextField[] allTF) {
-		for (JTextField tf: allTF) {
-			if (!(tf.getText().isBlank()))
-				continue;
-			return false;
-		
-		} return true;
 	}
 	
-	public boolean validStrTF(JTextField[] strTF) {
-		for (JTextField tf: strTF) {
-			if (isNumeric(tf.getText()))
-				return false;
-		
-		} return true;
-	}
-	
-	public boolean validNumTF(JTextField[] numTF) {
-		for (JTextField tf: numTF) {
-			if (!(isNumeric(tf.getText()))) 
-				return false;
-		
-		} return true;
-	}
-	
+	// user defined exceptions
 	class BlankTextFieldException extends Exception {
 		public BlankTextFieldException(String textFieldName, JPanel parentPane) {
 			CustomDialog cd = new CustomDialog("Error", "Empty " + textFieldName, parentPane, "OK", paneRed);
@@ -105,11 +76,13 @@ public class IT2622Form extends guiCustoms {
 			CustomDialog cd = new CustomDialog("Error", "Invalid character found in " + textFieldName, parentPane, "OK", paneRed);
 		}
 	}
+	
 	class StringInNumericsException extends Exception {
 		public StringInNumericsException(String textFieldName, JPanel parentPane) {
 			CustomDialog cd = new CustomDialog("Error","Invalid number found in " + textFieldName, parentPane, "OK", paneRed);
 		}
 	}
+	
 	class ScoreOverloadException extends Exception{
 		public ScoreOverloadException(String header, String textFieldName, int maxScore,JPanel parentPane) {
 			CustomDialog cd = new CustomDialog(header,textFieldName +" exceeds the maximum score of " + maxScore, parentPane, "OK", paneRed);
@@ -117,6 +90,8 @@ public class IT2622Form extends guiCustoms {
 	}
 	
 	public IT2622Form() {	
+		
+		// load custom fonts
 		try {
 			InputStream isfutura = getClass().getResourceAsStream("/res/fonts/futur.ttf");
 			InputStream isgotham = getClass().getResourceAsStream("/res/fonts/GothamBook.ttf");
@@ -131,17 +106,17 @@ public class IT2622Form extends guiCustoms {
 			ge.registerFont(gothamBook); 
 			ge.registerFont(gothamBookBold); 
 			ge.registerFont(gothamLight);
-		}
-		catch(IOException ie){
+		} catch(IOException ie) {
 			ie.printStackTrace();
-		}
-		catch(FontFormatException ffe){
+		} catch(FontFormatException ffe) {
 			ffe.printStackTrace();
 		}
 		
+		// set JPanel attributes
 		setPreferredSize(new Dimension(1280, 720));
 		setLayout(null);
 		
+		// create hierarchy of JPanels
 		mainContainer = new JPanel(null);
 		mainContainer.setPreferredSize(new Dimension(1280, 720));
 		mainContainer.setBounds(0, 0, 1280, 720);
@@ -153,6 +128,7 @@ public class IT2622Form extends guiCustoms {
 		gradeForm.setBounds(0, 0, 1280, 720);
 		mainContainer.add(gradeForm);
 		
+		// instantiate profile icon
 		lblIconHolder = new JLabel();
 		try {
 			Image myImage = ImageIO.read(getClass().getResourceAsStream("/res/images/pfp-icon.png"));
@@ -160,17 +136,18 @@ public class IT2622Form extends guiCustoms {
 			lblIconHolder.setIcon(icnPfp);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		lblIconHolder.setBounds(48, 30, 80, 80);
+		
+		} lblIconHolder.setBounds(48, 30, 80, 80);
 		gradeForm.add(lblIconHolder);
 		
+		// put username beside the image icon
 		lblStudentName = new JLabel(UsrLogin.user.getUsername());
-		
 		lblStudentName.setBounds(145, 57, 500, 28);
 		lblStudentName.setFont(futura.deriveFont(Font.PLAIN, 28));
 		lblStudentName.setForeground(userFontGray);
 		gradeForm.add(lblStudentName);
 		
+		// build the UI
 		lblDepartment = new JLabel("UNIVERSITY OF SANTO TOMAS");
 		lblDepartment.setBounds(145, 83, 500, 18);
 		lblDepartment.setFont(gothamBook.deriveFont(Font.PLAIN,16));
@@ -186,15 +163,6 @@ public class IT2622Form extends guiCustoms {
 		bLogout.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bLogout.setForeground(Color.WHITE);
 		bLogout.setFocusable(false);
-		bLogout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				UsrLogin usrLogin = new UsrLogin();
-				
-				//CustomDialog Constructor: headContent, messageContent, parentPane, childPane, newPane, buttonContentCancel, buttonContentConfirm, color
-				CustomDialog cd = new CustomDialog("Log Out","Are you sure you want to logout?",mainContainer,gradeForm,usrLogin,"Cancel","Logout",paneRed);
-				cd.setVisible(true);
-			}
-		});
 		gradeForm.add(bLogout);
 		
 		lblCourseName = new JLabel("IT2622", JLabel.CENTER);
@@ -626,13 +594,34 @@ public class IT2622Form extends guiCustoms {
 		bBack.setBorderPainted(false);
 		bBack.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bBack.setForeground(hyperColor);
+		gradeForm.add(bBack);
+		// end of UI building
+		
+		// add to main JPanel
+		gradeForm.setVisible(true);
+		mainContainer.add(gradeForm);
+		mainContainer.setVisible(true);
+		
+		// add and set to visible
+		add(mainContainer);
+		setVisible(true);
+		
+		// logout button listener
+		bLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UsrLogin usrLogin = new UsrLogin();
+				CustomDialog cd = new CustomDialog("Log Out","Are you sure you want to logout?",mainContainer,gradeForm,usrLogin,"Cancel","Logout",paneRed);
+				cd.setVisible(true);
+			}
+		});
+		
+		// back button listener
 		bBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CoursePicker cP = new CoursePicker();
 				CustomDialog cd = new CustomDialog("Changes will be discarded","Are you sure you want to go back?",mainContainer,gradeForm,cP,"Cancel","Continue	",paneRed);
 			}
 		});
-		gradeForm.add(bBack);
 		
 		// clear listener
 		bClear.addActionListener(new ActionListener() {
@@ -646,7 +635,7 @@ public class IT2622Form extends guiCustoms {
 			public void actionPerformed(ActionEvent e) {
 				IT2622 hci = new IT2622();
 				
-				// check if inputs are proper for respective fields
+				// arrays to check if inputs are proper for respective fields
 				JTextField[] allTF = {tfName, tfSection, tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfDeliverable1, tfIntegratedAsmnt};
 				ScoreTextField[] prelimTF = {tfPrelimAttendance, tfPrelimRecitation, tfFA,tfLongTest1, tfWireframe, tfStoryboard,tfPrototype,tfPrelimExam};
 				ScoreTextField[] finalTF = {tfFinalAttendance, tfFinalRecitation, tfAssignment,tfLongTest2,tfDeliverable1,tfIntegratedAsmnt};
@@ -656,67 +645,67 @@ public class IT2622Form extends guiCustoms {
 				JTextField[] numTF = {tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfDeliverable1, tfIntegratedAsmnt};
 				
 				try {
-						for(int i = 0; i<scoreTF.length;i++) {
-							if(!scoreTF[i].getText().isBlank()){
-								continue;
-							}
-							else {
-								scoreTF[i].setText("0");
-								//throw new BlankTextFieldException(prelimTF[i].getName(),gradeForm);
-							}
-						}
-						
-						for(int i = 0; i<studentDetailsTF.length;i++) {
-							if(!studentDetailsTF[i].getText().isBlank()){
-								continue;
-							}
-							else {
-							  throw new BlankTextFieldException(studentDetailsTF[i].getName(),gradeForm);
-							}
-						}
-						
-						for(int i = 0; i<strTF.length;i++) {
-							if(!isNumeric(strTF[i].getText())){
-								continue;
-							}
-							else {
-							  throw new NumericsInStringException(strTF[i].getName(),gradeForm);
-							}
-						}
-						
-						for(int i = 0; i<numTF.length;i++) {
-							if(isNumeric(numTF[i].getText())){
-								continue;
-							}
-							else {
-								throw new StringInNumericsException(numTF[i].getName(),gradeForm);
-							}
-						}
-						
-						for(int i = 0; i<scoreTF.length;i++) { 
-							if(Double.parseDouble(scoreTF[i].getText()) >= 0 && Double.parseDouble(scoreTF[i].getText()) <= scoreTF[i].maxScore){
-								continue;
-							}
-							else {
-							  throw new ScoreOverloadException("Cannot Compute!",scoreTF[i].getName(),scoreTF[i].maxScore,gradeForm);
-							}
-						}
-						
-						hci.computeClassStandingPrelim(Double.parseDouble(tfPrelimAttendance.getText()), Double.parseDouble(tfPrelimRecitation.getText()), Double.parseDouble(tfFA.getText()));
-						hci.computeLongTestPrelim(Double.parseDouble(tfLongTest1.getText()));
-						hci.computeDeliverablePrelim(Double.parseDouble(tfWireframe.getText()), Double.parseDouble(tfStoryboard.getText()), Double.parseDouble(tfPrototype.getText()));
-						hci.computeExamPrelim(Double.parseDouble(tfPrelimExam.getText()));
-						tfPrelimGrade.setText(hci.computeRawPrelimGrade()+"");
-						tfTransmutedPrelimGrade.setText(hci.computeTransmutedPrelimGrade()+"");
-						
-						hci.computeClassStandingFinal(Double.parseDouble(tfFinalAttendance.getText()), Double.parseDouble(tfFinalRecitation.getText()), Double.parseDouble(tfAssignment.getText()));
-						hci.computeLongTestFinal(Double.parseDouble(tfLongTest2.getText()));
-						hci.computeDeliverableFinal(Double.parseDouble(tfDeliverable1.getText()));
-						hci.computeIntegratedAssmnt(Double.parseDouble(tfIntegratedAsmnt.getText()));
-						tfFinalGrade.setText(hci.computeRawFinalGrade()+"");
-						tfTransmutedFinalGrade.setText(hci.computeTransmutedFinalGrade()+"");
-						
-						CustomDialog cd = new CustomDialog("Success!", "Your GWA is: " + hci.gwaReturn(Double.parseDouble(tfTransmutedFinalGrade.getText())),gradeForm,"OK",paneGreen);
+					
+					// if no grade has been input in textfields, set text to 0
+					for (int i = 0; i < scoreTF.length; i++) {
+						if (!scoreTF[i].getText().isBlank())
+							continue;
+						else
+							scoreTF[i].setText("0");
+					}
+					
+					// throws feedback pane if [name, student number, section] is/are blank
+					for (int i = 0; i < studentDetailsTF.length; i++) {
+						if (!studentDetailsTF[i].getText().isBlank())
+							continue;
+						else 
+							throw new BlankTextFieldException(studentDetailsTF[i].getName(),gradeForm);
+					}
+					
+					// checks whether name and section are valid strings
+					for (int i = 0; i < strTF.length; i++) {
+						if (!isNumeric(strTF[i].getText()))
+							continue;
+						else
+							throw new NumericsInStringException(strTF[i].getName(),gradeForm);
+					}
+					
+					// checks whether score textfields contain numerals only
+					for (int i = 0; i < numTF.length; i++) {
+						if (isNumeric(numTF[i].getText()))
+							continue;
+						else
+							throw new StringInNumericsException(numTF[i].getName(),gradeForm);
+					}
+					
+					// checks if input do not exceed respective max scores
+					for (int i = 0; i < scoreTF.length; i++) { 
+						if (Double.parseDouble(scoreTF[i].getText()) >= 0 && Double.parseDouble(scoreTF[i].getText()) <= scoreTF[i].maxScore)
+							continue;
+						else
+							throw new ScoreOverloadException("Cannot Compute!",scoreTF[i].getName(),scoreTF[i].maxScore,gradeForm);
+					}
+					
+					// compute the grades
+					// prelims
+					hci.computeClassStandingPrelim(Double.parseDouble(tfPrelimAttendance.getText()), Double.parseDouble(tfPrelimRecitation.getText()), Double.parseDouble(tfFA.getText()));
+					hci.computeLongTestPrelim(Double.parseDouble(tfLongTest1.getText()));
+					hci.computeDeliverablePrelim(Double.parseDouble(tfWireframe.getText()), Double.parseDouble(tfStoryboard.getText()), Double.parseDouble(tfPrototype.getText()));
+					hci.computeExamPrelim(Double.parseDouble(tfPrelimExam.getText()));
+					tfPrelimGrade.setText(hci.computeRawPrelimGrade()+"");
+					tfTransmutedPrelimGrade.setText(hci.computeTransmutedPrelimGrade()+"");
+					
+					// finals
+					hci.computeClassStandingFinal(Double.parseDouble(tfFinalAttendance.getText()), Double.parseDouble(tfFinalRecitation.getText()), Double.parseDouble(tfAssignment.getText()));
+					hci.computeLongTestFinal(Double.parseDouble(tfLongTest2.getText()));
+					hci.computeDeliverableFinal(Double.parseDouble(tfDeliverable1.getText()));
+					hci.computeIntegratedAssmnt(Double.parseDouble(tfIntegratedAsmnt.getText()));
+					tfFinalGrade.setText(hci.computeRawFinalGrade()+"");
+					tfTransmutedFinalGrade.setText(hci.computeTransmutedFinalGrade()+"");
+					
+					// call the feedback pane and display gwa
+					CustomDialog cd = new CustomDialog("Success!", "Your GWA is: " + hci.gwaReturn(Double.parseDouble(tfTransmutedFinalGrade.getText())),gradeForm,"OK",paneGreen);
+				
 				} catch (Exception exc) {
 					exc.printStackTrace(); // terminate actionPerformed method
 				}
@@ -729,39 +718,61 @@ public class IT2622Form extends guiCustoms {
 				
 				// check if inputs are proper for respective fields
 				JTextField[] allTF = {tfName, tfSection, tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfDeliverable1, tfIntegratedAsmnt};
+				ScoreTextField[] prelimTF = {tfPrelimAttendance, tfPrelimRecitation, tfFA,tfLongTest1, tfWireframe, tfStoryboard,tfPrototype,tfPrelimExam};
+				ScoreTextField[] finalTF = {tfFinalAttendance, tfFinalRecitation, tfAssignment,tfLongTest2,tfDeliverable1,tfIntegratedAsmnt};
+				ScoreTextField[] scoreTF = {tfPrelimAttendance, tfPrelimRecitation, tfFA,tfLongTest1, tfWireframe, tfStoryboard,tfPrototype,tfPrelimExam,tfFinalAttendance, tfFinalRecitation, tfAssignment,tfLongTest2,tfDeliverable1,tfIntegratedAsmnt};
+				JTextField[] studentDetailsTF = {tfName, tfStudentNo, tfSection};
 				JTextField[] strTF = {tfName, tfSection};
 				JTextField[] numTF = {tfStudentNo, tfPrelimAttendance, tfPrelimRecitation, tfFA, tfLongTest1, tfWireframe, tfStoryboard, tfPrototype, tfPrelimExam, tfFinalAttendance, tfFinalRecitation, tfAssignment, tfLongTest2, tfDeliverable1, tfIntegratedAsmnt};
-				ScoreTextField[] scoreTF = {tfPrelimAttendance, tfPrelimRecitation, tfFA,tfLongTest1, tfWireframe, tfStoryboard,tfPrototype,tfPrelimExam,tfFinalAttendance, tfFinalRecitation, tfAssignment,tfLongTest2,tfDeliverable1,tfIntegratedAsmnt};
 				
 				try {
-					if (!(noBlankTF(allTF))) { // if there is a blank TF
-						// CustomDialog(String headContent, String messageContent, JPanel parentPane, String buttonContentConfirm, Color confirmColor)
-						CustomDialog cd = new CustomDialog("Err!", "Please fill out every field.", gradeForm, "OK", paneRed);
-						throw new Exception();
-					}
-					if (!(validStrTF(strTF))) {
-						CustomDialog cd = new CustomDialog("Err!", "Invalid Name or Section.", gradeForm, "OK", paneRed);
-						throw new Exception();
-					}
-					if (!(validNumTF(numTF))) {
-						CustomDialog cd = new CustomDialog("Err!", "Invalid student number or grade! Please check your inputs.", gradeForm, "OK", paneRed);
-						throw new Exception();
+					
+					// if no grade has been input in textfields, set text to 0
+					for (int i = 0; i < scoreTF.length; i++) {
+						if (!scoreTF[i].getText().isBlank())
+							continue;
+						else
+							scoreTF[i].setText("0");
 					}
 					
-					for(int i = 0; i<scoreTF.length;i++) {
-						if(Double.parseDouble(scoreTF[i].getText())>=0 && Double.parseDouble(scoreTF[i].getText())<=scoreTF[i].maxScore){
+					// throws feedback pane if [name, student number, section] is/are blank
+					for (int i = 0; i < studentDetailsTF.length; i++) {
+						if (!studentDetailsTF[i].getText().isBlank())
 							continue;
-						}
-						else {
-						  throw new ScoreOverloadException("Cannot Print!",scoreTF[i].getName(),scoreTF[i].maxScore,gradeForm);
-						}
+						else 
+							throw new BlankTextFieldException(studentDetailsTF[i].getName(),gradeForm);
+					}
+					
+					// checks whether name and section are valid strings
+					for (int i = 0; i < strTF.length; i++) {
+						if (!isNumeric(strTF[i].getText()))
+							continue;
+						else
+							throw new NumericsInStringException(strTF[i].getName(),gradeForm);
+					}
+					
+					// checks whether score textfields contain numerals only
+					for (int i = 0; i < numTF.length; i++) {
+						if (isNumeric(numTF[i].getText()))
+							continue;
+						else
+							throw new StringInNumericsException(numTF[i].getName(),gradeForm);
+					}
+					
+					// checks if input do not exceed respective max scores
+					for (int i = 0; i < scoreTF.length; i++) { 
+						if (Double.parseDouble(scoreTF[i].getText()) >= 0 && Double.parseDouble(scoreTF[i].getText()) <= scoreTF[i].maxScore)
+							continue;
+						else
+							throw new ScoreOverloadException("Cannot Compute!",scoreTF[i].getName(),scoreTF[i].maxScore,gradeForm);
 					}
 					
 				} catch (Exception exc) {
 					exc.printStackTrace();
-					return ; // terminate actionPerformed method
+					return ;
 				}
 				
+				// checks whether display button has been clicked based on whether the grade field is filled or blank
 				try {
 					if (tfPrelimGrade.getText().isBlank() && tfFinalGrade.getText().isBlank() && tfTransmutedPrelimGrade.getText().isBlank() && tfTransmutedFinalGrade.getText().isBlank()) {
 						CustomDialog cd = new CustomDialog("Err!", "Please click the Display button first.", gradeForm, "OK", paneRed);
@@ -772,6 +783,8 @@ public class IT2622Form extends guiCustoms {
 					exc.printStackTrace();
 					return ;
 				}
+				
+				// prepare variables for writing to file
 				IT2622 hci = new IT2622();
 				File hciSheet = new File("IT2622 Sheet.csv");
 				PrintWriter pw = null;
@@ -781,9 +794,11 @@ public class IT2622Form extends guiCustoms {
 					pw = new PrintWriter(new FileWriter(hciSheet, true));
 					br = new BufferedReader(new FileReader(hciSheet));
 					
+					// to produce header titles in the sheet file, if null, printwrite the headers
 					if (br.readLine() == null)
 						pw.println("Name,Student Number,Section,GWA,PRELIMS,Prelim Grade,Transmuted Prelim Grade,Attendance,Recitation,Formatives,Long Test 1,Wireframe,Storyboard,Prototype,Exam,FINALS,Final Grade,Transmuted Final Grade,Attendance,Recitation,Assignment,Long Test 2,Deliverable 1,Integrated Assmnt");
 					
+					// printwrite the data computed earlier
 					pw.println(tfName.getText() + "," + tfStudentNo.getText() + "," + tfSection.getText() + "," +hci.gwaReturn(Double.parseDouble(tfTransmutedFinalGrade.getText()))+"," +" " + "," + tfPrelimGrade.getText() + "," + tfTransmutedPrelimGrade.getText() + "," + tfPrelimAttendance.getText() + "," + tfPrelimRecitation.getText() + "," + tfFA.getText() + "," + tfLongTest1.getText() + "," + tfWireframe.getText() + "," + tfStoryboard.getText() + 
 							 "," + tfPrototype.getText() + "," + tfPrelimExam.getText() + "," + " " + "," + tfFinalGrade.getText() + "," + tfTransmutedFinalGrade.getText() + "," + tfFinalAttendance.getText() + "," + tfFinalRecitation.getText() + "," + tfAssignment.getText() + "," + tfLongTest2.getText() + "," + tfDeliverable1.getText() + "," + tfIntegratedAsmnt.getText());
 					pw.close();
@@ -795,14 +810,5 @@ public class IT2622Form extends guiCustoms {
 				}
 			}
 		});
-		
-		
-		gradeForm.setVisible(true);
-		mainContainer.add(gradeForm);
-		mainContainer.setVisible(true);
-		
-		add(mainContainer);
-		setVisible(true);
-		
 	}
 }

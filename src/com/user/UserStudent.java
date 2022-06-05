@@ -3,6 +3,7 @@ package com.user;
 import java.util.ArrayList;
 
 public class UserStudent {
+	
 	private String username;
 	private String password;
 	private String name;

@@ -4,12 +4,13 @@ import com.user.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
-import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
+import java.util.*;
+import javax.imageio.*;
 import javax.swing.*;
 
-public class UsrLogin extends guiCustoms{
+public class UsrLogin extends guiCustoms {
+	
+	// declare the variables to be used in the class
 	static UserStudent user;
 	JPanel usrLogin;
 	JLabel lLogo,lUser,lPswrd,lTitle;
@@ -21,20 +22,20 @@ public class UsrLogin extends guiCustoms{
 	JButton bCrtUser;
 	Font gothamBook,gothamBookBold;
 	
+	// create custom exceptions that call a pop-up window whenever thrown
 	class BlankTextFieldException extends Exception {
 		public BlankTextFieldException(String textFieldName, JPanel parentPane) {
-			CustomDialog cd = new CustomDialog("Error", "Empty " + textFieldName, parentPane, "OK", paneRed);
+			CustomDialog cd = new CustomDialog("Error", "Empty " + textFieldName, parentPane, "OK", paneRed); 
 		}
-	}
-	
-	class UserDoesNotExist extends Exception {
+	} class UserDoesNotExist extends Exception {
 		public UserDoesNotExist(String passedUname, JPanel parentPane) {
 			CustomDialog cd = new CustomDialog("Error", "User "+passedUname+" does not exist!", parentPane, "OK", paneRed);
 		}
 	}
 	
-	
 	public UsrLogin() {
+		
+		// load custom fonts
 		try {	
 			InputStream isgotham = getClass().getResourceAsStream("/res/fonts/GothamBook.ttf");
 			InputStream isgothamBold = getClass().getResourceAsStream("/res/fonts/GothamBold.ttf");
@@ -43,26 +44,29 @@ public class UsrLogin extends guiCustoms{
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			ge.registerFont(gothamBook); 
 			ge.registerFont(gothamBookBold); 
-		}
-		catch(IOException ie){
+		} catch(IOException ie) {
 			ie.printStackTrace();
-		}
-		catch(FontFormatException ffe){
+		} catch(FontFormatException ffe) {
 			ffe.printStackTrace();
 		}
-			
-		usrLogin = new JPanel();
+		
+		/* 
+		 * since this class extends the guiCustoms class, 
+		 * and that class extends the JPanel,
+		 * therefore we need to set the JPanel attributes in this class
+		 */
 		setLayout(null);
 		setPreferredSize(new Dimension(1280, 720));
 		
+		// create another JPanel that will sit on top of the main JPanel; to allow switching of windows easily
+		usrLogin = new JPanel();
 		usrLogin.setPreferredSize(new Dimension(1280, 720));
 		usrLogin.setBackground(bgColor);
 		usrLogin.setBounds(0, 0, 1280, 720);
 		usrLogin.setLayout(null);
 		
-	
+		// from here, we build the UI
 		lLogo = new JLabel();
-		
 		try {
 			Image myImage = ImageIO.read(getClass().getResourceAsStream("/res/images/gwalogo2.png"));
 			icnPfp = new ImageIcon(myImage);
@@ -87,17 +91,6 @@ public class UsrLogin extends guiCustoms{
 		tfUser.setForeground(textfieldGray);
 		tfUser.setBorder(BorderFactory.createEmptyBorder());
 		tfUser.setName("Username");
-		tfUser.addFocusListener(new FocusListener() {
-		    public void focusGained(FocusEvent e) {
-		    	if (tfUser.getText().equals("Username"))
-		    		tfUser.setText("");
-		    }
-
-		    public void focusLost(FocusEvent e) {
-		    	if (tfUser.getText().isBlank())
-		        	tfUser.setText("Username");
-		    }
-		});
 		usrLogin.add(tfUser);
 		
 		lUser = new JLabel("USERNAME");
@@ -114,19 +107,7 @@ public class UsrLogin extends guiCustoms{
 		tfPswrd.setForeground(textfieldGray);
 		tfPswrd.setBorder(BorderFactory.createEmptyBorder());
 		tfPswrd.setName("Password");
-		tfPswrd.addFocusListener(new FocusListener() {
-		    public void focusGained(FocusEvent e) {
-		    	if (tfPswrd.getText().equals("Password"))
-		    		tfPswrd.setText("");
-		    }
-
-		    public void focusLost(FocusEvent e) {
-		        if (tfPswrd.getText().isBlank())
-		        	tfPswrd.setText("Password");
-		    }
-		});
 		usrLogin.add(tfPswrd);
-		
 		
 		lPswrd = new JLabel("PASSWORD");
 		lPswrd.setBounds(456, 447, 100, 13);
@@ -152,113 +133,47 @@ public class UsrLogin extends guiCustoms{
 		bCrtUser.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		bCrtUser.setForeground(hyperColor);
 		usrLogin.add(bCrtUser);
+		// end of UI building
 		
-		// first focus
+		// drive the first focus away from the Username text field
 		usrLogin.setFocusable(true);
 		usrLogin.requestFocus();
 		
+		// add to main JPanel and set to visible
 		add(usrLogin);
 		setVisible(true);
 		
-		bLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				File loginCreds = null;
-				BufferedReader br = null;
-				InputStream is = null;
-				int unameLoc = 0;
-				
-				try {
-					loginCreds = new File("usr-login-creds.txt");
-					br = new BufferedReader(new FileReader(loginCreds));
-				} 
-				catch (FileNotFoundException e1) {
-					CustomDialog cd = new CustomDialog("No user found!", "Please create an account.", usrLogin,"OK", paneRed);
-					bCrtUser.requestFocus();
-					return ;
-				}
-				
-				try {
-						
-						ArrayList al = new ArrayList();
-		                ArrayList username = new ArrayList();
-		                ArrayList password = new ArrayList();
-		                
-		                String line1 = br.readLine();
-		                if(line1.trim().isBlank()) {
-		                	CustomDialog cd = new CustomDialog("No user found!", "Please create an account.", usrLogin,"OK", paneRed);
-							bCrtUser.requestFocus();
-		                }
-		                
-		                while (line1 != null)
-		                {
-		                    al.add(line1);
-		                    line1 = br.readLine();
-		                }
+		/*
+		 * set listeners for the text fields;
+		 * because the text fields come with a preset text,
+		 * when the content is still not changed, we want the program to auto clear it for us,
+		 * but if blank/whitespace has been inputted, it returns with its preset text
+		 */
+		tfUser.addFocusListener(new FocusListener() {
+		    public void focusGained(FocusEvent e) {
+		    	if (tfUser.getText().equals("Username"))
+		    		tfUser.setText("");
+		    }
 
-		                for (int x = 0; x < al.size(); x++)
-		                {
-		                	if(x%2==0) {
-		                    username.add(al.get(x));
-		                        continue;
-		                	}
-		                	
-		                    else {    
-		                    password.add(al.get(x));
-		                        continue;
-		                    }
-		                }
-		                
-		                for (int x = 0; x < username.size(); x++)
-		                {
-		                	if(tfUser.getText().isBlank() || tfUser.getText().equals("Username")) {
-		                		throw new BlankTextFieldException(tfUser.getName(),usrLogin);
-		                	}
-		                	
-		                	else if(tfUser.getText().equals(username.get(x))) {
-		                		unameLoc = x;
-		                		break;
-		                	}
-		                	
-		                	else if (!tfUser.getText().equals(username.get(x)) && x==(username.size()-1)){
-		                		throw new UserDoesNotExist(tfUser.getText(),usrLogin);
-		                	}
-		                	
-		                	else if (!tfUser.getText().equals(username.get(x)));
-		                	{
-		                		continue;
-		                	}
-		                }
-
-						br.close();
-						br = new BufferedReader(new FileReader(loginCreds)); // cheap alternative
-						if (tfUser.getText().equals(username.get(unameLoc)) && tfPswrd.getText().equals(password.get(unameLoc))) {
-							user = new UserStudent(tfUser.getText(), tfPswrd.getText());
-							CoursePicker cp = new CoursePicker();
-				            cp.setPreferredSize(new Dimension(1280, 720));
-				            cp.setBounds(0, 0, 1280, 720);
-			            
-				            usrLogin.setVisible(false);
-				            add(cp);
-				            cp.setVisible(true);
-						}
-						else {
-							CustomDialog cd = new CustomDialog("Incorrect Info!", "The password you’ve entered for "+username.get(unameLoc)+" is incorrect", usrLogin,"OK", paneRed);
-						}
-					}
-				
-				catch (IOException e1) {
-					e1.printStackTrace();
-				}
-				catch (BlankTextFieldException btfe) {
-					
-				}
-				catch (UserDoesNotExist udne) {
-					
-				}
-			}
+		    public void focusLost(FocusEvent e) {
+		    	if (tfUser.getText().isBlank())
+		        	tfUser.setText("Username");
+		    }
 		});
 		
+		tfPswrd.addFocusListener(new FocusListener() {
+		    public void focusGained(FocusEvent e) {
+		    	if (tfPswrd.getText().equals("Password"))
+		    		tfPswrd.setText("");
+		    }
+
+		    public void focusLost(FocusEvent e) {
+		        if (tfPswrd.getText().isBlank())
+		        	tfPswrd.setText("Password");
+		    }
+		});
+		
+		// listener for account creation
 		bCrtUser.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -269,6 +184,114 @@ public class UsrLogin extends guiCustoms{
 				usrLogin.setVisible(false);
 				add(usrCreate);
 				usrCreate.setVisible(true);
+			}
+		});
+		
+		// set listener for login button
+		bLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				// declare variables
+				File loginCreds = null;
+				BufferedReader br = null;
+				InputStream is = null;
+				int unameLoc = 0;
+				
+				// check whether the usr-login-creds.txt exists
+				try {
+					loginCreds = new File("usr-login-creds.txt");
+					br = new BufferedReader(new FileReader(loginCreds));
+				} catch (FileNotFoundException e1) {
+					CustomDialog cd = new CustomDialog("No user found!", "Please create an account.", usrLogin,"OK", paneRed);
+					bCrtUser.requestFocus();
+					return ;
+				}
+				
+				/* * * * explain user creation first * * * */
+				
+				try {
+					
+					/*
+					 * declare an array list to compile everyline in the text file
+					 * then username and password array list to sort these entries
+					 */
+					ArrayList al = new ArrayList();
+	                ArrayList username = new ArrayList();
+	                ArrayList password = new ArrayList();
+	                
+	                // check whether the file exists, but is empty
+	                String line1 = br.readLine();
+	                if (line1.trim().isBlank()) {
+	                	CustomDialog cd = new CustomDialog("No user found!", "Please create an account.", usrLogin,"OK", paneRed);
+						bCrtUser.requestFocus();
+	                }
+	                
+	                // for every line in the file, add the strings to the everything-arraylist
+	                while (line1 != null)  {
+	                    al.add(line1);
+	                    line1 = br.readLine();
+	                }
+	                
+	                // add the even lines as usernames, the odd lines as passwords
+	                for (int x = 0; x < al.size(); x++) {
+	                	if (x%2 == 0) {
+	                		username.add(al.get(x));
+		                    continue;
+	                	
+	                	} else {    
+	                		password.add(al.get(x));
+	                		continue;
+	                    }
+	                }
+	                
+	                // check the validiy of inputs in the text fields
+	                for (int x = 0; x < username.size(); x++) {
+	                	if (tfUser.getText().isBlank() || tfUser.getText().equals("Username"))
+	                		throw new BlankTextFieldException(tfUser.getName(),usrLogin);
+	                	
+	                	else if(tfUser.getText().equals(username.get(x))) {
+	                		unameLoc = x;
+	                		break;
+	                	
+	                	} else if (!tfUser.getText().equals(username.get(x)) && x==(username.size()-1))
+	                		throw new UserDoesNotExist(tfUser.getText(),usrLogin);
+	                	
+	                	else if (!tfUser.getText().equals(username.get(x)));
+	                		continue;
+	                }
+		                
+	                // to reset, we close the BR then re-open it
+					br.close();
+					br = new BufferedReader(new FileReader(loginCreds)); 
+					
+					// then, check whether the inputs has corresponding data within the text file of user credentials
+					if (tfUser.getText().equals(username.get(unameLoc)) && tfPswrd.getText().equals(password.get(unameLoc))) {
+						
+						// create the static variable user
+						user = new UserStudent(tfUser.getText(), tfPswrd.getText());
+						CoursePicker cp = new CoursePicker();
+			            cp.setPreferredSize(new Dimension(1280, 720));
+			            cp.setBounds(0, 0, 1280, 720);
+		            
+			            usrLogin.setVisible(false);
+			            add(cp);
+			            cp.setVisible(true);
+			            
+					} else {
+						CustomDialog cd = new CustomDialog("Incorrect Info!", "The password you’ve entered for " + username.get(unameLoc) + " is incorrect", usrLogin,"OK", paneRed);
+					}
+				
+				// catch errors and produce feedback panes
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				
+				} catch (BlankTextFieldException btfe) {
+					btfe.printStackTrace();
+					
+				} catch (UserDoesNotExist udne) {
+					udne.printStackTrace();
+					
+				}
 			}
 		});
 	}
