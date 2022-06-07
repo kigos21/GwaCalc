@@ -14,20 +14,6 @@ public class GwaCalc extends JFrame {
 	
 	public GwaCalc() {
 		
-		/* 
-		 * General Weighted Average Calculator will be a standalone java application that includes multiple 
-		 * features such as user registration, automatic grade computation, a search engine, and general 
-		 * weighted average generation. To execute these features, the application will utilize graphical 
-		 * user interfaces, input forms, file output stream, event handlings, and exception handlings. 
-		 * 
-		 * Through these features, the developers will be able to develop a documentation and general weighted 
-		 * average calculator for students in two specific courses. 
-		 * 
-		 * The objective of the program is to provide the students a program that documents and computes their 
-		 * own grades in two specific courses.
-		 */
-		
-		
 		// set JFrame attributes
 		setTitle("GENERAL WEIGHTED AVERAGE CALCULATOR");
 		setLayout(null);

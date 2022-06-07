@@ -50,11 +50,7 @@ public class UsrLogin extends guiCustoms {
 			ffe.printStackTrace();
 		}
 		
-		/* 
-		 * since this class extends the guiCustoms class, 
-		 * and that class extends the JPanel,
-		 * therefore we need to set the JPanel attributes in this class
-		 */
+	
 		setLayout(null);
 		setPreferredSize(new Dimension(1280, 720));
 		
@@ -201,13 +197,14 @@ public class UsrLogin extends guiCustoms {
 				try {
 					loginCreds = new File("usr-login-creds.txt");
 					br = new BufferedReader(new FileReader(loginCreds));
-				} catch (FileNotFoundException e1) {
+				} 
+				
+				catch (FileNotFoundException e1) {
 					CustomDialog cd = new CustomDialog("No user found!", "Please create an account.", usrLogin,"OK", paneRed);
 					bCrtUser.requestFocus();
 					return ;
 				}
 				
-				/* * * * explain user creation first * * * */
 				
 				try {
 					
@@ -221,11 +218,12 @@ public class UsrLogin extends guiCustoms {
 	                
 	                // check whether the file exists, but is empty
 	                String line1 = br.readLine();
-	                if (line1.trim().isBlank()) {
+	                if (line1 == null) {
 	                	CustomDialog cd = new CustomDialog("No user found!", "Please create an account.", usrLogin,"OK", paneRed);
 						bCrtUser.requestFocus();
 	                }
 	                
+	                else {
 	                // for every line in the file, add the strings to the everything-arraylist
 	                while (line1 != null)  {
 	                    al.add(line1);
@@ -244,20 +242,24 @@ public class UsrLogin extends guiCustoms {
 	                    }
 	                }
 	                
-	                // check the validiy of inputs in the text fields
+	                // checks the which username matches the one in the al arraylist and also checks validity of input in the Username textfield
 	                for (int x = 0; x < username.size(); x++) {
-	                	if (tfUser.getText().isBlank() || tfUser.getText().equals("Username"))
+	                	if (tfUser.getText().isBlank() || tfUser.getText().equals("Username")) {	                		
 	                		throw new BlankTextFieldException(tfUser.getName(),usrLogin);
+	                	}
 	                	
 	                	else if(tfUser.getText().equals(username.get(x))) {
 	                		unameLoc = x;
 	                		break;
 	                	
-	                	} else if (!tfUser.getText().equals(username.get(x)) && x==(username.size()-1))
-	                		throw new UserDoesNotExist(tfUser.getText(),usrLogin);
+	                	} 
+	                	else if (!tfUser.getText().equals(username.get(x)) && x==(username.size()-1)) {
+	                		throw new UserDoesNotExist(tfUser.getText(),usrLogin);	                		
+	                	}
 	                	
-	                	else if (!tfUser.getText().equals(username.get(x)));
+	                	else if (!tfUser.getText().equals(username.get(x))){               		
 	                		continue;
+	                	}
 	                }
 		                
 	                // to reset, we close the BR then re-open it
@@ -280,7 +282,7 @@ public class UsrLogin extends guiCustoms {
 					} else {
 						CustomDialog cd = new CustomDialog("Incorrect Info!", "The password you’ve entered for " + username.get(unameLoc) + " is incorrect", usrLogin,"OK", paneRed);
 					}
-				
+	                }
 				// catch errors and produce feedback panes
 				} catch (IOException e1) {
 					e1.printStackTrace();
