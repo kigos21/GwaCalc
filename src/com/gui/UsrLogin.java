@@ -280,7 +280,7 @@ public class UsrLogin extends guiCustoms {
 			            cp.setVisible(true);
 			            
 					} else {
-						CustomDialog cd = new CustomDialog("Incorrect Info!", "The password you’ve entered for " + username.get(unameLoc) + " is incorrect", usrLogin,"OK", paneRed);
+						CustomDialog cd = new CustomDialog("Incorrect Info!", "The password you've entered for " + username.get(unameLoc) + " is incorrect", usrLogin,"OK", paneRed);
 					}
 	                }
 				// catch errors and produce feedback panes
